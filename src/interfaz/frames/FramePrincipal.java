@@ -1,6 +1,5 @@
 package interfaz.frames;
 
-import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -11,7 +10,6 @@ import javax.swing.JMenuItem;
 
 public class FramePrincipal {
 
-	private JFrame frame;
 
 	/**
 	 * Launch the application.
@@ -49,8 +47,8 @@ public class FramePrincipal {
 		JMenuBar menuBar = new JMenuBar();
 		
 		initializeMenuUsuarios(menuBar, frame);
+		initializeMenuFenomenos(menuBar, frame);
 		//initializeMenuObservaciones(menuBar, frame);
-		//initializeMenuFenomenos(menuBar, frame);
 		//initializeMenuListadoporZona(menuBar, frame);
 		//initializeMenuListadoporFiltros(menuBar, frame);
 		
@@ -59,7 +57,25 @@ public class FramePrincipal {
 
 }
 
+	/** Inicialicación de botones del menu de Fenomeno */
+
+private static void initializeMenuFenomenos(JMenuBar menuBar, final JFrame frame) {
+JMenu fenomeno = new JMenu("Fenomeno");
 	
+	JMenuItem nuevoFenomeno = new JMenuItem("Nuevo Fenomeno");
+	
+	nuevoFenomeno.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent event) {
+            
+        	new FrameNuevoFenomeno(frame);
+        	
+        }
+    });
+	fenomeno.add(nuevoFenomeno);
+	menuBar.add(fenomeno);
+}
+
 /** Inicialicación de botones del menu de clientes */
 	
 	private static void initializeMenuUsuarios(JMenuBar menuBar, final JFrame frame) {
@@ -78,7 +94,7 @@ public class FramePrincipal {
 		
 		JMenuItem modificarUsuario = new JMenuItem("Modificar Usuario");
 		
-		nuevoUsuario.addActionListener(new ActionListener() {
+		modificarUsuario.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
                 
@@ -88,7 +104,7 @@ public class FramePrincipal {
 
 		JMenuItem eliminarUsuario = new JMenuItem("Eliminar Usuario");
 		
-		nuevoUsuario.addActionListener(new ActionListener() {
+		eliminarUsuario.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
                 
@@ -102,15 +118,5 @@ public class FramePrincipal {
 		menuBar.add(usuarios);		
 	}
 	
-	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	}
-
-	public void setVisible(boolean b) {
-		// TODO Auto-generated method stub
-		
-	}
 
 }

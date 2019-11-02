@@ -1,6 +1,5 @@
 package interfaz.frames;
 
-import java.awt.EventQueue;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -18,6 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import com.entidades.TipoUsuario;
+import com.entidades.Usuario;
 
 import interfaz.locator.ClientePDT;
 
@@ -191,13 +191,13 @@ public class FrameNuevoUsuario implements ActionListener{
 			nuevoUsuarioPanel.add(this.comboTipoUsu, constraints);
 		
 			constraints.gridx = 0;
-			constraints.gridy = 3;
+			constraints.gridy = 10;
 			constraints.gridwidth = 3;
 			constraints.anchor = GridBagConstraints.SOUTH;
 			nuevoUsuarioPanel.add(buttonIngresar, constraints);
 
-			constraints.gridx = 0;
-			constraints.gridy = 4;
+			constraints.gridx = 1;
+			constraints.gridy = 10;
 			constraints.gridwidth = 4;
 			constraints.anchor = GridBagConstraints.SOUTH;
 			nuevoUsuarioPanel.add(buttonCancelar, constraints);
@@ -257,8 +257,6 @@ public class FrameNuevoUsuario implements ActionListener{
 
 	}
 	
-	
-
 	private void accionIngesar() {
 
 		// Si es ingresar se validan datos!
@@ -287,7 +285,8 @@ public class FrameNuevoUsuario implements ActionListener{
 		}
 
 		// Valiamos ahora, que no exista un Usuario con dicha CI
-		boolean existe;
+		
+		Usuario existe;
 		
 		try{
 			existe = ClientePDT.existeUsuario(fieldNumeroDoc);
@@ -299,7 +298,7 @@ public class FrameNuevoUsuario implements ActionListener{
 		}
 		
 		
-		if (existe) {
+		if (existe!=null) {
 			JOptionPane.showMessageDialog(frame, "El Usuario con dicho documento ya se ecuentra registrado.",
 					"Usuario Existente!", JOptionPane.WARNING_MESSAGE);
 
@@ -310,8 +309,6 @@ public class FrameNuevoUsuario implements ActionListener{
 		// Usuario y volvemos al menu
 		boolean almacenado;
 		
-		//TENGO 2 ERRORES CON ESTO: 1- NOSE QUE PASARLE EN LUGAR DEL ID
-		//2-lA OPERACION INGRESAR... ESPERA UN OBJETO TIPO DE USUARIO QUE ME INGRESARON EN EL COMBO 
 				
 		try{
 			almacenado = ClientePDT.CrearUsuario(fieldID, fieldPass, fieldUsuario, fieldNombre, fieldApellido, fieldEstado, fieldTipoDoc, fieldNumeroDoc, fieldDireccion, fieldMail, fieldTipoUsu);
@@ -337,7 +334,6 @@ public class FrameNuevoUsuario implements ActionListener{
 		}
 
 	}
-
 	
 	
 	private void accionCancelar() {

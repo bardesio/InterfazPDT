@@ -33,7 +33,7 @@ public final class EJBLocator {
      * Obtiene el JNDI para el bean especificado en el modulo core_negocios
      */
     public <T> String getJNDIName(final Class<T> ejbClass) {
-        return getJNDIName(ejbClass, Constantes.MODULO_EJB);
+        return getJNDIName(ejbClass, Constantes.PDT);
     }
     
     /**
