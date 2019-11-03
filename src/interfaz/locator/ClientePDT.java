@@ -57,10 +57,10 @@ public class ClientePDT {
 	}
 		
 /***************************************************FENOMENO*******************************************************/
-	public static boolean ingresarnuevoFenomeno(long codigo, String fieldnombre , String fieldDescripcion) throws  Exception {
+	public static boolean ingresarnuevoFenomeno(long id,String fieldCodigo ,String fieldNombre , String fieldDescripcion) throws  Exception {
 		
 		FenomenoBeanRemote fenomenobeanremote = EJBLocator.getInstance().lookup(FenomenoBeanRemote.class);
-		return fenomenobeanremote.crearFenomeno(codigo, fieldnombre, fieldDescripcion);
+		return fenomenobeanremote.crearFenomeno(id,fieldCodigo, fieldNombre, fieldDescripcion);
 	}
 	
 	/***************************************************LISTAR OBSERVACION POR ZONA  *******************************************************/

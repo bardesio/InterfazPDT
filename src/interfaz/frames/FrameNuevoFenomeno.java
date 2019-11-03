@@ -48,7 +48,7 @@ public class FrameNuevoFenomeno implements ActionListener {
 		this.labelDescripcion = new JLabel("Descripcion:");
 		
 		 this.textCodigo=new JTextField(15);
-		this.textNombre= new JTextField(15);
+		 this.textNombre= new JTextField(15);
 		 this.textDescripcion = new JTextField(15);
 		
 		JButton buttonIngresar = new JButton("Ingresar");
@@ -146,25 +146,40 @@ public class FrameNuevoFenomeno implements ActionListener {
 
 		String fieldNombre = this.textNombre.getText();
 		String fieldDescripcion = this.textDescripcion.getText();
-		long  codigo = this.textCodigo.getBaseline(0, 0);
+		String fieldCodigo = this.textCodigo.getText();
 				
 		// Si alguno es vacío, mostramos una ventana de mensaje
-		if (fieldNombre.equals("") || fieldDescripcion.equals("")) {
+		if (fieldNombre.equals("") || fieldDescripcion.equals("")|| fieldCodigo.equals("")) {
 			JOptionPane.showMessageDialog(frame, "Debe completar todos los datos solicitados.", "Datos incompletos!",
 					JOptionPane.WARNING_MESSAGE);
 
 			return;
 		}
 		
+		/*long codigo = 0;
 		
+		try {
+			codigo= Long.valueOf(fieldCodigo);
+		}
+		catch(Exception e)
+		{
+			JOptionPane.showMessageDialog(frame, "El codigo debe ser un nuemero entero.", "Datos incorrectos!",
+					JOptionPane.WARNING_MESSAGE);
+			return;
+		}
 		// Valiamos ahora, que no exista un cliente con dicha CI
+	
+		
+		*/
 		
 		
 		boolean almacenado;
+		long id=0;
 		
 		try{
 			
-			almacenado= ClientePDT.ingresarnuevoFenomeno(codigo, fieldNombre, fieldDescripcion);
+			almacenado= ClientePDT.ingresarnuevoFenomeno(id,fieldCodigo, fieldNombre, fieldDescripcion);
+			
 			
 		}
 		catch (Exception e){
