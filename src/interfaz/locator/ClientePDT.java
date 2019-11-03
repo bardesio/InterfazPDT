@@ -2,8 +2,10 @@ package interfaz.locator;
 
 import java.util.List;
 
+import javax.naming.NamingException;
 
 import com.Remote.*;
+import com.entidades.Observacion;
 import com.entidades.TipoUsuario;
 import com.entidades.Usuario;
 
@@ -50,8 +52,8 @@ public class ClientePDT {
 	
 	public static List<TipoUsuario> obtenerTodoslosTipos() throws Exception {
 
-		UsuarioBeanRemote usuarioBeanRemote = EJBLocator.getInstance().lookup(UsuarioBeanRemote.class);
-		return usuarioBeanRemote.obtenerTodoslosTipos();
+		TIpoUsuarioBeanRemote tipousuarioBeanRemote = EJBLocator.getInstance().lookup(TIpoUsuarioBeanRemote.class);
+		return tipousuarioBeanRemote.obtenerTodoslosTipos();
 	}
 		
 /***************************************************FENOMENO*******************************************************/
@@ -61,4 +63,11 @@ public class ClientePDT {
 		return fenomenobeanremote.crearFenomeno(codigo, fieldnombre, fieldDescripcion);
 	}
 	
+	/***************************************************LISTAR OBSERVACION POR ZONA  *******************************************************/
+	
+	public static List<Observacion> ListarObservacionporZona(String NomZona) throws Exception {
+		
+		ObservacionBeanRemote observacionbeanremote = EJBLocator.getInstance().lookup(ObservacionBeanRemote.class);
+		return observacionbeanremote.ListarObservacionporZona(NomZona);
+	}
 }

@@ -10,7 +10,6 @@ import javax.swing.JMenuItem;
 
 public class FramePrincipal {
 
-
 	/**
 	 * Launch the application.
 	 */
@@ -49,7 +48,7 @@ public class FramePrincipal {
 		initializeMenuUsuarios(menuBar, frame);
 		initializeMenuFenomenos(menuBar, frame);
 		//initializeMenuObservaciones(menuBar, frame);
-		//initializeMenuListadoporZona(menuBar, frame);
+		initializeMenuListadoporZona(menuBar, frame);
 		//initializeMenuListadoporFiltros(menuBar, frame);
 		
 		
@@ -75,6 +74,26 @@ JMenu fenomeno = new JMenu("Fenomeno");
 	fenomeno.add(nuevoFenomeno);
 	menuBar.add(fenomeno);
 }
+
+/** Inicialicación de botones del menu de Listado de observaciones por zona */
+
+private static void initializeMenuListadoporZona(JMenuBar menuBar, final JFrame frame) {
+JMenu listado = new JMenu("Listado por zona");
+
+JMenuItem nuevoListado = new JMenuItem("Listado de observaciones por zona");
+
+nuevoListado.addActionListener(new ActionListener() {
+    @Override
+    public void actionPerformed(ActionEvent event) {
+        
+    	new FrameListadoporZona(frame);
+    	
+    }
+});
+listado.add(nuevoListado);
+menuBar.add(listado);
+}
+
 
 /** Inicialicación de botones del menu de clientes */
 	
