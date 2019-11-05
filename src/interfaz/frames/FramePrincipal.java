@@ -71,9 +71,21 @@ JMenu fenomeno = new JMenu("Fenomeno");
         	
         }
     });
+	JMenuItem modificarFenomeno = new JMenuItem("Modificar Fenomeno");
+
+	modificarFenomeno.addActionListener(new ActionListener() {
+	    @Override
+	    public void actionPerformed(ActionEvent event) {
+	        
+	    	new FrameModificarFenomeno(frame);
+	    }
+	});
+	
 	fenomeno.add(nuevoFenomeno);
+	fenomeno.add(modificarFenomeno);
 	menuBar.add(fenomeno);
 }
+
 
 /** Inicialicación de botones del menu de Listado de observaciones por zona */
 
@@ -90,6 +102,7 @@ nuevoListado.addActionListener(new ActionListener() {
     	
     }
 });
+
 listado.add(nuevoListado);
 menuBar.add(listado);
 }

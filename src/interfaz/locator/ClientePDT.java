@@ -5,11 +5,13 @@ import java.util.List;
 import javax.naming.NamingException;
 
 import com.Remote.*;
+import com.entidades.Fenomeno;
 import com.entidades.Observacion;
 import com.entidades.TipoUsuario;
 import com.entidades.Usuario;
 
 import interfaz.locator.EJBLocator;
+
 
 
 
@@ -62,6 +64,23 @@ public class ClientePDT {
 		FenomenoBeanRemote fenomenobeanremote = EJBLocator.getInstance().lookup(FenomenoBeanRemote.class);
 		return fenomenobeanremote.crearFenomeno(id,fieldCodigo, fieldNombre, fieldDescripcion);
 	}
+	
+	public List<Fenomeno> existecodigo(String codigo) throws Exception {
+
+		FenomenoBeanRemote fenomenobeanremote= EJBLocator.getInstance().lookup(FenomenoBeanRemote.class);
+		return fenomenobeanremote.existecodigo(codigo);
+		
+
+	}
+	
+	public static boolean ModificarFenomeno (long codigofen,String codigo, String nombreFen,String descripcion) throws Exception
+	{
+		FenomenoBeanRemote fenomenobeanremote = EJBLocator.getInstance().lookup(FenomenoBeanRemote.class);
+		return fenomenobeanremote.modificarFenomeno(codigofen, codigo, nombreFen, descripcion);
+	}
+	
+	
+	
 	
 	/***************************************************LISTAR OBSERVACION POR ZONA  *******************************************************/
 	
