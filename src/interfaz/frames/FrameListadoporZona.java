@@ -5,8 +5,6 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -15,16 +13,11 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 
 import com.entidades.Observacion;
-import com.entidades.Usuario;
-
 import interfaz.locator.ClientePDT;
 
 public class FrameListadoporZona implements ActionListener {
@@ -121,10 +114,10 @@ public class FrameListadoporZona implements ActionListener {
 
 		List<Observacion> observaciones; 
 		
-		String zona = this.textZona.getText();
+		String FieldZona = this.textZona.getText();
 		
 		try{
-			observaciones = ClientePDT.ListarObservacionporZona(zona);
+			observaciones = ClientePDT.ListarObservacionporZona(FieldZona);
 		}
 		catch (Exception e){
 			return null;
@@ -199,8 +192,8 @@ public class FrameListadoporZona implements ActionListener {
 
 		if (e.getSource() == this.buttonCancelar) {
 			this.accionCancelar();
-		} else {
-			this.accionListar();
+		} else if (e.getSource() == this.buttonListar) {
+			this.accionListar();;
 		}
 
 	}
@@ -212,19 +205,19 @@ public class FrameListadoporZona implements ActionListener {
 
 	private void accionListar() {
 
-		// Si es Eliminar se validan datos!
-
 		String fieldZona = this.textZona.getText();
 		
 		// Si alguno es vacío, mostramos una ventana de mensaje
 		if (fieldZona.equals("")) {
 			JOptionPane.showMessageDialog(frame, "Debe ingresar la zona a filtrar", "Datos incompletos!",
 					JOptionPane.WARNING_MESSAGE);
-
-			return;
 		}
-			
 		
+		else {
+			
+			cargarTablaObservacion();
+			
+		}
 		
 	}
 

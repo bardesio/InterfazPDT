@@ -22,7 +22,7 @@ public class FramePrincipal {
 		});
 	}
 
-/** Método que inicializa toda la ventatna principal */
+/** Método que inicializa toda la ventana principal */
 	
 	private static void createAndShowGUI() {
 
@@ -149,6 +149,11 @@ menuBar.add(listado);
 		usuarios.add(eliminarUsuario);
 		menuBar.add(usuarios);		
 	}
+
+public void setVisible(boolean b) {
+	// TODO Auto-generated method stub
+	
+}
 	
 
 }

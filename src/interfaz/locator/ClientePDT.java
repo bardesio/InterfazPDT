@@ -2,8 +2,6 @@ package interfaz.locator;
 
 import java.util.List;
 
-import javax.naming.NamingException;
-
 import com.Remote.*;
 import com.entidades.Fenomeno;
 import com.entidades.Observacion;
@@ -22,6 +20,7 @@ public class ClientePDT {
 	
 	private static String JNDI_USUARIO = "global/PDT/UsuarioBean!.com.Remote.UsuarioBeanRemote";
 	private static String JNDI_FENOMENO ="global/PDT/FenoemenoBean!com.Remote.FenomenoBeanRemote";
+	private static String JNDI_OBSERVACION ="global/PDT/ObservacionBean!com.Remote.ObservacionBeanRemote";
 
 
 /***************************************************USUARIO*******************************************************/
@@ -57,6 +56,13 @@ public class ClientePDT {
 		TIpoUsuarioBeanRemote tipousuarioBeanRemote = EJBLocator.getInstance().lookup(TIpoUsuarioBeanRemote.class);
 		return tipousuarioBeanRemote.obtenerTodoslosTipos();
 	}
+	
+	public static List<Usuario> Login(String usuario, String pass) throws Exception {
+
+		UsuarioBeanRemote usuarioBeanRemote = EJBLocator.getInstance().lookup(UsuarioBeanRemote.class);
+		return usuarioBeanRemote.Login(usuario, pass);
+	}
+	
 		
 /***************************************************FENOMENO*******************************************************/
 	public static boolean ingresarnuevoFenomeno(long id,String fieldCodigo ,String fieldNombre , String fieldDescripcion) throws  Exception {
