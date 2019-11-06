@@ -25,7 +25,7 @@ public class ClientePDT {
 
 
 /***************************************************USUARIO*******************************************************/
-	public static Usuario existeUsuario(String nomUsu) throws Exception {
+	public static List<Usuario> existeUsuario(String nomUsu) throws Exception {
 
 		UsuarioBeanRemote usuarioBeanRemote = EJBLocator.getInstance().lookup(UsuarioBeanRemote.class);
 		return usuarioBeanRemote.existeUsuario(nomUsu);

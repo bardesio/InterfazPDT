@@ -286,7 +286,7 @@ public class FrameModificarUsuario implements ActionListener{
 		
 		
 		// Validamos ahora, que exista un Usuario con dicha CI
-				Usuario existe;
+				List<Usuario> existe;
 				
 				try{
 					existe = ClientePDT.existeUsuario(fieldUsuario);
@@ -323,7 +323,7 @@ public class FrameModificarUsuario implements ActionListener{
 					this.textTipoDoc.setEnabled(true);
 					
 					//Cargo los campos
-					
+					/*
 					this.textApellido.setText(existe.getApellido());
 					this.textDireccion.setText(existe.getDireccion()); 
 					this.textEstado.setText(existe.getEstado());;
@@ -332,7 +332,7 @@ public class FrameModificarUsuario implements ActionListener{
 					this.textNumeroDoc.setText(existe.getNumerodoc());;
 					this.textPass.setText(existe.getPass());;
 					this.textTipoDoc.setText(existe.getTipodoc());
-					
+					*/
 				}
 		
 	}

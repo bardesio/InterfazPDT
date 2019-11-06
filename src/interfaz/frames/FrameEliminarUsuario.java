@@ -9,14 +9,13 @@ import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import com.entidades.TipoUsuario;
+import com.entidades.Fenomeno;
 import com.entidades.Usuario;
 
 import interfaz.locator.ClientePDT;
@@ -76,8 +75,6 @@ public class FrameEliminarUsuario implements ActionListener{
 		constraints.gridx = 1;
 		eliminarUsuarioPanel.add(this.textUsuario, constraints);
 		
-		constraints.gridx = 1;
-		this.comboTipoUsu = this.completarComboUsuario(frame);
 		
 		constraints.gridx = 0;
 		constraints.gridy = 3;
@@ -104,34 +101,7 @@ public class FrameEliminarUsuario implements ActionListener{
 
 	}
 	
-	/*ESTO ES PARA PROBAR LOS COMBOS RECORDAR ELIMINAR DESDE ACA HASTA LA PROXIMA LINEA COMENTADA*/
 	
-	private JComboBox<String> comboTipoUsu;
-
-	private List<TipoUsuario> tipoUsuarios;
-	
-private JComboBox<String> completarComboUsuario(JFrame frame) {
-		
-		try{
-			this.tipoUsuarios = ClientePDT.obtenerTodoslosTipos();
-		}
-		catch (Exception e){
-			return null;
-		}
-		
-		JComboBox<String> combo = new JComboBox<>();
-		
-		for(TipoUsuario u : this.tipoUsuarios){
-			combo.addItem(u.getNombre());
-		}
-		
-		return combo;
-		
-		
-	}
-
-				/* ELIMINAR HASTA ACA*/
-
 	/**
 	 * Como implementos Action Listener, quiere decir que soy escuchado de
 	 * eventos. Este método es quien se ejecutan cuando tocan un boton .
@@ -169,11 +139,18 @@ private JComboBox<String> completarComboUsuario(JFrame frame) {
 				
 				try{
 					
-					Usuario u = ClientePDT.existeUsuario(fieldUsuario);
-					almaceno= ClientePDT.EliminarUsuario(u.getId());
-				}
-				catch(Exception e){
-					JOptionPane.showMessageDialog(frame, "Error de conexión con el servidor. Intente más tarde.",
+					List<Usuario> us = ClientePDT.existeUsuario(fieldUsuario);
+					
+					if (us.isEmpty())
+					{
+						JOptionPane.showMessageDialog(null, "Usuario no encontrado");
+						return;
+					}else {
+						almaceno= ClientePDT.EliminarUsuario(us.get(0).getId());
+					}
+						
+				}catch(Exception e){
+					JOptionPane.showMessageDialog(frame, "Error estoy fuera del try",
 							"Error de conexión!", JOptionPane.WARNING_MESSAGE);
 	
 					return;

@@ -184,7 +184,7 @@ public class FrameNuevoUsuario implements ActionListener{
 		nuevoUsuarioPanel.add(this.labelTipoUsu, constraints);
 
 		constraints.gridx = 1;
-		this.comboTipoUsu = this.completarComboUsuario(frame);
+		this.completarComboUsuario(frame);
 		
 		
 		if (this.comboTipoUsu!=null){
@@ -220,22 +220,20 @@ public class FrameNuevoUsuario implements ActionListener{
 
 	
 
-	private JComboBox<String> completarComboUsuario(JFrame frame) {
+	private void completarComboUsuario(JFrame frame) {
 		
 		try{
 			this.tipoUsuarios = ClientePDT.obtenerTodoslosTipos();
 		}
 		catch (Exception e){
-			return null;
+			System.out.println("Error: "+ e.getLocalizedMessage());
 		}
 		
-		JComboBox<String> combo = new JComboBox<>();
+		comboTipoUsu = new JComboBox<>();
 		
 		for(TipoUsuario u : this.tipoUsuarios){
-			combo.addItem(u.getNombre());
+			comboTipoUsu.addItem(u.getNombre());
 		}
-		
-		return combo;
 		
 		
 	}
@@ -286,7 +284,7 @@ public class FrameNuevoUsuario implements ActionListener{
 
 		// Valiamos ahora, que no exista un Usuario con dicha CI
 		
-		Usuario existe;
+		List<Usuario> existe;
 		
 		try{
 			existe = ClientePDT.existeUsuario(fieldNumeroDoc);
