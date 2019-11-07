@@ -46,7 +46,7 @@ public class ClientePDT {
 		return usuarioBeanRemote.ModificarUsuario(id, nombre, apellido, tipoDoc, numDoc, direccion, correo, pass, estado, tipousuario);
 	}
 	
-	public static boolean EliminarUsuario(Long usuario) throws Exception {
+	public static boolean EliminarUsuario(long usuario) throws Exception {
 
 		UsuarioBeanRemote usuarioBeanRemote = EJBLocator.getInstance().lookup(UsuarioBeanRemote.class);
 		return usuarioBeanRemote.EliminarUsuario(usuario);
@@ -81,10 +81,17 @@ public class ClientePDT {
 
 	}
 	
-	public static boolean ModificarFenomeno (long codigofen,String codigo, String nombreFen,String descripcion) throws Exception
+	public static boolean ModificarFenomeno (String codigo, String nombreFen,String descripcion) throws Exception
 	{
 		FenomenoBeanRemote fenomenobeanremote = EJBLocator.getInstance().lookup(FenomenoBeanRemote.class);
-		return fenomenobeanremote.modificarFenomeno(codigofen, codigo, nombreFen, descripcion);
+		return fenomenobeanremote.modificarFenomeno(codigo, nombreFen, descripcion);
+	}
+	
+	public static boolean EliminarFenomeno(long codigo) throws Exception {
+
+		FenomenoBeanRemote fenomenobeanremote = EJBLocator.getInstance().lookup(FenomenoBeanRemote.class);
+		return fenomenobeanremote.EliminarFenomeno(codigo);
+		
 	}
 	
 	

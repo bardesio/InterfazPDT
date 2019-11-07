@@ -80,9 +80,19 @@ JMenu fenomeno = new JMenu("Fenomeno");
 	    	new FrameModificarFenomeno(frame);
 	    }
 	});
+	JMenuItem eliminarFenomeno = new JMenuItem("Eliminar Fenomeno");
+
+	eliminarFenomeno.addActionListener(new ActionListener() {
+	    @Override
+	    public void actionPerformed(ActionEvent event) {
+	        
+	    	new FrameEliminarFenomeno(frame);
+	    }
+	});
 	
 	fenomeno.add(nuevoFenomeno);
 	fenomeno.add(modificarFenomeno);
+	fenomeno.add(eliminarFenomeno);
 	menuBar.add(fenomeno);
 }
 

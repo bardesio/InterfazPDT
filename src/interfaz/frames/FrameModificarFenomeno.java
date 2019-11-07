@@ -38,11 +38,13 @@ public class FrameModificarFenomeno implements ActionListener{
 	private JLabel labelCodigo;
 	private JLabel labelNombre;
 	private JLabel labelDescripcion;
+	private JLabel labelCodigoFEN;
 	
 	/** Atributos de TexField */
 	private JTextField textNombre;
 	private JTextField textDescripcion;
 	private JTextField textCodigo;
+	private JTextField textCodigofen;
 
 	/** Atributos de Botones */
 	private JButton buttonModificar;
@@ -61,6 +63,7 @@ public class FrameModificarFenomeno implements ActionListener{
 		 this.textCodigo=new JTextField(15);
 		 this.textNombre= new JTextField(15);
 		 this.textDescripcion = new JTextField(15);
+		 this.textCodigofen = new JTextField(15);
 		
 		JButton buttonModificar = new JButton("Modificar");
 		buttonModificar.addActionListener(this);
@@ -192,14 +195,16 @@ public class FrameModificarFenomeno implements ActionListener{
 					}else {
 						for(Fenomeno CFen : fenomenos)
 						{
+																					
 							String dato=CFen.getCodigo();
 							textCodigo.setText(dato);
 							String desc=CFen.getDescripcion();
 							String nom=CFen.getNombreFen();
 							textNombre.setText(nom);
 							textDescripcion.setText(desc);
-							CFen.getNombreFen();
 							buttonModificar.setEnabled(true);
+							
+							
 							
 							
 						}
@@ -220,7 +225,11 @@ public class FrameModificarFenomeno implements ActionListener{
 		String fieldDescripcion = this.textDescripcion.getText();
 		String fieldNombre= this.textNombre.getText();
 		String fieldcodigo = this.textCodigo.getText();
-		long fieldcodigofen= 1l;
+		
+		
+		
+		
+		
 				
 
 		// Si alguno es vacío, mostramos una ventana de mensaje
@@ -238,7 +247,7 @@ public class FrameModificarFenomeno implements ActionListener{
 			
 			//almacenado = fenomenobeanremote.modificarFenomeno(fieldcodigofen, fieldcodigo, fieldNombre, fieldDescripcion);			
 			
-			almacenado = ClientePDT.ModificarFenomeno(fieldcodigofen, fieldcodigo, fieldNombre, fieldDescripcion);
+			almacenado = ClientePDT.ModificarFenomeno(fieldcodigo, fieldNombre, fieldDescripcion);
 			
 		} catch (Exception e){
 			JOptionPane.showMessageDialog(frame, "Error de conexión con el servidor. Intente más tarde.",
