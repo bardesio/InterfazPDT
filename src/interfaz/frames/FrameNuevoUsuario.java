@@ -184,7 +184,7 @@ public class FrameNuevoUsuario implements ActionListener{
 		nuevoUsuarioPanel.add(this.labelTipoUsu, constraints);
 
 		constraints.gridx = 1;
-		this.completarComboUsuario(frame);
+		 this.comboTipoUsu = this.completarComboUsuario(frame);
 		
 		
 		if (this.comboTipoUsu!=null){
@@ -213,29 +213,30 @@ public class FrameNuevoUsuario implements ActionListener{
 		this.frame = frame;
 
 	}else{
-		JOptionPane.showMessageDialog(frame, "Error de conexión con el servidor. Intente más tarde.",
+		JOptionPane.showMessageDialog(frame, "Estoy reventando al querer cargar el combo",
 				"Error de conexión!", JOptionPane.WARNING_MESSAGE);
 		frame.dispose();}
 	}
 
 	
 
-	private void completarComboUsuario(JFrame frame) {
+	private JComboBox<String> completarComboUsuario(JFrame frame) {
 		
 		try{
+
 			this.tipoUsuarios = ClientePDT.obtenerTodoslosTipos();
 		}
 		catch (Exception e){
-			System.out.println("Error: "+ e.getLocalizedMessage());
+			return null;
 		}
 		
-		comboTipoUsu = new JComboBox<>();
+		JComboBox<String> combo = new JComboBox<>();
 		
-		for(TipoUsuario u : this.tipoUsuarios){
-			comboTipoUsu.addItem(u.getNombre());
+		for(TipoUsuario tu : this.tipoUsuarios){
+			combo.addItem(tu.getNombre());
 		}
 		
-		
+		return combo;
 	}
 
 	/**
@@ -268,7 +269,7 @@ public class FrameNuevoUsuario implements ActionListener{
 		String fieldNumeroDoc = this.textNumeroDoc.getText();
 		String fieldPass = this.textPass.getText();
 		String fieldTipoDoc = this.textTipoDoc.getText();
-		TipoUsuario fieldTipoUsu = (TipoUsuario) this.comboTipoUsu.getSelectedItem();
+		long tipoUsu = (long) this.comboTipoUsu.getSelectedItem();
 		Long fieldID = 1l;
 		
 
@@ -284,7 +285,7 @@ public class FrameNuevoUsuario implements ActionListener{
 
 		// Valiamos ahora, que no exista un Usuario con dicha CI
 		
-		List<Usuario> existe;
+		Usuario existe;
 		
 		try{
 			existe = ClientePDT.existeUsuario(fieldNumeroDoc);
@@ -309,7 +310,7 @@ public class FrameNuevoUsuario implements ActionListener{
 		
 				
 		try{
-			almacenado = ClientePDT.CrearUsuario(fieldID, fieldPass, fieldUsuario, fieldNombre, fieldApellido, fieldEstado, fieldTipoDoc, fieldNumeroDoc, fieldDireccion, fieldMail, fieldTipoUsu);
+			almacenado = ClientePDT.CrearUsuario(fieldID, fieldPass, fieldUsuario, fieldNombre, fieldApellido, fieldEstado, fieldTipoDoc, fieldNumeroDoc, fieldDireccion, fieldMail, tipoUsu);
 		} catch (Exception e){
 			JOptionPane.showMessageDialog(frame, "Error de conexión con el servidor. Intente más tarde.",
 					"Error de conexión!", JOptionPane.WARNING_MESSAGE);

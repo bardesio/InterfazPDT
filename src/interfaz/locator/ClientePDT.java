@@ -24,14 +24,15 @@ public class ClientePDT {
 
 
 /***************************************************USUARIO*******************************************************/
-	public static List<Usuario> existeUsuario(String nomUsu) throws Exception {
+	public static Usuario existeUsuario(String nomUsu) throws Exception {
 
 		UsuarioBeanRemote usuarioBeanRemote = EJBLocator.getInstance().lookup(UsuarioBeanRemote.class);
 		return usuarioBeanRemote.existeUsuario(nomUsu);
 	}
 	
+	
 	public static boolean CrearUsuario(Long id, String pass, String usuario, String nombre, String apellido, String estado, String tipodoc,
-			String numerodoc, String direccion, String mail, TipoUsuario tipousuario) throws Exception{
+			String numerodoc, String direccion, String mail, long tipousuario) throws Exception{
 		
 		UsuarioBeanRemote usuarioBeanRemote = EJBLocator.getInstance().lookup(UsuarioBeanRemote.class);
 		return usuarioBeanRemote.CrearUsuario(id, pass, usuario, nombre, apellido, estado, tipodoc, numerodoc, direccion, mail, tipousuario);

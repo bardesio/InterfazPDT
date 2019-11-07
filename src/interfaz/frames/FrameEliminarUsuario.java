@@ -123,7 +123,7 @@ public class FrameEliminarUsuario implements ActionListener{
 
 		// Si es Eliminar se validan datos!
 
-		String fieldUsuario = this.textUsuario.getText();
+		String fieldUsuario = this.textUsuario.getText().toUpperCase();
 		
 		
 
@@ -139,18 +139,18 @@ public class FrameEliminarUsuario implements ActionListener{
 				
 				try{
 					
-					List<Usuario> us = ClientePDT.existeUsuario(fieldUsuario);
+					Usuario us = ClientePDT.existeUsuario(fieldUsuario);
 					
-					if (us.isEmpty())
+					if (us == null)
 					{
 						JOptionPane.showMessageDialog(null, "Usuario no encontrado");
 						return;
 					}else {
-						almaceno= ClientePDT.EliminarUsuario(us.get(0).getId());
+						almaceno= ClientePDT.EliminarUsuario(us.getId());
 					}
 						
 				}catch(Exception e){
-					JOptionPane.showMessageDialog(frame, "Error estoy fuera del try",
+					JOptionPane.showMessageDialog(frame, "Error con el servidor, por favor contacte con su administrador",
 							"Error de conexión!", JOptionPane.WARNING_MESSAGE);
 	
 					return;
