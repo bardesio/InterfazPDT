@@ -55,7 +55,8 @@ public class ClientePDT {
 	public static List<TipoUsuario> obtenerTodoslosTipos() throws Exception {
 
 		TIpoUsuarioBeanRemote tipousuarioBeanRemote = EJBLocator.getInstance().lookup(TIpoUsuarioBeanRemote.class);
-		return tipousuarioBeanRemote.obtenerTodoslosTipos();
+		List<TipoUsuario> TP = tipousuarioBeanRemote.obtenerTodoslosTipos(); 
+		return TP;
 	}
 	
 	public static List<Usuario> Login(String usuario, String pass) throws Exception {

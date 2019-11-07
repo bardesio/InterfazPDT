@@ -16,10 +16,14 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import com.Remote.FenomenoBeanRemote;
+import com.Remote.TIpoUsuarioBeanRemote;
+import com.entidades.Fenomeno;
 import com.entidades.TipoUsuario;
 import com.entidades.Usuario;
 
 import interfaz.locator.ClientePDT;
+import interfaz.locator.EJBLocator;
 
 
 public class FrameNuevoUsuario implements ActionListener{
@@ -185,7 +189,7 @@ public class FrameNuevoUsuario implements ActionListener{
 
 		constraints.gridx = 1;
 		 this.comboTipoUsu = this.completarComboUsuario(frame);
-		
+		 
 		
 		if (this.comboTipoUsu!=null){
 			nuevoUsuarioPanel.add(this.comboTipoUsu, constraints);
@@ -223,8 +227,11 @@ public class FrameNuevoUsuario implements ActionListener{
 	private JComboBox<String> completarComboUsuario(JFrame frame) {
 		
 		try{
+			
 
-			this.tipoUsuarios = ClientePDT.obtenerTodoslosTipos();
+			TIpoUsuarioBeanRemote tipousuariobeanremote = EJBLocator.getInstance().lookup(TIpoUsuarioBeanRemote.class);
+			
+			this.tipoUsuarios = tipousuariobeanremote.obtenerTodoslosTipos();
 		}
 		catch (Exception e){
 			return null;
