@@ -229,9 +229,8 @@ public class FrameNuevoUsuario implements ActionListener{
 		try{
 			
 
-			TIpoUsuarioBeanRemote tipousuariobeanremote = EJBLocator.getInstance().lookup(TIpoUsuarioBeanRemote.class);
 			
-			this.tipoUsuarios = tipousuariobeanremote.obtenerTodoslosTipos();
+			this.tipoUsuarios = ClientePDT.obtenerTodoslosTipos();
 		}
 		catch (Exception e){
 			return null;
@@ -276,7 +275,7 @@ public class FrameNuevoUsuario implements ActionListener{
 		String fieldNumeroDoc = this.textNumeroDoc.getText();
 		String fieldPass = this.textPass.getText();
 		String fieldTipoDoc = this.textTipoDoc.getText();
-		long tipoUsu = (long) this.comboTipoUsu.getSelectedItem();
+		String tipoUsu = (String) this.comboTipoUsu.getSelectedItem();
 		Long fieldID = 1l;
 		
 
@@ -290,27 +289,7 @@ public class FrameNuevoUsuario implements ActionListener{
 			return;
 		}
 
-		// Valiamos ahora, que no exista un Usuario con dicha CI
 		
-		Usuario existe;
-		
-		try{
-			existe = ClientePDT.existeUsuario(fieldNumeroDoc);
-		} catch (Exception e){
-			JOptionPane.showMessageDialog(frame, "Error de conexión con el servidor. Intente más tarde.",
-					"Error de conexión!", JOptionPane.WARNING_MESSAGE);
-
-			return;
-		}
-		
-		
-		if (existe!=null) {
-			JOptionPane.showMessageDialog(frame, "El Usuario con dicho documento ya se ecuentra registrado.",
-					"Usuario Existente!", JOptionPane.WARNING_MESSAGE);
-
-			return;
-		}
-
 		// Si estamos aquí,..quiere decir que no hay errores. Almacenamos el
 		// Usuario y volvemos al menu
 		boolean almacenado;
