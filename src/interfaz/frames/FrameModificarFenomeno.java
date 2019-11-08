@@ -227,12 +227,6 @@ public class FrameModificarFenomeno implements ActionListener{
 		String fieldcodigo = this.textCodigo.getText();
 		long fieldID = 1l;
 		
-		
-		
-		
-		
-				
-
 		// Si alguno es vacío, mostramos una ventana de mensaje
 		if (fieldNombre.equals("") || fieldDescripcion.equals("")) {
 			JOptionPane.showMessageDialog(frame, "Debe completar todos los datos solicitados.", "Datos incompletos!",

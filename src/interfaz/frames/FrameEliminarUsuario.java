@@ -125,7 +125,6 @@ public class FrameEliminarUsuario implements ActionListener{
 
 		String fieldUsuario = this.textUsuario.getText().toUpperCase();
 		
-		
 
 		// Si alguno es vacío, mostramos una ventana de mensaje
 		if (fieldUsuario.equals("")) {
