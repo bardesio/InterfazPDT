@@ -81,10 +81,10 @@ public class ClientePDT {
 
 	}
 	
-	public static boolean ModificarFenomeno (String codigo, String nombreFen,String descripcion) throws Exception
+	public static boolean ModificarFenomeno (long id, String codigo, String nombreFen,String descripcion) throws Exception
 	{
 		FenomenoBeanRemote fenomenobeanremote = EJBLocator.getInstance().lookup(FenomenoBeanRemote.class);
-		return fenomenobeanremote.modificarFenomeno(codigo, nombreFen, descripcion);
+		return fenomenobeanremote.modificarFenomeno(id, codigo, nombreFen, descripcion);
 	}
 	
 	public static boolean EliminarFenomeno(long codigo) throws Exception {
