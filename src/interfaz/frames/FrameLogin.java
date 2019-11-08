@@ -37,7 +37,7 @@ public class FrameLogin extends JFrame {
 	private JFrame jframe;
 	private JPanel jpanel;
 	public static JTextField txt_usu;
-	public static JPasswordField pass;
+	public static JTextField pass;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -120,7 +120,7 @@ public class FrameLogin extends JFrame {
 					public void actionPerformed(ActionEvent e) {
 						
 						String usuario = txt_usu.getText();
-						String password = String.valueOf(pass.getPassword());
+						String password = pass.getText();
 					
 						//Usuario u1= new Usuario();
 						try {

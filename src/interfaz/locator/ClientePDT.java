@@ -59,7 +59,7 @@ public class ClientePDT {
 		return TP;
 	}
 	
-	public static List<Usuario> Login(String usuario, String pass) throws Exception {
+	public  List<Usuario> Login(String usuario, String pass) throws Exception {
 
 		UsuarioBeanRemote usuarioBeanRemote = EJBLocator.getInstance().lookup(UsuarioBeanRemote.class);
 		return usuarioBeanRemote.Login(usuario, pass);
