@@ -126,9 +126,10 @@ public class FrameLogin extends JFrame {
 						try {
 							UsuarioBeanRemote usuariobeanremote = EJBLocator.getInstance().lookup(UsuarioBeanRemote.class);		
 							List<Usuario>u = usuariobeanremote.Login(usuario,password);
+							//llamarlo desde el clietnte
 							if(u.isEmpty())
 							{
-								JOptionPane.showMessageDialog(null, "Usuario no encontrado");
+								JOptionPane.showMessageDialog(null, "Usuario no encontrado, Datos Invalidos!");
 								return;
 							}
 							else {	
@@ -141,16 +142,15 @@ public class FrameLogin extends JFrame {
 							     JOptionPane.showMessageDialog(null, "Bienvenido\n"
 						                    + "Has ingresado satisfactoriamente al sistema",   "Mensaje de bienvenida",
 						                    JOptionPane.INFORMATION_MESSAGE);
-										
-						                    
-						                    FramePrincipal bienvenido = new FramePrincipal();
-						                    bienvenido.setVisible(true);
 								
 							}	
 							}
+							this.dispose();
+		                    FramePrincipal bienvenido = new FramePrincipal();
+		                    bienvenido.setVisible(true);
 						}
 							
-							
+						
 			               
 			                    //menuprincipal.setVisible(true);
 			                    
@@ -162,6 +162,11 @@ public class FrameLogin extends JFrame {
 							e1.printStackTrace();
 						}					
 					
+					}
+
+					private void dispose() {
+						// TODO Auto-generated method stub
+						
 					}
 					
 				});
