@@ -286,7 +286,7 @@ public class FrameModificarUsuario implements ActionListener{
 		
 		
 		// Validamos ahora, que exista un Usuario con dicha CI
-				Usuario existe;
+				List<Usuario> existe;
 				
 				try{
 					existe = ClientePDT.existeUsuario(fieldUsuario);
