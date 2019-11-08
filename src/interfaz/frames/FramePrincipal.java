@@ -14,14 +14,17 @@ public class FramePrincipal {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-
-		javax.swing.SwingUtilities.invokeLater(new Runnable() {
+	javax.swing.SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
+				
 				createAndShowGUI();
 			}
 		});
 	}
 
+	
+	
+	
 /** Método que inicializa toda la ventana principal */
 	
 	private static void createAndShowGUI() {
@@ -49,12 +52,16 @@ public class FramePrincipal {
 		initializeMenuFenomenos(menuBar, frame);
 		//initializeMenuObservaciones(menuBar, frame);
 		initializeMenuListadoporZona(menuBar, frame);
+		
 		//initializeMenuListadoporFiltros(menuBar, frame);
 		
 		
 		frame.setJMenuBar(menuBar);
 
 }
+
+	
+
 
 	/** Inicialicación de botones del menu de Fenomeno */
 

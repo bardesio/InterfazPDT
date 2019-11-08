@@ -1,202 +1,190 @@
 package interfaz.frames;
 
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
+import java.awt.EventQueue;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemListener;
+import java.awt.HeadlessException;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import java.util.List;
 
-import javax.swing.BorderFactory;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+import javax.swing.event.DocumentListener;
 
-import com.entidades.Usuario;
+
+import com.entidades.*;
+import com.servicios.*;
 
 import interfaz.locator.ClientePDT;
+import interfaz.locator.EJBLocator;
 
-public class FrameLogin implements ActionListener{
-	
+import com.Remote.*;
+
+public class FrameLogin extends JFrame {
+
+	private JFrame jframe;
+	private JPanel jpanel;
+	public static JTextField txt_usu;
+	public static JPasswordField pass;
+
 	public static void main(String[] args) {
-
-		javax.swing.SwingUtilities.invokeLater(new Runnable() {
+		EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				createAndShowGUI();
+				try {
+					FrameLogin window = new FrameLogin();
+					window.jframe.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 		});
 	}
-		
-	private static void createAndShowGUI() {
-
-		
-		JFrame frame = new JFrame("Green Place");
-		
-		frame.setSize(600, 400);
-        frame.setLocationRelativeTo(null);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-		// Display the window.
-		frame.setVisible(true);
-	}
 	
-	/** Frame de la ventana */
-	private JFrame frame;
-
-	/** Atributos de labels */
-	private JLabel labelPass;
-	private JLabel labelUsuario;
-	
-	/** Atributos de TexField */
-	private JTextField textPass;
-	private JTextField textUsuario;
-	
-	/** Atributos de Botones */
-	private JButton buttonIngresar;
-	private JButton buttonCancelar;
-	
-	//Defino el objeto Menú del tipo Menu Principal 
-	//que es la clase que contiene el menú de todo el programa
-	final FramePrincipal menu= new FramePrincipal();
 
 	
-	public void FrameNuevoUsuario(JFrame framePadre) {
-
-		this.labelUsuario = new JLabel("Usuario:");
-		this.labelPass = new JLabel("Contraseña:");
-		
-		this.textPass = new JTextField(15);
-		this.textUsuario = new JTextField(15);JButton buttonIngresar = new JButton("Ingresar");
-		buttonIngresar.addActionListener(this);
-
-		JButton buttonCancelar = new JButton("Cancelar");
-		buttonCancelar.addActionListener(this);
-
-		this.buttonIngresar = buttonIngresar;
-		this.buttonCancelar = buttonCancelar;
-
-		this.initalizeFrame(framePadre);
-	}
-	
-	private void initalizeFrame(JFrame framePadre) {
-
-		JFrame frame = new JFrame("Ingreso al sistema");
-		frame.setSize(136, 133);
-		frame.setResizable(false);
-		frame.setLocationRelativeTo(framePadre);
-		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
-		GridBagLayout gbl_loginPanel = new GridBagLayout();
-		gbl_loginPanel.rowWeights = new double[]{};
-		gbl_loginPanel.columnWeights = new double[]{};
-		JPanel loginPanel = new JPanel(gbl_loginPanel);
-
-		GridBagConstraints constraints = new GridBagConstraints();
-		constraints.anchor = GridBagConstraints.WEST;
-		constraints.insets = new Insets(10, 10, 10, 10);
-
-		
-		constraints.gridx = 0;
-		constraints.gridy = 0;
-		loginPanel.add(this.labelUsuario, constraints);
-		
-		constraints.gridx = 1;
-		loginPanel.add(this.textUsuario, constraints);
-		
-		constraints.gridx = 0;
-		constraints.gridy = 1;
-		loginPanel.add(this.labelPass, constraints);
-
-		constraints.gridx = 1;
-		loginPanel.add(this.textPass, constraints);
-		constraints.gridx = 0;
-		constraints.gridy = 10;
-		constraints.gridwidth = 3;
-		constraints.anchor = GridBagConstraints.SOUTH;
-		loginPanel.add(buttonIngresar, constraints);
-
-		constraints.gridx = 1;
-		constraints.gridy = 10;
-		constraints.gridwidth = 4;
-		constraints.anchor = GridBagConstraints.SOUTH;
-		loginPanel.add(buttonCancelar, constraints);
-
-		loginPanel
-			.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Datos del Usuario"));
-
-	frame.getContentPane().add(loginPanel);
-
-	frame.pack();
-	frame.setVisible(true);
-
-	this.frame = frame;
-}
 
 	/**
-	 * Como implementos Action Listener, quiere decir que soy escuchado de
-	 * eventos. Este método es quien se ejecutan cuando tocan un boton .
+	 * Initialize the contents of the frame.
 	 */
-	@Override
-	public void actionPerformed(ActionEvent e) {
-
-		/* Debo primero conocer que botón fue clickeado */
-
-		if (e.getSource() == this.buttonCancelar) {
-			this.accionCancelar();
-		} else {
-			this.accionIngesar();
-		}
-
-	}
-	
-	private void accionIngesar() {
-
-		// Si es ingresar se validan datos!
-
-		String fieldUsuario = this.textUsuario.getText();
-		String fieldPass = this.textPass.getText();
-
-		// Si alguno es vacío, mostramos una ventana de mensaje
-		if (fieldUsuario.equals("") || fieldPass.equals("")) {
-			JOptionPane.showMessageDialog(frame, "Debe completar todos los datos solicitados.", "Datos incompletos!",
-					JOptionPane.WARNING_MESSAGE);
-
-			return;
-		}
-
-		// Valiamos ahora, que los datos ingresados sean correctos
-		List<Usuario> existe;
-		
-		try{
-			existe = ClientePDT.Login(fieldUsuario, fieldPass);
-		} catch (Exception e){
-			JOptionPane.showMessageDialog(frame, "Error de conexión con el servidor. Intente más tarde.",
-					"Error de conexión!", JOptionPane.WARNING_MESSAGE);
-
-			return;
-		}
-		
-		
-		if (existe==null) {
-			JOptionPane.showMessageDialog(frame, "Usuario y/o contraseña invalida",
-					"Usuario Existente!", JOptionPane.WARNING_MESSAGE);
-
-			return;
-		}
-		else {
-			this.menu.setVisible(true); // Despliego el menú principal
-			this.frame.dispose();
-		}
-	}
-	
-	
-	private void accionCancelar() {
-		// si se cancela, se eliminar la ventana
-		this.frame.dispose();
-
+	private void initialize() {
+		jframe = new JFrame();
+		jframe.setBounds(100, 100, 450, 300);
+		jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
+	
+	
+	
+	
+	public FrameLogin()
+
+	{
+		
+		initialize();
+		jframe.setTitle("Bienvenido 404 Not Found");
+		jframe.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+		jframe.setBounds(100, 100, 323, 181);
+		jframe.setLocationRelativeTo(null);
+		jpanel= new JPanel();  			//Defino el panel
+		jpanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+		jframe.setContentPane(jpanel);
+		jpanel.setLayout(null);
+	
+		//Defino la etiqueta Usuario
+		JLabel lblNewLabel = new JLabel("Usuario");
+		lblNewLabel.setBounds(54, 44, 46, 14);
+		jpanel.add(lblNewLabel);
+				
+		//Defino la etiqueta Contraseña
+		JLabel lblContrasea = new JLabel("Contraseña");
+		lblContrasea.setBounds(36, 76, 89, 14);
+		jpanel.add(lblContrasea);  
+	
+		//Defino el cuadro de texto Usuario 
+		txt_usu = new JTextField();
+		txt_usu.setBounds(110, 41, 86, 20);
+		jpanel.add(txt_usu);
+		txt_usu.setColumns(10);
+		txt_usu.requestFocus();        	
+	
+		//Defino el cuadro de texto de la contraseña
+		pass = new JPasswordField();
+		pass.setBounds(110, 73, 86, 20);
+		pass.transferFocus();
+		jpanel.add(pass);
+		
+	
+		//Defino el objeto Menú del tipo Menu Principal 
+		//que es la clase que contiene el menú de todo el programa
+		 //VentanaPrincipal menuprincipal= new VentanaPrincipal();
+		 //VerificarUsuario usu= new VerificarUsuario();
+		this.dispose();
+
+                    
+		//Defino el botón Aceptar
+				JButton btnAceptar = new JButton("Aceptar");
+				btnAceptar.addActionListener(new  ActionListener() { 
+					@Override//Establezco que debe hacer cuando hago clic
+					public void actionPerformed(ActionEvent e) {
+						
+						String usuario = txt_usu.getText();
+						String password = String.valueOf(pass.getPassword());
+					
+						//Usuario u1= new Usuario();
+						try {
+							UsuarioBeanRemote usuariobeanremote = EJBLocator.getInstance().lookup(UsuarioBeanRemote.class);		
+							List<Usuario>u = usuariobeanremote.Login(usuario,password);
+							if(u.isEmpty())
+							{
+								JOptionPane.showMessageDialog(null, "Usuario no encontrado");
+								return;
+							}
+							else {	
+							for (Usuario usu : u)
+							{
+								String user=usu.getUsuario();
+								String pass=usu.getPass();
+								usu.setUsuario(user);
+								usu.setPass(pass);
+							     JOptionPane.showMessageDialog(null, "Bienvenido\n"
+						                    + "Has ingresado satisfactoriamente al sistema",   "Mensaje de bienvenida",
+						                    JOptionPane.INFORMATION_MESSAGE);
+										
+						                    
+						                    FramePrincipal bienvenido = new FramePrincipal();
+						                    bienvenido.setVisible(true);
+								
+							}	
+							}
+						}
+							
+							
+			               
+			                    //menuprincipal.setVisible(true);
+			                    
+								//dispose();
+						
+							
+						catch (Exception e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}					
+					
+					}
+					
+				});
+				btnAceptar.setBounds(120, 111, 98, 20);
+				jpanel.add(btnAceptar);
+	}
+	
 }
+
+	
+	
+
+
+
+
+
+
+
+	
+
+
+
+
+	
+
+
