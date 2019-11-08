@@ -225,6 +225,7 @@ public class FrameModificarFenomeno implements ActionListener{
 		String fieldDescripcion = this.textDescripcion.getText();
 		String fieldNombre= this.textNombre.getText();
 		String fieldcodigo = this.textCodigo.getText();
+		long fieldID = 1l;
 		
 		
 		
@@ -247,7 +248,7 @@ public class FrameModificarFenomeno implements ActionListener{
 			
 			//almacenado = fenomenobeanremote.modificarFenomeno(fieldcodigofen, fieldcodigo, fieldNombre, fieldDescripcion);			
 			
-			almacenado = ClientePDT.ModificarFenomeno(fieldcodigo, fieldNombre, fieldDescripcion);
+			almacenado = ClientePDT.ModificarFenomeno(fieldID, fieldcodigo, fieldNombre, fieldDescripcion);
 			
 		} catch (Exception e){
 			JOptionPane.showMessageDialog(frame, "Error de conexión con el servidor. Intente más tarde.",
