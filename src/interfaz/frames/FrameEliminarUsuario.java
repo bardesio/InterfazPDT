@@ -123,8 +123,7 @@ public class FrameEliminarUsuario implements ActionListener{
 
 		// Si es Eliminar se validan datos!
 
-		String fieldUsuario = this.textUsuario.getText().toUpperCase();
-		
+		String fieldUsuario = this.textUsuario.getText();
 		
 
 		// Si alguno es vacío, mostramos una ventana de mensaje
@@ -139,14 +138,14 @@ public class FrameEliminarUsuario implements ActionListener{
 				
 				try{
 					
-					Usuario us = ClientePDT.existeUsuario(fieldUsuario);
+					List<Usuario> us = ClientePDT.existeUsuario(fieldUsuario);
 					
 					if (us == null)
 					{
 						JOptionPane.showMessageDialog(null, "Usuario no encontrado");
 						return;
 					}else {
-						almaceno= ClientePDT.EliminarUsuario(us.getId());
+						almaceno= ClientePDT.EliminarUsuario(us.get(0).getId());
 					}
 						
 				}catch(Exception e){

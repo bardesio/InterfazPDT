@@ -45,6 +45,8 @@ public class FrameNuevoUsuario implements ActionListener{
 
 	
 	private JComboBox<String> comboTipoUsu;
+	private JComboBox<String> comboTipo;
+
 
 	/** Atributos de TexField */
 	private JTextField textPass;
@@ -52,7 +54,7 @@ public class FrameNuevoUsuario implements ActionListener{
 	private JTextField textNombre;
 	private JTextField textApellido;
 	private JTextField textEstado;
-	private JTextField textTipoDoc;
+	//private JTextField textTipoDoc;
 	private JTextField textNumeroDoc;
 	private JTextField textDireccion;
 	private JTextField textMail;
@@ -86,7 +88,6 @@ public class FrameNuevoUsuario implements ActionListener{
 		this.textMail = new JTextField(15);
 		this.textNumeroDoc = new JTextField(15);
 		this.textPass = new JTextField(15);
-		this.textTipoDoc = new JTextField(15);
 		this.textUsuario = new JTextField(15);
 		
 		JButton buttonIngresar = new JButton("Ingresar");
@@ -181,7 +182,11 @@ public class FrameNuevoUsuario implements ActionListener{
 		nuevoUsuarioPanel.add(this.labelTipoDoc, constraints);
 
 		constraints.gridx = 1;
-		nuevoUsuarioPanel.add(this.textTipoDoc, constraints);
+		this.comboTipo = this.completarComboTipo();
+		nuevoUsuarioPanel.add(this.comboTipo, constraints);
+		
+		//constraints.gridx = 1;
+		//nuevoUsuarioPanel.add(this.textTipoDoc, constraints);
 		
 		constraints.gridx = 0;
 		constraints.gridy = 9;
@@ -223,6 +228,11 @@ public class FrameNuevoUsuario implements ActionListener{
 	}
 
 	
+
+	private JComboBox<String> completarComboTipo() {
+		String[] valores = {"CI", "PASAPORTE", "CARTA DE CIUDADANIA", "OTROS"};
+		return new JComboBox<>(valores);
+	}
 
 	private JComboBox<String> completarComboUsuario(JFrame frame) {
 		
@@ -274,7 +284,8 @@ public class FrameNuevoUsuario implements ActionListener{
 		String fieldMail = this.textMail.getText();
 		String fieldNumeroDoc = this.textNumeroDoc.getText();
 		String fieldPass = this.textPass.getText();
-		String fieldTipoDoc = this.textTipoDoc.getText();
+		String Tipodoc = (String) this.comboTipo.getSelectedItem();
+		//String fieldTipoDoc = this.textTipoDoc.getText();
 		String tipoUsu = (String) this.comboTipoUsu.getSelectedItem();
 		Long fieldID = 1l;
 		
@@ -282,7 +293,7 @@ public class FrameNuevoUsuario implements ActionListener{
 		// Si alguno es vacío, mostramos una ventana de mensaje
 		if (fieldNombre.equals("") || fieldApellido.equals("") || fieldUsuario.equals("")|| 
 				fieldDireccion.equals("")|| fieldEstado.equals("")|| fieldMail.equals("")|| 
-				fieldNumeroDoc.equals("")|| fieldPass.equals("")|| fieldTipoDoc.equals("")) {
+				fieldNumeroDoc.equals("")|| fieldPass.equals("")) {
 			JOptionPane.showMessageDialog(frame, "Debe completar todos los datos solicitados.", "Datos incompletos!",
 					JOptionPane.WARNING_MESSAGE);
 
@@ -296,7 +307,7 @@ public class FrameNuevoUsuario implements ActionListener{
 		
 				
 		try{
-			almacenado = ClientePDT.CrearUsuario(fieldID, fieldPass, fieldUsuario, fieldNombre, fieldApellido, fieldEstado, fieldTipoDoc, fieldNumeroDoc, fieldDireccion, fieldMail, tipoUsu);
+			almacenado = ClientePDT.CrearUsuario(fieldID, fieldPass, fieldUsuario, fieldNombre, fieldApellido, fieldEstado, Tipodoc, fieldNumeroDoc, fieldDireccion, fieldMail, tipoUsu);
 		} catch (Exception e){
 			JOptionPane.showMessageDialog(frame, "Error de conexión con el servidor. Intente más tarde.",
 					"Error de conexión!", JOptionPane.WARNING_MESSAGE);
