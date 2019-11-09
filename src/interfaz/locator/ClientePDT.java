@@ -5,6 +5,7 @@ import java.util.List;
 import com.Remote.*;
 import com.entidades.Fenomeno;
 import com.entidades.Observacion;
+import com.entidades.Telefono;
 import com.entidades.TipoUsuario;
 import com.entidades.Usuario;
 
@@ -92,6 +93,14 @@ public class ClientePDT {
 		FenomenoBeanRemote fenomenobeanremote = EJBLocator.getInstance().lookup(FenomenoBeanRemote.class);
 		return fenomenobeanremote.EliminarFenomeno(codigo);
 		
+	}
+	
+	public static List<Telefono> obtenerTelefono() throws Exception {
+
+		FenomenoBeanRemote fenomenotelefono = EJBLocator.getInstance().lookup(FenomenoBeanRemote.class);
+		List<Telefono> TL = fenomenotelefono.ObtenerTelefono();
+		
+		return TL;
 	}
 	
 	
