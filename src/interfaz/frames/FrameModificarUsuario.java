@@ -107,7 +107,7 @@ public class FrameModificarUsuario implements ActionListener{
 	
 	private void initalizeFrame(JFrame framePadre) {
 
-		JFrame frame = new JFrame("Nuevo Usuario");
+		JFrame frame = new JFrame("Modificar Usuario");
 		frame.setSize(136, 133);
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(framePadre);
@@ -116,7 +116,7 @@ public class FrameModificarUsuario implements ActionListener{
 		GridBagLayout gbl_modificarUsuarioPanel = new GridBagLayout();
 		gbl_modificarUsuarioPanel.rowWeights = new double[]{};
 		gbl_modificarUsuarioPanel.columnWeights = new double[]{};
-		JPanel nuevoUsuarioPanel = new JPanel(gbl_modificarUsuarioPanel);
+		JPanel modificarUsuarioPanel = new JPanel(gbl_modificarUsuarioPanel);
 
 		GridBagConstraints constraints = new GridBagConstraints();
 		constraints.anchor = GridBagConstraints.WEST;
@@ -125,110 +125,109 @@ public class FrameModificarUsuario implements ActionListener{
 		
 		constraints.gridx = 0;
 		constraints.gridy = 0;
-		nuevoUsuarioPanel.add(this.labelUsuario, constraints);
+		modificarUsuarioPanel.add(this.labelUsuario, constraints);
 		
 		constraints.gridx = 1;
-		nuevoUsuarioPanel.add(this.textUsuario, constraints);
-			
-		constraints.gridx = 2;
-		constraints.gridy = 0;
-		constraints.gridwidth = 3;
-		constraints.anchor = GridBagConstraints.SOUTH;
-		nuevoUsuarioPanel.add(buttonBuscar, constraints);
-		this.buttonBuscar.setEnabled(false);
+		modificarUsuarioPanel.add(this.textUsuario, constraints);
 
 		
 		constraints.gridx = 0;
 		constraints.gridy = 1;
-		nuevoUsuarioPanel.add(this.labelPass, constraints);
+		modificarUsuarioPanel.add(this.labelPass, constraints);
 
 		constraints.gridx = 1;
-		nuevoUsuarioPanel.add(this.textPass, constraints);
+		modificarUsuarioPanel.add(this.textPass, constraints);
 		this.textPass.setEnabled(false);
 		
 		constraints.gridx = 0;
 		constraints.gridy = 2;
-		nuevoUsuarioPanel.add(this.labelNombre, constraints);
+		modificarUsuarioPanel.add(this.labelNombre, constraints);
 		
 		constraints.gridx = 1;
-		nuevoUsuarioPanel.add(this.textNombre, constraints);
+		modificarUsuarioPanel.add(this.textNombre, constraints);
 		this.textNombre.setEnabled(false);
 		
 		
 		constraints.gridx = 0;
 		constraints.gridy = 3;
-		nuevoUsuarioPanel.add(this.labelApellido, constraints);
+		modificarUsuarioPanel.add(this.labelApellido, constraints);
 
 		constraints.gridx = 1;
-		nuevoUsuarioPanel.add(this.textApellido, constraints);
+		modificarUsuarioPanel.add(this.textApellido, constraints);
 		this.textApellido.setEnabled(false);
 
 		
 		constraints.gridx = 0;
 		constraints.gridy = 4;
-		nuevoUsuarioPanel.add(this.labelDireccion, constraints);
+		modificarUsuarioPanel.add(this.labelDireccion, constraints);
 
 		constraints.gridx = 1;
-		nuevoUsuarioPanel.add(this.textDireccion, constraints);
+		modificarUsuarioPanel.add(this.textDireccion, constraints);
 		this.textDireccion.setEnabled(false);
 
 		constraints.gridx = 0;
 		constraints.gridy = 5;
-		nuevoUsuarioPanel.add(this.labelEstado, constraints);
+		modificarUsuarioPanel.add(this.labelEstado, constraints);
 		
 		constraints.gridx = 1;
-		nuevoUsuarioPanel.add(this.textEstado, constraints);
+		modificarUsuarioPanel.add(this.textEstado, constraints);
 		this.textEstado.setEnabled(false);
 
 		constraints.gridx = 0;
 		constraints.gridy = 6;
-		nuevoUsuarioPanel.add(this.labelMail, constraints);
+		modificarUsuarioPanel.add(this.labelMail, constraints);
 
 		constraints.gridx = 1;
-		nuevoUsuarioPanel.add(this.textMail, constraints);
+		modificarUsuarioPanel.add(this.textMail, constraints);
 		this.textMail.setEnabled(false);
 		
 		constraints.gridx = 0;
 		constraints.gridy = 7;
-		nuevoUsuarioPanel.add(this.labelNumeroDoc, constraints);
+		modificarUsuarioPanel.add(this.labelNumeroDoc, constraints);
 
 		constraints.gridx = 1;
-		nuevoUsuarioPanel.add(this.textNumeroDoc, constraints);
+		modificarUsuarioPanel.add(this.textNumeroDoc, constraints);
 		this.textNumeroDoc.setEnabled(false);
 
 		constraints.gridx = 0;
 		constraints.gridy = 8;
-		nuevoUsuarioPanel.add(this.labelTipoDoc, constraints);
+		modificarUsuarioPanel.add(this.labelTipoDoc, constraints);
 
 		constraints.gridx = 1;
-		nuevoUsuarioPanel.add(this.textTipoDoc, constraints);
+		modificarUsuarioPanel.add(this.textTipoDoc, constraints);
 		this.textTipoDoc.setEnabled(false);
 		
 		constraints.gridx = 0;
 		constraints.gridy = 9;
-		nuevoUsuarioPanel.add(this.labelTipoUsu, constraints);
+		modificarUsuarioPanel.add(this.labelTipoUsu, constraints);
 
 		constraints.gridx = 1;
 		this.comboTipoUsu = this.completarComboUsuario(frame);
 		this.comboTipoUsu.setEnabled(false);
 
-			constraints.gridx = 0;
+			constraints.gridx = 2;
 			constraints.gridy = 10;
 			constraints.gridwidth = 3;
 			constraints.anchor = GridBagConstraints.SOUTH;
-			nuevoUsuarioPanel.add(buttonModificar, constraints);
+			modificarUsuarioPanel.add(buttonModificar, constraints);
 			this.buttonModificar.setEnabled(false);
 
 			constraints.gridx = 1;
 			constraints.gridy = 10;
 			constraints.gridwidth = 4;
 			constraints.anchor = GridBagConstraints.SOUTH;
-			nuevoUsuarioPanel.add(buttonCancelar, constraints);
+			modificarUsuarioPanel.add(buttonCancelar, constraints);
+			
+			constraints.gridx = 0;
+			constraints.gridy = 10;
+			constraints.gridwidth = 3;
+			constraints.anchor = GridBagConstraints.SOUTH;
+			modificarUsuarioPanel.add(buttonBuscar, constraints);
 
-		nuevoUsuarioPanel
+		modificarUsuarioPanel
 				.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Datos del Usuario"));
 
-		frame.getContentPane().add(nuevoUsuarioPanel);
+		frame.getContentPane().add(modificarUsuarioPanel);
 
 		frame.pack();
 		frame.setVisible(true);
@@ -311,7 +310,6 @@ public class FrameModificarUsuario implements ActionListener{
 					
 					//Habilito los campos
 					
-					this.textUsuario.setEnabled(false);
 					this.buttonModificar.setEnabled(true);
 					this.textApellido.setEnabled(true);
 					this.textDireccion.setEnabled(true);
@@ -323,16 +321,16 @@ public class FrameModificarUsuario implements ActionListener{
 					this.textTipoDoc.setEnabled(true);
 					
 					//Cargo los campos
-					/*
-					this.textApellido.setText(existe.getApellido());
-					this.textDireccion.setText(existe.getDireccion()); 
-					this.textEstado.setText(existe.getEstado());;
-					this.textMail.setText(existe.getMail());;
-					this.textNombre.setText(existe.getNombre());;
-					this.textNumeroDoc.setText(existe.getNumerodoc());;
-					this.textPass.setText(existe.getPass());;
-					this.textTipoDoc.setText(existe.getTipodoc());
-					*/
+					
+					this.textApellido.setText(existe.get(0).getApellido());
+					this.textDireccion.setText(existe.get(0).getDireccion()); 
+					this.textEstado.setText(existe.get(0).getEstado());
+					this.textMail.setText(existe.get(0).getMail());
+					this.textNombre.setText(existe.get(0).getNombre());
+					this.textNumeroDoc.setText(existe.get(0).getNumerodoc());
+					this.textPass.setText(existe.get(0).getPass());
+					this.textTipoDoc.setText(existe.get(0).getTipodoc());
+					
 				}
 		
 	}

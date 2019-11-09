@@ -88,7 +88,6 @@ public class FrameNuevoUsuario implements ActionListener{
 		this.textMail = new JTextField(15);
 		this.textNumeroDoc = new JTextField(15);
 		this.textPass = new JTextField(15);
-		//this.textTipoDoc = new JTextField(15);
 		this.textUsuario = new JTextField(15);
 		
 		JButton buttonIngresar = new JButton("Ingresar");
