@@ -28,6 +28,7 @@ public class FrameModificarUsuario implements ActionListener{
 	private JFrame frame;
 	
 	//Probando
+	Long fieldID = null;
 	
 	/** Atributos de labels */
 	private JLabel labelPass;
@@ -88,7 +89,6 @@ public class FrameModificarUsuario implements ActionListener{
 		this.textMail = new JTextField(15);
 		this.textNumeroDoc = new JTextField(15);
 		this.textPass = new JTextField(15);
-		//this.textTipoDoc = new JTextField(15);
 		this.textUsuario = new JTextField(15);
 		
 		JButton buttonModificar = new JButton("Modificar");
@@ -299,7 +299,7 @@ public class FrameModificarUsuario implements ActionListener{
 				List<Usuario> existe;
 				
 				try{
-					existe = ClientePDT.existeUsuario(fieldUsuario);
+					existe = ClientePDT.existeUsuario(fieldUsuario.toUpperCase());
 				} catch (Exception e){
 					JOptionPane.showMessageDialog(frame, "Error de conexión con el servidor. Intente más tarde.",
 							"Error de conexión!", JOptionPane.WARNING_MESSAGE);
@@ -344,7 +344,7 @@ public class FrameModificarUsuario implements ActionListener{
 					this.textPass.setText(existe.get(0).getPass());
 					this.comboTipo.setSelectedItem(existe.get(0).getTipodoc());
 					this.comboTipoUsu.setSelectedItem(existe.get(0).getTipousuario());
-					
+					this.fieldID = existe.get(0).getId();
 				}
 		
 	}
@@ -353,16 +353,18 @@ public class FrameModificarUsuario implements ActionListener{
 
 		// Si es ingresar se validan datos!
 
-		String fieldNombre = this.textNombre.getText();
-		String fieldApellido = this.textApellido.getText();
-		String fieldDireccion = this.textDireccion.getText();
-		String fieldEstado = this.textEstado.getText();
-		String fieldMail = this.textMail.getText();
-		String fieldNumeroDoc = this.textNumeroDoc.getText();
-		String fieldPass = this.textPass.getText();
+		String fieldNombre = this.textNombre.getText().toUpperCase();
+		String fieldApellido = this.textApellido.getText().toUpperCase();
+		String fieldDireccion = this.textDireccion.getText().toUpperCase();
+		String fieldEstado = this.textEstado.getText().toUpperCase();
+		String fieldMail = this.textMail.getText().toUpperCase();
+		String fieldNumeroDoc = this.textNumeroDoc.getText().toUpperCase();
+		String fieldPass = this.textPass.getText().toUpperCase();
+		String fieldUsuario = this.textUsuario.getText();
 		String Tipodoc = (String) this.comboTipo.getSelectedItem();
 		String tipoUsu = (String) this.comboTipoUsu.getSelectedItem();
-		Long fieldID = 1l;
+		
+		
 				
 
 		// Si alguno es vacío, mostramos una ventana de mensaje
@@ -379,8 +381,10 @@ public class FrameModificarUsuario implements ActionListener{
 		boolean almacenado;
 						
 		try{
-			almacenado = ClientePDT.ModificarUsuario(fieldID, fieldNombre, fieldApellido, Tipodoc, 
-					fieldNumeroDoc, fieldDireccion, fieldMail, fieldPass, fieldEstado, tipoUsu);
+			almacenado = ClientePDT.ModificarUsuario(fieldID, fieldPass, fieldUsuario, fieldNombre, fieldApellido, 
+					fieldEstado, Tipodoc, fieldNumeroDoc, fieldDireccion, fieldMail, tipoUsu);
+			
+			
 		} catch (Exception e){
 			JOptionPane.showMessageDialog(frame, "Error de conexión con el servidor. Intente más tarde.",
 					"Error de conexión!", JOptionPane.WARNING_MESSAGE);

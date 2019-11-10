@@ -123,7 +123,7 @@ public class FrameEliminarUsuario implements ActionListener{
 
 		// Si es Eliminar se validan datos!
 
-		String fieldUsuario = this.textUsuario.getText();
+		String fieldUsuario = this.textUsuario.getText().toUpperCase();
 		
 
 		// Si alguno es vacío, mostramos una ventana de mensaje

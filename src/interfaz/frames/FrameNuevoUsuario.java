@@ -218,7 +218,7 @@ public class FrameNuevoUsuario implements ActionListener{
 		this.frame = frame;
 
 	}else{
-		JOptionPane.showMessageDialog(frame, "Estoy reventando al querer cargar el combo",
+		JOptionPane.showMessageDialog(frame, "Error en el servidor, por favor contacte a soporte tecnico",
 				"Error de conexión!", JOptionPane.WARNING_MESSAGE);
 		frame.dispose();}
 	}
@@ -269,16 +269,15 @@ public class FrameNuevoUsuario implements ActionListener{
 
 		// Si es ingresar se validan datos!
 
-		String fieldNombre = this.textNombre.getText();
-		String fieldApellido = this.textApellido.getText();
-		String fieldUsuario = this.textUsuario.getText();
-		String fieldDireccion = this.textDireccion.getText();
-		String fieldEstado = this.textEstado.getText();
-		String fieldMail = this.textMail.getText();
-		String fieldNumeroDoc = this.textNumeroDoc.getText();
-		String fieldPass = this.textPass.getText();
+		String fieldNombre = this.textNombre.getText().toUpperCase();
+		String fieldApellido = this.textApellido.getText().toUpperCase();
+		String fieldUsuario = this.textUsuario.getText().toUpperCase();
+		String fieldDireccion = this.textDireccion.getText().toUpperCase();
+		String fieldEstado = this.textEstado.getText().toUpperCase();
+		String fieldMail = this.textMail.getText().toUpperCase();
+		String fieldNumeroDoc = this.textNumeroDoc.getText().toUpperCase();
+		String fieldPass = this.textPass.getText().toUpperCase();
 		String Tipodoc = (String) this.comboTipo.getSelectedItem();
-		//String fieldTipoDoc = this.textTipoDoc.getText();
 		String tipoUsu = (String) this.comboTipoUsu.getSelectedItem();
 		Long fieldID = 1l;
 		
@@ -300,30 +299,53 @@ public class FrameNuevoUsuario implements ActionListener{
 		
 				
 		try{
-			almacenado = ClientePDT.CrearUsuario(fieldID, fieldPass, fieldUsuario, fieldNombre, fieldApellido, fieldEstado, Tipodoc, fieldNumeroDoc, fieldDireccion, fieldMail, tipoUsu);
-		} catch (Exception e){
-			JOptionPane.showMessageDialog(frame, "Error de conexión con el servidor. Intente más tarde.",
+			
+			List<Usuario> us = ClientePDT.existeUsuario(fieldUsuario);
+			
+			//Si la lista es de tamaño
+			if (us.size() == 0)
+			{
+				//Intento crear el usuario
+				try{
+					almacenado = ClientePDT.CrearUsuario(fieldID, fieldPass, fieldUsuario, fieldNombre, fieldApellido, fieldEstado, Tipodoc, fieldNumeroDoc, fieldDireccion, fieldMail, tipoUsu);
+				} catch (Exception e){
+					JOptionPane.showMessageDialog(frame, "Error de conexión con el servidor. Intente más tarde.",
+							"Error de conexión!", JOptionPane.WARNING_MESSAGE);
+
+					return;
+				}
+				
+				//Si se devolvio verdadero el almacenado
+				if (almacenado) {
+					JOptionPane.showMessageDialog(frame, "El Usuario ha sido registrado con éxito.",
+							"Usuario Registrado!", JOptionPane.INFORMATION_MESSAGE);
+					
+					// cerramos la ventanta
+					this.frame.dispose();
+	
+				}
+				else{
+					JOptionPane.showMessageDialog(frame, "Hubo un error al almacenar. Intente nuevamente más tarde",
+							"Error al registrar!", JOptionPane.ERROR_MESSAGE);
+				}
+
+				//El tamaño de la lista es ditinto de 0
+			}else {
+				JOptionPane.showMessageDialog(null, "El usuario ya existe en el sistema");
+				return;
+				}
+			
+			
+				
+		}catch(Exception e){
+			JOptionPane.showMessageDialog(frame, "Error con el servidor, por favor contacte con su administrador",
 					"Error de conexión!", JOptionPane.WARNING_MESSAGE);
 
 			return;
 		}
-
-		if (almacenado) {
-			JOptionPane.showMessageDialog(frame, "El Usuario ha sido registrado con éxito.",
-					"Usuario Registrado!", JOptionPane.INFORMATION_MESSAGE);
-			
-			// cerramos la ventanta
-			this.frame.dispose();
-
-			
-		}
-		else{
-			JOptionPane.showMessageDialog(frame, "Hubo un error al almacenar. Intente nuevamente más tarde",
-					"Error al registrar!", JOptionPane.ERROR_MESSAGE);
+		
 		}
 
-	}
-	
 	
 	private void accionCancelar() {
 		// si se cancela, se eliminar la ventana

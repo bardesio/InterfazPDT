@@ -41,11 +41,11 @@ public class ClientePDT {
 	}
 	
 	
-	public static boolean ModificarUsuario(Long id, String nombre, String apellido, String tipoDoc, String numDoc, 
-			String direccion, String correo, String pass, String estado, String tipousuario) throws Exception{
+	public static boolean ModificarUsuario(Long id, String pass, String usuario, String nombre, String apellido, String estado, String tipodoc,
+			String numerodoc, String direccion, String mail, String tipousuario)  throws Exception{
 		
 		UsuarioBeanRemote usuarioBeanRemote = EJBLocator.getInstance().lookup(UsuarioBeanRemote.class);
-		return usuarioBeanRemote.ModificarUsuario(id, nombre, apellido, tipoDoc, numDoc, direccion, correo, pass, estado, tipousuario);
+		return usuarioBeanRemote.ModificarUsuario(id, pass, usuario, nombre, apellido, estado, tipodoc, numerodoc, direccion, mail, tipousuario);
 	}
 	
 	public static boolean EliminarUsuario(long usuario) throws Exception {
