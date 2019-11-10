@@ -1,10 +1,13 @@
 package interfaz.frames;
 
+import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -13,60 +16,65 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 import com.entidades.Observacion;
+
 import interfaz.locator.ClientePDT;
+import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
+import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
+import net.sourceforge.jdatepicker.impl.UtilDateModel;
 
 public class FrameListadoporZona implements ActionListener {
-
-
-	/** Frame de la ventana */
-	private JFrame frame;
-
-	/** Atributos de labels */
-	private JLabel labelZona;
-
-	/** Atributos de TexField */
-	private JTextField textZona;
 	
-	/** Atributos de Botones */
-	private JButton buttonListar;
-	private JButton buttonCancelar;
+	/** Frame */
+	private Frame frame;
 
 	/** Tabla */
-	private JTable tablaObservacion;
+	private JTable tablaObservaciones;
+
+	/** Date Picker */
+	private JDatePickerImpl datePicker;
+
+	/** Labels */
+	private JLabel labelFecha;
+
+	/** Buttons */
+	private JButton botonFiltrar;
+	private JButton botonLimpiar;
 
 	public FrameListadoporZona(JFrame framePadre) {
 
-		this.labelZona = new JLabel("Zona: ");
-		
-		this.textZona = new JTextField(15);
-		
-		JButton buttonListar = new JButton("Listar");
-		buttonListar.addActionListener(this);
+		this.labelFecha = new JLabel("Fecha:");
 
-		JButton buttonCancelar = new JButton("Cancelar");
-		buttonCancelar.addActionListener(this);
+		JButton botonFiltrar = new JButton("Filtrar");
+		botonFiltrar.addActionListener(this);
 
-		this.buttonListar = buttonListar;
-		this.buttonCancelar = buttonCancelar;
+		JButton botonLimpiar = new JButton("Limpiar Filtro");
+		botonLimpiar.addActionListener(this);
+
+		this.botonFiltrar = botonFiltrar;
+		this.botonLimpiar = botonLimpiar;
 
 		this.initalizeFrame(framePadre);
 	}
-	
+
 	private void initalizeFrame(JFrame framePadre) {
 
-		JFrame frame = new JFrame("Listado de Observaciones por zona");
-		frame.setSize(500, 500);
+		JFrame frame = new JFrame("Listado de Observaciones por zona y fecha");
+		frame.setSize(600, 600);
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-		JPanel listarObservacionPanel = new JPanel(new GridBagLayout());
-		listarObservacionPanel.setSize(600, 600);
+		JPanel listarObservacionesPanel = new JPanel(new GridBagLayout());
+		listarObservacionesPanel.setSize(600, 600);
 
 		GridBagConstraints constraints = new GridBagConstraints();
 		constraints.anchor = GridBagConstraints.WEST;
@@ -74,72 +82,80 @@ public class FrameListadoporZona implements ActionListener {
 
 		constraints.gridx = 0;
 		constraints.gridy = 0;
-		listarObservacionPanel.add(this.labelZona, constraints);
+		listarObservacionesPanel.add(this.labelFecha, constraints);
 
 		constraints.gridx = 1;
-		listarObservacionPanel.add(this.textZona, constraints);
-		
-		constraints.gridx = 0;
-		constraints.gridy = 2;
-		constraints.gridwidth = 3;
-		constraints.anchor = GridBagConstraints.CENTER;
-		listarObservacionPanel.add(buttonListar, constraints);
+		this.datePicker = this.crearDatePicker();
+		listarObservacionesPanel.add(this.datePicker, constraints);
+
+		constraints.gridx = 2;
+		constraints.gridy = 0;
+		listarObservacionesPanel.add(this.botonFiltrar, constraints);
+
+		constraints.gridx = 3;
+		constraints.gridy = 0;
+		listarObservacionesPanel.add(this.botonLimpiar, constraints);
 
 		constraints.gridx = 0;
 		constraints.gridy = 3;
-		constraints.gridwidth = 3;
+		constraints.gridwidth = 6;
 		constraints.anchor = GridBagConstraints.CENTER;
-		listarObservacionPanel.add(buttonCancelar, constraints);
-
-		constraints.gridx = 0;
-		constraints.gridy = 5;
-		constraints.gridwidth = 5;
-		constraints.anchor = GridBagConstraints.CENTER;
-		this.tablaObservacion = this.cargarTablaObservacion();
+		this.tablaObservaciones = this.cargartablaObservaciones();
 		
-			listarObservacionPanel
+		if (this.tablaObservaciones!=null){
+			listarObservacionesPanel.add(new JScrollPane(this.tablaObservaciones), constraints);
+	
+			listarObservacionesPanel
 					.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Lista de Observaciones"));
 	
-			frame.add(listarObservacionPanel);
-				
+			frame.add(listarObservacionesPanel);
+	
+			this.botonFiltrar.addActionListener(this);
+			this.botonLimpiar.addActionListener(this);
+	
+			// frame.pack();
 			frame.setVisible(true);
 	
 			this.frame = frame;
 		}
-		
+		else{
+			JOptionPane.showMessageDialog(frame, "Error de conexión con el servidor. Intente más tarde.",
+					"Error de conexión!", JOptionPane.WARNING_MESSAGE);
+			frame.dispose();
+		}
 
-	
+	}
 
-	private JTable cargarTablaObservacion() {
+	private JTable cargartablaObservaciones() {
 
-		List<Observacion> observaciones; 
-		
-		String FieldZona = this.textZona.getText();
+		List<Observacion> observaciones;
 		
 		try{
-			observaciones = ClientePDT.ListarObservacionporZona(FieldZona);
+			observaciones = ClientePDT.obtenerTodasConsultas();
 		}
 		catch (Exception e){
 			return null;
 		}
 
-		String[] nombreColumnas = { "ID", "Usuario", "Fenomeno", "Localidad", "Descripcion", 
-				"Imagen", "Latitud", "Longitud", "Altitud", "Estado", "Date"};
-		
+		String[] nombreColumnas = { "Id", "Usuario", "Codigo Fenomeno", "Localidad", "Descripcion", "Imagen"
+				, "Latitud", "Longitud","Altitud","Estado", "Fecha"};
 
 		/*
-		 * El tamaño de la tabla es, 6 columnas (cantidad de datos a mostrar) y
-		 * la cantidad de filas depende de la cantida de mascotas
+		 * El tamaño de la tabla es, 11 columnas (cantidad de datos a mostrar) y
+		 * la cantidad de filas depende de la cantida de consultas
 		 */
-		Object[][] datos = new Object[observaciones.size()][12];
+		Object[][] datos = new Object[observaciones.size()][11];
 
 		/* Cargamos la matriz con todos los datos */
 		int fila = 0;
 
+		SimpleDateFormat formateadorFecha = new SimpleDateFormat("dd/MM/yyyy");
+
 		for (Observacion o : observaciones) {
+
 			datos[fila][0] = o.getId();
 			datos[fila][1] = o.getUsuario().getNombre();
-			datos[fila][2] = o.getFenomeno().getNombreFen();
+			datos[fila][2] = o.getFenomeno().getCodigo();
 			datos[fila][3] = o.getLocalidad().getNombreLoc();
 			datos[fila][4] = o.getDescripcion();
 			datos[fila][5] = o.getImagen();
@@ -147,8 +163,7 @@ public class FrameListadoporZona implements ActionListener {
 			datos[fila][7] = o.getLongitud();
 			datos[fila][8] = o.getAltitud();
 			datos[fila][9] = o.getEstado().getNombre();
-			datos[fila][10] = o.getFecha();
-			
+			datos[fila][10] = formateadorFecha.format(o.getFecha());
 			fila++;
 
 		}
@@ -175,52 +190,55 @@ public class FrameListadoporZona implements ActionListener {
 		table.setCellSelectionEnabled(false);
 		table.setSize(600, 600);
 
-		this.tablaObservacion = table;
+		this.tablaObservaciones = table;
 
 		return table;
 
 	}
 
-	/**
-	 * Como implementos Action Listener, quiere decir que soy escuchado de
-	 * eventos. Este método es quien se ejecutan cuando tocan un boton .
-	 */
+	private JDatePickerImpl crearDatePicker() {
+
+		UtilDateModel model = new UtilDateModel();
+		JDatePanelImpl datePanel = new JDatePanelImpl(model);
+		JDatePickerImpl datePicker = new JDatePickerImpl(datePanel);
+		return datePicker;
+	}
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
-		/* Debo primero conocer que botón fue clickeado */
-
-		if (e.getSource() == this.buttonCancelar) {
-			this.accionCancelar();
-		} else if (e.getSource() == this.buttonListar) {
-			this.accionListar();;
+		if (e.getSource() == this.botonFiltrar) {
+			this.accionFiltrar();
+		} else {
+			this.accionLimpiarFiltro();
 		}
 
 	}
-	
-	private void accionCancelar() {
-		// si se cancela, se eliminar la ventana
-		this.frame.dispose();
+
+	private void accionLimpiarFiltro() {
+
+		this.tablaObservaciones.setRowSorter(null);
+		this.datePicker.getModel().setValue(null);
 	}
 
-	private void accionListar() {
+	private void accionFiltrar() {
 
-		String fieldZona = this.textZona.getText();
-		
-		// Si alguno es vacío, mostramos una ventana de mensaje
-		if (fieldZona.equals("")) {
-			JOptionPane.showMessageDialog(frame, "Debe ingresar la zona a filtrar", "Datos incompletos!",
-					JOptionPane.WARNING_MESSAGE);
+		TableRowSorter<TableModel> filtro = new TableRowSorter<>(this.tablaObservaciones.getModel());
+
+		Date fecha = (Date) this.datePicker.getModel().getValue();
+
+		SimpleDateFormat formateadorFecha = new SimpleDateFormat("dd/MM/yyyy");
+
+		if (fecha != null) {
+
+			String fechaString = formateadorFecha.format(fecha);
+
+			filtro.setRowFilter(RowFilter.regexFilter(fechaString, 0));
+
+			this.tablaObservaciones.setRowSorter(filtro);
+
 		}
-		
-		else {
-			
-			cargarTablaObservacion();
-			
-		}
-		
 	}
 
-		
-	
 }
+

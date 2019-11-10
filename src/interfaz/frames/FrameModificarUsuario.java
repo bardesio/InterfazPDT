@@ -43,6 +43,8 @@ public class FrameModificarUsuario implements ActionListener{
 
 	
 	private JComboBox<String> comboTipoUsu;
+	private JComboBox<String> comboTipo;
+
 
 	/** Atributos de TexField */
 	private JTextField textPass;
@@ -50,7 +52,7 @@ public class FrameModificarUsuario implements ActionListener{
 	private JTextField textNombre;
 	private JTextField textApellido;
 	private JTextField textEstado;
-	private JTextField textTipoDoc;
+	//private JTextField textTipoDoc;
 	private JTextField textNumeroDoc;
 	private JTextField textDireccion;
 	private JTextField textMail;
@@ -86,7 +88,7 @@ public class FrameModificarUsuario implements ActionListener{
 		this.textMail = new JTextField(15);
 		this.textNumeroDoc = new JTextField(15);
 		this.textPass = new JTextField(15);
-		this.textTipoDoc = new JTextField(15);
+		//this.textTipoDoc = new JTextField(15);
 		this.textUsuario = new JTextField(15);
 		
 		JButton buttonModificar = new JButton("Modificar");
@@ -194,15 +196,17 @@ public class FrameModificarUsuario implements ActionListener{
 		modificarUsuarioPanel.add(this.labelTipoDoc, constraints);
 
 		constraints.gridx = 1;
-		modificarUsuarioPanel.add(this.textTipoDoc, constraints);
-		this.textTipoDoc.setEnabled(false);
-		
+		this.comboTipo = this.completarComboTipo();
+		modificarUsuarioPanel.add(this.comboTipo, constraints);
+		this.comboTipo.setEnabled(false);
+
 		constraints.gridx = 0;
 		constraints.gridy = 9;
 		modificarUsuarioPanel.add(this.labelTipoUsu, constraints);
 
 		constraints.gridx = 1;
 		this.comboTipoUsu = this.completarComboUsuario(frame);
+		modificarUsuarioPanel.add(this.comboTipoUsu, constraints);
 		this.comboTipoUsu.setEnabled(false);
 
 			constraints.gridx = 2;
@@ -236,6 +240,13 @@ public class FrameModificarUsuario implements ActionListener{
 
 	}
 
+	
+	private JComboBox<String> completarComboTipo() {
+		String[] valores = {"CI", "PASAPORTE", "CARTA DE CIUDADANIA", "OTROS"};
+		return new JComboBox<>(valores);
+	}
+	
+	
 	private JComboBox<String> completarComboUsuario(JFrame frame) {
 		
 		try{
@@ -254,7 +265,7 @@ public class FrameModificarUsuario implements ActionListener{
 		return combo;
 		
 		
-	}
+}
 	
 	/**
 	 * Como implementos Action Listener, quiere decir que soy escuchado de
@@ -297,7 +308,7 @@ public class FrameModificarUsuario implements ActionListener{
 				}
 				
 				
-				if (existe==null) {
+				if (existe==null || existe.size() == 0) {
 					JOptionPane.showMessageDialog(frame, "El nombre de usuario ingresado no existe.",
 							"Usuario Existente!", JOptionPane.WARNING_MESSAGE);
 
@@ -318,7 +329,9 @@ public class FrameModificarUsuario implements ActionListener{
 					this.textNombre.setEnabled(true);
 					this.textNumeroDoc.setEnabled(true);
 					this.textPass.setEnabled(true);
-					this.textTipoDoc.setEnabled(true);
+					//this.textTipoDoc.setEnabled(true);
+					this.comboTipo.setEnabled(true);
+					this.comboTipoUsu.setEnabled(true);
 					
 					//Cargo los campos
 					
@@ -329,7 +342,8 @@ public class FrameModificarUsuario implements ActionListener{
 					this.textNombre.setText(existe.get(0).getNombre());
 					this.textNumeroDoc.setText(existe.get(0).getNumerodoc());
 					this.textPass.setText(existe.get(0).getPass());
-					this.textTipoDoc.setText(existe.get(0).getTipodoc());
+					this.comboTipo.setSelectedItem(existe.get(0).getTipodoc());
+					this.comboTipoUsu.setSelectedItem(existe.get(0).getTipousuario());
 					
 				}
 		
@@ -346,15 +360,15 @@ public class FrameModificarUsuario implements ActionListener{
 		String fieldMail = this.textMail.getText();
 		String fieldNumeroDoc = this.textNumeroDoc.getText();
 		String fieldPass = this.textPass.getText();
-		String fieldTipoDoc = this.textTipoDoc.getText();
-		TipoUsuario fieldTipoUsu = (TipoUsuario) this.comboTipoUsu.getSelectedItem();
+		String Tipodoc = (String) this.comboTipo.getSelectedItem();
+		String tipoUsu = (String) this.comboTipoUsu.getSelectedItem();
 		Long fieldID = 1l;
 				
 
 		// Si alguno es vacío, mostramos una ventana de mensaje
 		if (fieldNombre.equals("") || fieldApellido.equals("") || 
 				fieldDireccion.equals("")|| fieldEstado.equals("")|| fieldMail.equals("")|| 
-				fieldNumeroDoc.equals("")|| fieldPass.equals("")|| fieldTipoDoc.equals("")) {
+				fieldNumeroDoc.equals("")|| fieldPass.equals("")) {
 			JOptionPane.showMessageDialog(frame, "Debe completar todos los datos solicitados.", "Datos incompletos!",
 					JOptionPane.WARNING_MESSAGE);
 
@@ -365,8 +379,8 @@ public class FrameModificarUsuario implements ActionListener{
 		boolean almacenado;
 						
 		try{
-			almacenado = ClientePDT.ModificarUsuario(fieldID, fieldNombre, fieldApellido, fieldTipoDoc, 
-					fieldNumeroDoc, fieldDireccion, fieldMail, fieldPass, fieldEstado, fieldTipoUsu);
+			almacenado = ClientePDT.ModificarUsuario(fieldID, fieldNombre, fieldApellido, Tipodoc, 
+					fieldNumeroDoc, fieldDireccion, fieldMail, fieldPass, fieldEstado, tipoUsu);
 		} catch (Exception e){
 			JOptionPane.showMessageDialog(frame, "Error de conexión con el servidor. Intente más tarde.",
 					"Error de conexión!", JOptionPane.WARNING_MESSAGE);

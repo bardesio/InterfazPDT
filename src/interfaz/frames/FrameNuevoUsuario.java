@@ -54,7 +54,6 @@ public class FrameNuevoUsuario implements ActionListener{
 	private JTextField textNombre;
 	private JTextField textApellido;
 	private JTextField textEstado;
-	//private JTextField textTipoDoc;
 	private JTextField textNumeroDoc;
 	private JTextField textDireccion;
 	private JTextField textMail;
@@ -185,9 +184,6 @@ public class FrameNuevoUsuario implements ActionListener{
 		this.comboTipo = this.completarComboTipo();
 		nuevoUsuarioPanel.add(this.comboTipo, constraints);
 		
-		//constraints.gridx = 1;
-		//nuevoUsuarioPanel.add(this.textTipoDoc, constraints);
-		
 		constraints.gridx = 0;
 		constraints.gridy = 9;
 		nuevoUsuarioPanel.add(this.labelTipoUsu, constraints);
@@ -237,9 +233,6 @@ public class FrameNuevoUsuario implements ActionListener{
 	private JComboBox<String> completarComboUsuario(JFrame frame) {
 		
 		try{
-			
-
-			
 			this.tipoUsuarios = ClientePDT.obtenerTodoslosTipos();
 		}
 		catch (Exception e){

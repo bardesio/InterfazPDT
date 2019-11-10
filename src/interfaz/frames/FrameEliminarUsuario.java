@@ -140,7 +140,7 @@ public class FrameEliminarUsuario implements ActionListener{
 					
 					List<Usuario> us = ClientePDT.existeUsuario(fieldUsuario);
 					
-					if (us == null)
+					if (us == null || us.size() == 0)
 					{
 						JOptionPane.showMessageDialog(null, "Usuario no encontrado");
 						return;

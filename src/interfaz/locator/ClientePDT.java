@@ -24,6 +24,7 @@ public class ClientePDT {
 	private static String JNDI_OBSERVACION ="global/PDT/ObservacionBean!com.Remote.ObservacionBeanRemote";
 
 
+
 /***************************************************USUARIO*******************************************************/
 	public static List<Usuario> existeUsuario(String nomUsu) throws Exception {
 
@@ -41,7 +42,7 @@ public class ClientePDT {
 	
 	
 	public static boolean ModificarUsuario(Long id, String nombre, String apellido, String tipoDoc, String numDoc, 
-			String direccion, String correo, String pass, String estado, TipoUsuario tipousuario) throws Exception{
+			String direccion, String correo, String pass, String estado, String tipousuario) throws Exception{
 		
 		UsuarioBeanRemote usuarioBeanRemote = EJBLocator.getInstance().lookup(UsuarioBeanRemote.class);
 		return usuarioBeanRemote.ModificarUsuario(id, nombre, apellido, tipoDoc, numDoc, direccion, correo, pass, estado, tipousuario);
@@ -59,6 +60,9 @@ public class ClientePDT {
 		List<TipoUsuario> TP = tipousuarioBeanRemote.obtenerTodoslosTipos(); 
 		return TP;
 	}
+	
+	
+		
 	
 	public  List<Usuario> Login(String usuario, String pass) throws Exception {
 
@@ -108,9 +112,9 @@ public class ClientePDT {
 	
 	/***************************************************LISTAR OBSERVACION POR ZONA  *******************************************************/
 	
-	public static List<Observacion> ListarObservacionporZona(String NomZona) throws Exception {
+		public static List<Observacion> obtenerTodasConsultas() throws Exception {
 		
-		ObservacionBeanRemote observacionbeanremote = EJBLocator.getInstance().lookup(ObservacionBeanRemote.class);
-		return observacionbeanremote.ListarObservacionporZona(NomZona);
+		ObservacionBeanRemote observacionesBeanRemote = EJBLocator.getInstance().lookup(ObservacionBeanRemote.class);
+		return observacionesBeanRemote.obtenerTodasObservaciones();
 	}
 }
