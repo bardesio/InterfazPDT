@@ -50,7 +50,7 @@ public class FramePrincipal {
 		
 		initializeMenuUsuarios(menuBar, frame);
 		initializeMenuFenomenos(menuBar, frame);
-		//initializeMenuObservaciones(menuBar, frame);
+		initializeMenuObservaciones(menuBar, frame);
 		initializeMenuListadoporZona(menuBar, frame);
 		
 		//initializeMenuListadoporFiltros(menuBar, frame);
@@ -166,6 +166,24 @@ menuBar.add(listado);
 		usuarios.add(eliminarUsuario);
 		menuBar.add(usuarios);		
 	}
+	
+	private static void initializeMenuObservaciones(JMenuBar menuBar, final JFrame frame) {
+		JMenu menu = new JMenu("Observaciones");
+		JMenuItem item1 = new JMenuItem("Observaciones");
+
+		
+
+		item1.addActionListener(new ActionListener() {
+		    @Override
+		    public void actionPerformed(ActionEvent event) {
+		        
+		    	new FrameMantenimientoObservacion(frame);
+		    	
+		    }
+		});
+		menu.add(item1);
+		menuBar.add(menu);
+		}
 
 public void setVisible(boolean b) {
 	// TODO Auto-generated method stub
