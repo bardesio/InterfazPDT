@@ -7,6 +7,7 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -43,16 +44,26 @@ public class FrameListadoporZona implements ActionListener {
 	private JDatePickerImpl datePicker;
 
 	/** Labels */
-	private JLabel labelFecha;
+	private JLabel labelFechaInicio;
+	private JLabel labelFechaFin;
+	private JLabel labelZona;
 
+
+	/** Atributos de TexField */
+	private JTextField textZona;
+	
 	/** Buttons */
 	private JButton botonFiltrar;
 	private JButton botonLimpiar;
 
 	public FrameListadoporZona(JFrame framePadre) {
 
-		this.labelFecha = new JLabel("Fecha:");
+		this.labelFechaInicio = new JLabel("Fecha Inicio: ");
+		this.labelFechaFin = new JLabel("Fecha Fin: ");
 
+		this.labelZona = new JLabel("Zona: ");
+		this.textZona = new JTextField(15);
+		
 		JButton botonFiltrar = new JButton("Filtrar");
 		botonFiltrar.addActionListener(this);
 
@@ -61,7 +72,7 @@ public class FrameListadoporZona implements ActionListener {
 
 		this.botonFiltrar = botonFiltrar;
 		this.botonLimpiar = botonLimpiar;
-
+		
 		this.initalizeFrame(framePadre);
 	}
 
@@ -82,12 +93,27 @@ public class FrameListadoporZona implements ActionListener {
 
 		constraints.gridx = 0;
 		constraints.gridy = 0;
-		listarObservacionesPanel.add(this.labelFecha, constraints);
+		listarObservacionesPanel.add(this.labelFechaInicio, constraints);
 
 		constraints.gridx = 1;
 		this.datePicker = this.crearDatePicker();
 		listarObservacionesPanel.add(this.datePicker, constraints);
 
+		constraints.gridx = 0;
+		constraints.gridy = 1;
+		listarObservacionesPanel.add(this.labelFechaFin, constraints);
+		
+		constraints.gridx = 1;
+		this.datePicker = this.crearDatePicker();
+		listarObservacionesPanel.add(this.datePicker, constraints);
+		
+		constraints.gridx = 0;
+		constraints.gridy = 2;
+		listarObservacionesPanel.add(this.labelZona, constraints);
+		
+		constraints.gridx = 1;
+		listarObservacionesPanel.add(this.textZona, constraints);
+		
 		constraints.gridx = 2;
 		constraints.gridy = 0;
 		listarObservacionesPanel.add(this.botonFiltrar, constraints);
@@ -113,7 +139,7 @@ public class FrameListadoporZona implements ActionListener {
 			this.botonFiltrar.addActionListener(this);
 			this.botonLimpiar.addActionListener(this);
 	
-			// frame.pack();
+			frame.pack();
 			frame.setVisible(true);
 	
 			this.frame = frame;
@@ -131,7 +157,8 @@ public class FrameListadoporZona implements ActionListener {
 		List<Observacion> observaciones;
 		
 		try{
-			observaciones = ClientePDT.obtenerTodasConsultas();
+			observaciones = new ArrayList<Observacion>();
+			observaciones = ClientePDT.obtenerTodasObservaciones();
 		}
 		catch (Exception e){
 			return null;

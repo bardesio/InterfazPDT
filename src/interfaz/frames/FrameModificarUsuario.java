@@ -20,6 +20,7 @@ import javax.swing.JTextField;
 import com.entidades.TipoUsuario;
 import com.entidades.Usuario;
 
+import interfaz.constantes.Constantes;
 import interfaz.locator.ClientePDT;
 
 public class FrameModificarUsuario implements ActionListener{
@@ -27,7 +28,7 @@ public class FrameModificarUsuario implements ActionListener{
 	/** Frame de la ventana */
 	private JFrame frame;
 	
-	//Probando
+	//declaro un ID que me servira en caso de que este inactivo
 	Long fieldID = null;
 	
 	/** Atributos de labels */
@@ -173,7 +174,7 @@ public class FrameModificarUsuario implements ActionListener{
 		
 		constraints.gridx = 1;
 		modificarUsuarioPanel.add(this.textEstado, constraints);
-		this.textEstado.setEnabled(false);
+		this.textEstado.setEditable(false);
 
 		constraints.gridx = 0;
 		constraints.gridy = 6;
@@ -296,10 +297,10 @@ public class FrameModificarUsuario implements ActionListener{
 		
 		
 		// Validamos ahora, que exista un Usuario con dicha CI
-				List<Usuario> existe;
+				List<Usuario> usuarios;
 				
 				try{
-					existe = ClientePDT.existeUsuario(fieldUsuario.toUpperCase());
+					usuarios = ClientePDT.existeUsuario(fieldUsuario.toUpperCase());
 				} catch (Exception e){
 					JOptionPane.showMessageDialog(frame, "Error de conexión con el servidor. Intente más tarde.",
 							"Error de conexión!", JOptionPane.WARNING_MESSAGE);
@@ -308,7 +309,7 @@ public class FrameModificarUsuario implements ActionListener{
 				}
 				
 				
-				if (existe==null || existe.size() == 0) {
+				if (usuarios==null || usuarios.size() == 0 || usuarios.get(0).getEstado().equals(Constantes.INACTIVO)) {
 					JOptionPane.showMessageDialog(frame, "El nombre de usuario ingresado no existe.",
 							"Usuario Existente!", JOptionPane.WARNING_MESSAGE);
 
@@ -324,27 +325,25 @@ public class FrameModificarUsuario implements ActionListener{
 					this.buttonModificar.setEnabled(true);
 					this.textApellido.setEnabled(true);
 					this.textDireccion.setEnabled(true);
-					this.textEstado.setEnabled(true);
 					this.textMail.setEnabled(true);
 					this.textNombre.setEnabled(true);
 					this.textNumeroDoc.setEnabled(true);
 					this.textPass.setEnabled(true);
-					//this.textTipoDoc.setEnabled(true);
 					this.comboTipo.setEnabled(true);
 					this.comboTipoUsu.setEnabled(true);
 					
 					//Cargo los campos
 					
-					this.textApellido.setText(existe.get(0).getApellido());
-					this.textDireccion.setText(existe.get(0).getDireccion()); 
-					this.textEstado.setText(existe.get(0).getEstado());
-					this.textMail.setText(existe.get(0).getMail());
-					this.textNombre.setText(existe.get(0).getNombre());
-					this.textNumeroDoc.setText(existe.get(0).getNumerodoc());
-					this.textPass.setText(existe.get(0).getPass());
-					this.comboTipo.setSelectedItem(existe.get(0).getTipodoc());
-					this.comboTipoUsu.setSelectedItem(existe.get(0).getTipousuario());
-					this.fieldID = existe.get(0).getId();
+					this.textApellido.setText(usuarios.get(0).getApellido());
+					this.textDireccion.setText(usuarios.get(0).getDireccion()); 
+					this.textEstado.setText("ACTIVO");
+					this.textMail.setText(usuarios.get(0).getMail());
+					this.textNombre.setText(usuarios.get(0).getNombre());
+					this.textNumeroDoc.setText(usuarios.get(0).getNumerodoc());
+					this.textPass.setText(usuarios.get(0).getPass());
+					this.comboTipo.setSelectedItem(usuarios.get(0).getTipodoc());
+					this.comboTipoUsu.setSelectedItem(usuarios.get(0).getTipousuario());
+					this.fieldID = usuarios.get(0).getId();
 				}
 		
 	}
@@ -362,8 +361,7 @@ public class FrameModificarUsuario implements ActionListener{
 		String fieldPass = this.textPass.getText().toUpperCase();
 		String fieldUsuario = this.textUsuario.getText();
 		String Tipodoc = (String) this.comboTipo.getSelectedItem();
-		String tipoUsu = (String) this.comboTipoUsu.getSelectedItem();
-		
+		String tipoUsu = (String) this.comboTipoUsu.getSelectedItem();		
 		
 				
 

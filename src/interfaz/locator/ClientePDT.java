@@ -1,5 +1,6 @@
 package interfaz.locator;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.Remote.*;
@@ -112,9 +113,17 @@ public class ClientePDT {
 	
 	/***************************************************LISTAR OBSERVACION POR ZONA  *******************************************************/
 	
-		public static List<Observacion> obtenerTodasConsultas() throws Exception {
+		public static List<Observacion> obtenerTodasObservaciones() throws Exception {
 		
+			try {
 		ObservacionBeanRemote observacionesBeanRemote = EJBLocator.getInstance().lookup(ObservacionBeanRemote.class);
-		return observacionesBeanRemote.obtenerTodasObservaciones();
-	}
+		List<Observacion> obs = new ArrayList<Observacion>();
+		obs = observacionesBeanRemote.obtenerTodasObservaciones();
+		 return obs;
+			}
+			catch (Exception e){
+				System.out.print(e.getLocalizedMessage());
+				return null;
+			}
+		}
 }
