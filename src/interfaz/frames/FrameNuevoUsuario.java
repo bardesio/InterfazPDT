@@ -1,5 +1,6 @@
 package interfaz.frames;
 
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -22,12 +23,15 @@ import com.entidades.Fenomeno;
 import com.entidades.TipoUsuario;
 import com.entidades.Usuario;
 
+import interfaz.constantes.Constantes;
 import interfaz.locator.ClientePDT;
 import interfaz.locator.EJBLocator;
 
 
 public class FrameNuevoUsuario implements ActionListener{
 
+	Long fieldID = null;
+	
 	/** Frame de la ventana */
 	private JFrame frame;
 
@@ -160,7 +164,10 @@ public class FrameNuevoUsuario implements ActionListener{
 
 		constraints.gridx = 1;
 		nuevoUsuarioPanel.add(this.textEstado, constraints);
-
+		this.textEstado.setText("ACTIVO");
+		this.textEstado.setEditable(false);
+		
+		
 		constraints.gridx = 0;
 		constraints.gridy = 6;
 		nuevoUsuarioPanel.add(this.labelMail, constraints);
@@ -273,14 +280,12 @@ public class FrameNuevoUsuario implements ActionListener{
 		String fieldApellido = this.textApellido.getText().toUpperCase();
 		String fieldUsuario = this.textUsuario.getText().toUpperCase();
 		String fieldDireccion = this.textDireccion.getText().toUpperCase();
-		String fieldEstado = this.textEstado.getText().toUpperCase();
+		String fieldEstado = "ACTIVO";
 		String fieldMail = this.textMail.getText().toUpperCase();
 		String fieldNumeroDoc = this.textNumeroDoc.getText().toUpperCase();
 		String fieldPass = this.textPass.getText().toUpperCase();
 		String Tipodoc = (String) this.comboTipo.getSelectedItem();
-		String tipoUsu = (String) this.comboTipoUsu.getSelectedItem();
-		Long fieldID = 1l;
-		
+		String tipoUsu = (String) this.comboTipoUsu.getSelectedItem();		
 
 		// Si alguno es vacío, mostramos una ventana de mensaje
 		if (fieldNombre.equals("") || fieldApellido.equals("") || fieldUsuario.equals("")|| 
@@ -303,48 +308,71 @@ public class FrameNuevoUsuario implements ActionListener{
 			List<Usuario> us = ClientePDT.existeUsuario(fieldUsuario);
 			
 			//Si la lista es de tamaño
-			if (us.size() == 0)
+			if (us == null || us.size() == 0)
 			{
 				//Intento crear el usuario
 				try{
+					fieldID = 1l;
 					almacenado = ClientePDT.CrearUsuario(fieldID, fieldPass, fieldUsuario, fieldNombre, fieldApellido, fieldEstado, Tipodoc, fieldNumeroDoc, fieldDireccion, fieldMail, tipoUsu);
-				} catch (Exception e){
+				
+					//Si se devolvio verdadero el almacenado
+					if (almacenado) {
+						JOptionPane.showMessageDialog(frame, "El Usuario ha sido registrado con éxito.",
+								"Usuario Registrado!", JOptionPane.INFORMATION_MESSAGE);
+						
+						// cerramos la ventanta
+						this.frame.dispose();
+		
+					}
+				
+				}catch (Exception e){
 					JOptionPane.showMessageDialog(frame, "Error de conexión con el servidor. Intente más tarde.",
 							"Error de conexión!", JOptionPane.WARNING_MESSAGE);
 
 					return;
 				}
 				
-				//Si se devolvio verdadero el almacenado
-				if (almacenado) {
-					JOptionPane.showMessageDialog(frame, "El Usuario ha sido registrado con éxito.",
-							"Usuario Registrado!", JOptionPane.INFORMATION_MESSAGE);
-					
-					// cerramos la ventanta
-					this.frame.dispose();
-	
+				//El usuario existe pero esta inactivo
+			}else if (!String.valueOf(us.get(0).getEstado()).equals(Constantes.ACTIVO))
+				{
+				try {
+					fieldID = us.get(0).getId();
+					almacenado = ClientePDT.ModificarUsuario(fieldID, fieldPass, fieldUsuario, fieldNombre, fieldApellido, fieldEstado, Tipodoc, fieldNumeroDoc, fieldDireccion, fieldMail, tipoUsu);
+				
+					if (almacenado) {
+						JOptionPane.showMessageDialog(frame, "El Usuario ha sido registrado con éxito.",
+								"Usuario Registrado!", JOptionPane.INFORMATION_MESSAGE);
+						
+						// cerramos la ventanta
+						this.frame.dispose();
+		
+					}
+				
 				}
-				else{
-					JOptionPane.showMessageDialog(frame, "Hubo un error al almacenar. Intente nuevamente más tarde",
-							"Error al registrar!", JOptionPane.ERROR_MESSAGE);
+				catch(Exception e){
+					JOptionPane.showMessageDialog(frame, "Error de conexión con el servidor. Intente más tarde.",
+							"Error de conexión!", JOptionPane.WARNING_MESSAGE);
+					
+					return;
+					}
 				}
 
-				//El tamaño de la lista es ditinto de 0
-			}else {
+				//El usuario ya existe en el sistema
+			else {
 				JOptionPane.showMessageDialog(null, "El usuario ya existe en el sistema");
 				return;
 				}
 			
 			
-				
+	
 		}catch(Exception e){
 			JOptionPane.showMessageDialog(frame, "Error con el servidor, por favor contacte con su administrador",
 					"Error de conexión!", JOptionPane.WARNING_MESSAGE);
 
 			return;
 		}
+	}
 		
-		}
 
 	
 	private void accionCancelar() {
