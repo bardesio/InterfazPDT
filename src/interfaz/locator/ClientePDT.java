@@ -73,13 +73,13 @@ public class ClientePDT {
 	
 		
 /***************************************************FENOMENO*******************************************************/
-	public static boolean ingresarnuevoFenomeno(long id,String fieldCodigo ,String fieldNombre , String fieldDescripcion) throws  Exception {
+	public static boolean ingresarnuevoFenomeno(long id,String fieldCodigo ,String fieldNombre , String fieldDescripcion,String tels) throws  Exception {
 		
 		FenomenoBeanRemote fenomenobeanremote = EJBLocator.getInstance().lookup(FenomenoBeanRemote.class);
-		return fenomenobeanremote.crearFenomeno(id,fieldCodigo, fieldNombre, fieldDescripcion);
+		return fenomenobeanremote.crearFenomeno(id,fieldCodigo, fieldNombre, fieldDescripcion,tels);
 	}
 	
-	public List<Fenomeno> existecodigo(String codigo) throws Exception {
+	public static List<Fenomeno> existecodigo(String codigo) throws Exception {
 
 		FenomenoBeanRemote fenomenobeanremote= EJBLocator.getInstance().lookup(FenomenoBeanRemote.class);
 		return fenomenobeanremote.existecodigo(codigo);
@@ -100,17 +100,15 @@ public class ClientePDT {
 		
 	}
 	
-	public static List<Telefono> obtenerTelefono() throws Exception {
+	public static List<Telefono> obtenerTelefonoE() throws Exception {
 
 		FenomenoBeanRemote fenomenotelefono = EJBLocator.getInstance().lookup(FenomenoBeanRemote.class);
-		List<Telefono> TL = fenomenotelefono.ObtenerTelefono();
+		List<Telefono> TL = fenomenotelefono.obtenerTelEmergencia();
 		
 		return TL;
 	}
 	
-	
-	
-	
+		
 	/***************************************************LISTAR OBSERVACION POR ZONA  *******************************************************/
 	
 		public static List<Observacion> obtenerTodasObservaciones() throws Exception {

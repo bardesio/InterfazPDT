@@ -1,5 +1,6 @@
 package interfaz.frames;
 
+import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -17,6 +18,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import com.entidades.Telefono;
+import com.entidades.TipoUsuario;
+
 import interfaz.locator.ClientePDT;
 
 public class FrameNuevoFenomeno implements ActionListener {
@@ -28,6 +32,9 @@ public class FrameNuevoFenomeno implements ActionListener {
 	private JLabel labelCodigo;
 	private JLabel labelNombre;
 	private JLabel labelDescripcion;
+	private JLabel labeltelefono;
+	
+	private JComboBox<String> comboTel;
 	
 	/** Atributos de TexField */
 	private JTextField textNombre;
@@ -39,13 +46,16 @@ public class FrameNuevoFenomeno implements ActionListener {
 	private JButton buttonCancelar;
 	
 	
+	private List<Telefono> telefonos;
 	
 	public FrameNuevoFenomeno(JFrame framePadre) {
 
 	
+		
 		this.labelCodigo = new JLabel("Codigo:"); 
 		this.labelNombre = new JLabel("Nombre:");
 		this.labelDescripcion = new JLabel("Descripcion:");
+		this.labeltelefono = new JLabel ("Telefonos de Emergencia:");
 		
 		 this.textCodigo=new JTextField(15);
 		 this.textNombre= new JTextField(15);
@@ -75,7 +85,7 @@ public class FrameNuevoFenomeno implements ActionListener {
 
 		GridBagConstraints constraints = new GridBagConstraints();
 		constraints.anchor = GridBagConstraints.WEST;
-		constraints.insets = new Insets(20,20,20,20);
+		constraints.insets = new Insets(10,10,10,10);
 		
 		constraints.gridx = 0;
 		constraints.gridy = 0;
@@ -98,21 +108,30 @@ public class FrameNuevoFenomeno implements ActionListener {
 
 		constraints.gridx = 1;
 		nuevaFenomenoPanel.add(this.textDescripcion, constraints);
-
 		
+		constraints.gridx = 0;
+		constraints.gridy = 3;
+		nuevaFenomenoPanel.add(this.labeltelefono, constraints);
+		
+		constraints.gridx = 1;
+		 this.comboTel = this.completarComboTelefono(frame);
+
+		if (this.comboTel!=null) {
+			nuevaFenomenoPanel.add(this.comboTel,constraints);
+			
 	
 			constraints.gridx = 0;
-			constraints.gridy = 5;
-			constraints.gridwidth = 5;
+			constraints.gridy = 10;
+			constraints.gridwidth = 4;
 			constraints.anchor = GridBagConstraints.CENTER;
 			nuevaFenomenoPanel.add(buttonIngresar, constraints);
 	
-			constraints.gridx = 0;
-			constraints.gridy = 6;
+			constraints.gridx = 1;
+			constraints.gridy = 10;
 			constraints.gridwidth = 5;
 			constraints.anchor = GridBagConstraints.CENTER;
 			nuevaFenomenoPanel.add(buttonCancelar, constraints);
-			
+							
 	
 			nuevaFenomenoPanel
 					.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Datos del Fenomeno"));
@@ -123,9 +142,45 @@ public class FrameNuevoFenomeno implements ActionListener {
 			frame.setVisible(true);
 	
 			this.frame = frame;
+		}else
+		{
+			JOptionPane.showMessageDialog(frame, "Error en el servidor, por favor contacte a soporte tecnico",
+					"Error de conexión!", JOptionPane.WARNING_MESSAGE);
+			frame.dispose();}
 		}
-	
 		
+	
+	private JComboBox<String> completarComboTelefono(JFrame frame) {
+		
+		try{
+			this.telefonos = ClientePDT.obtenerTelefonoE();
+			
+		}
+		catch (Exception e){
+			return null;
+		}
+		
+		JComboBox<String> combo = new JComboBox<>();
+		
+		for(Telefono tu : this.telefonos){
+			
+			combo.addItem(tu.getNombre()+'-'+tu.getNumero());
+			
+		}
+		
+		return combo;
+	}
+	
+	
+	public String separarNombreDeTelefono(String telEmergencia) {
+		int i = 0;
+		while(i<= telEmergencia.length() -1) {
+			if (telEmergencia.charAt(i) =='-') {
+				return telEmergencia.substring(0, i-1);
+			}
+		}
+		return telEmergencia;
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -147,6 +202,9 @@ public class FrameNuevoFenomeno implements ActionListener {
 		String fieldNombre = this.textNombre.getText();
 		String fieldDescripcion = this.textDescripcion.getText();
 		String fieldCodigo = this.textCodigo.getText();
+		String telEmergencia =(String) this.comboTel.getSelectedItem();
+		String tels = (String) this.comboTel.getSelectedItem();
+		
 				
 		// Si alguno es vacío, mostramos una ventana de mensaje
 		if (fieldNombre.equals("") || fieldDescripcion.equals("")|| fieldCodigo.equals("")) {
@@ -156,29 +214,13 @@ public class FrameNuevoFenomeno implements ActionListener {
 			return;
 		}
 		
-		/*long codigo = 0;
-		
-		try {
-			codigo= Long.valueOf(fieldCodigo);
-		}
-		catch(Exception e)
-		{
-			JOptionPane.showMessageDialog(frame, "El codigo debe ser un nuemero entero.", "Datos incorrectos!",
-					JOptionPane.WARNING_MESSAGE);
-			return;
-		}
-		// Valiamos ahora, que no exista un cliente con dicha CI
-	
-		
-		*/
-		
-		
+			
 		boolean almacenado;
 		long id=0;
 		
 		try{
 			
-			almacenado= ClientePDT.ingresarnuevoFenomeno(id,fieldCodigo, fieldNombre, fieldDescripcion);
+			almacenado= ClientePDT.ingresarnuevoFenomeno(id,fieldCodigo, fieldNombre, fieldDescripcion,tels);
 			
 			
 		}

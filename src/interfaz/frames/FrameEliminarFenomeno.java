@@ -133,13 +133,32 @@ public class FrameEliminarFenomeno implements ActionListener {
 	}
 	
 	public void accionIngesar(){
-		long fieldcodigo = Integer.parseInt(this.textcodFen.getText());
+		//long fieldcodigo = Integer.parseInt(this.textcodFen.getText());
+			String 	fieldcodigofen = this.textcodFen.getText().toUpperCase();
+			
+			
+			// Si alguno es vacío, mostramos una ventana de mensaje
+			if (fieldcodigofen.equals("")) {
+				JOptionPane.showMessageDialog(frame, "Debe ingresar el usuario a eliminar", "Datos incompletos!",
+						JOptionPane.WARNING_MESSAGE);
+				return;
 				
+			}
 		boolean almaceno;
 		
 		try {
+			List<Fenomeno> us = ClientePDT.existecodigo(fieldcodigofen);
 			
-			almaceno= ClientePDT.EliminarFenomeno(fieldcodigo);
+			if(us==null || us.size()==0)
+			{
+				JOptionPane.showMessageDialog(null, "Usuario no encontrado");
+				return;
+			}
+			else {
+				almaceno= ClientePDT.EliminarFenomeno(us.get(0).getId());
+			}
+				
+			
 		}catch(Exception e){
 			JOptionPane.showMessageDialog(frame, "Error de conexión con el servidor. Intente más tarde.",
 					"Error de conexión!", JOptionPane.WARNING_MESSAGE);
