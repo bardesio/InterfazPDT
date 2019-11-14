@@ -18,6 +18,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import org.jgroups.protocols.TUNNEL;
+
 import com.entidades.Telefono;
 import com.entidades.TipoUsuario;
 
@@ -164,7 +166,7 @@ public class FrameNuevoFenomeno implements ActionListener {
 		
 		for(Telefono tu : this.telefonos){
 			
-			combo.addItem(tu.getNombre()+'-'+tu.getNumero());
+			combo.addItem(tu.getNombre());
 			
 		}
 		
@@ -202,9 +204,8 @@ public class FrameNuevoFenomeno implements ActionListener {
 		String fieldNombre = this.textNombre.getText();
 		String fieldDescripcion = this.textDescripcion.getText();
 		String fieldCodigo = this.textCodigo.getText();
-		String telEmergencia =(String) this.comboTel.getSelectedItem();
-		String tels = (String) this.comboTel.getSelectedItem();
 		
+		String tels =(String) this.comboTel.getSelectedItem();
 				
 		// Si alguno es vacío, mostramos una ventana de mensaje
 		if (fieldNombre.equals("") || fieldDescripcion.equals("")|| fieldCodigo.equals("")) {

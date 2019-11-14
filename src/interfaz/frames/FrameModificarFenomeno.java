@@ -21,6 +21,7 @@ import org.omg.CORBA.LongLongSeqHelper;
 
 import com.Remote.FenomenoBeanRemote;
 import com.entidades.Fenomeno;
+import com.entidades.Telefono;
 import com.entidades.TipoUsuario;
 import com.entidades.Usuario;
 
@@ -34,11 +35,16 @@ public class FrameModificarFenomeno implements ActionListener{
 	//Probando
 	private JFrame frame;
 
+	Long fieldID = null;
 	/** Atributos de labels */
 	private JLabel labelCodigo;
 	private JLabel labelNombre;
 	private JLabel labelDescripcion;
-	private JLabel labelCodigoFEN;
+	private JLabel labeltelefono;
+	
+	private JComboBox<String> comboTel;
+	
+	
 	
 	/** Atributos de TexField */
 	private JTextField textNombre;
@@ -51,7 +57,7 @@ public class FrameModificarFenomeno implements ActionListener{
 	private JButton buttonCancelar;
 	private JButton buttonBuscar;
 	
-	
+	private List<Telefono> telefonos;
 
 	public FrameModificarFenomeno(JFrame framePadre) {
 
@@ -59,11 +65,12 @@ public class FrameModificarFenomeno implements ActionListener{
 		this.labelCodigo = new JLabel("Codigo:"); 
 		this.labelNombre = new JLabel("Nombre:");
 		this.labelDescripcion = new JLabel("Descripcion:");
+		this.labeltelefono = new JLabel ("Telefonos de Emergencia:");
 		
 		 this.textCodigo=new JTextField(15);
 		 this.textNombre= new JTextField(15);
 		 this.textDescripcion = new JTextField(15);
-		 this.textCodigofen = new JTextField(15);
+		 
 		
 		JButton buttonModificar = new JButton("Modificar");
 		buttonModificar.addActionListener(this);
@@ -117,12 +124,21 @@ public class FrameModificarFenomeno implements ActionListener{
 		constraints.gridx = 1;
 		ModificarFenomenoPanel.add(this.textDescripcion, constraints);
 
+		constraints.gridx = 0;
+		constraints.gridy = 3;
+		ModificarFenomenoPanel.add(this.labeltelefono, constraints);
+		
+		constraints.gridx = 1;
+		 this.comboTel = this.completarComboTelefono(frame);
+
+		if (this.comboTel!=null) {
+			ModificarFenomenoPanel.add(this.comboTel,constraints);
+			comboTel.setEnabled(false);
 		
 		
-		
-			constraints.gridx = 0;
-			constraints.gridy = 5;
-			constraints.gridwidth = 5;
+			constraints.gridx = 2;
+			constraints.gridy = 10;
+			constraints.gridwidth = 3;
 			constraints.anchor = GridBagConstraints.SOUTH;
 			ModificarFenomenoPanel.add(buttonModificar, constraints);
 			this.buttonModificar.setEnabled(false);
@@ -135,8 +151,8 @@ public class FrameModificarFenomeno implements ActionListener{
 			
 
 			constraints.gridx = 0;
-			constraints.gridy = 6;
-			constraints.gridwidth = 4;
+			constraints.gridy = 10;
+			constraints.gridwidth = 3;
 			constraints.anchor = GridBagConstraints.SOUTH;
 			ModificarFenomenoPanel.add(buttonBuscar, constraints);
 			
@@ -151,8 +167,33 @@ public class FrameModificarFenomeno implements ActionListener{
 
 		this.frame = frame;
 
+	}else
+	{
+		JOptionPane.showMessageDialog(frame, "Error en el servidor, por favor contacte a soporte tecnico",
+				"Error de conexión!", JOptionPane.WARNING_MESSAGE);
+		frame.dispose();}
+		
 	}
-
+	private JComboBox<String> completarComboTelefono(JFrame frame) {
+		
+		try{
+			this.telefonos = ClientePDT.obtenerTelefonoE();
+			
+		}
+		catch (Exception e){
+			return null;
+		}
+		
+		JComboBox<String> combo = new JComboBox<>();
+		
+		for(Telefono tu : this.telefonos){
+			
+			combo.addItem(tu.getNombre());
+			
+		}
+		
+		return combo;
+	}
 	
 	
 	/**
@@ -187,6 +228,7 @@ public class FrameModificarFenomeno implements ActionListener{
 					
 					FenomenoBeanRemote fenomenobeanremote = EJBLocator.getInstance().lookup(FenomenoBeanRemote.class);
 					String codigo = this.textCodigo.getText().toUpperCase();
+					
 					List <Fenomeno> fenomenos = fenomenobeanremote.existecodigo(codigo);
 					if (fenomenos.isEmpty())
 					{
@@ -199,10 +241,16 @@ public class FrameModificarFenomeno implements ActionListener{
 							String dato=CFen.getCodigo();
 							textCodigo.setText(dato);
 							String desc=CFen.getDescripcion();
+							this.textDescripcion.setText(desc);
 							String nom=CFen.getNombreFen();
 							textNombre.setText(nom);
-							textDescripcion.setText(desc);
+							comboTel.setEnabled(false);
+							String nombretel = CFen.getTelefonos().getNombre();
+							this.comboTel.setToolTipText(nombretel);
+							this.comboTel.setEnabled(true);							
+							this.fieldID = CFen.getId();
 							buttonModificar.setEnabled(true);
+							
 							
 							
 							
@@ -225,7 +273,8 @@ public class FrameModificarFenomeno implements ActionListener{
 		String fieldDescripcion = this.textDescripcion.getText();
 		String fieldNombre= this.textNombre.getText();
 		String fieldcodigo = this.textCodigo.getText();
-		long fieldID = 1l;
+		String tel = (String) this.comboTel.getSelectedItem();
+		
 		
 		// Si alguno es vacío, mostramos una ventana de mensaje
 		if (fieldNombre.equals("") || fieldDescripcion.equals("")) {
@@ -242,7 +291,7 @@ public class FrameModificarFenomeno implements ActionListener{
 			
 			//almacenado = fenomenobeanremote.modificarFenomeno(fieldcodigofen, fieldcodigo, fieldNombre, fieldDescripcion);			
 			
-			almacenado = ClientePDT.ModificarFenomeno(fieldID, fieldcodigo, fieldNombre, fieldDescripcion);
+			almacenado = ClientePDT.ModificarFenomeno(fieldID, fieldcodigo, fieldNombre, fieldDescripcion,tel);
 			
 		} catch (Exception e){
 			JOptionPane.showMessageDialog(frame, "Error de conexión con el servidor. Intente más tarde.",
