@@ -17,14 +17,15 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-
+import com.Remote.FenomenoBeanRemote;
 import com.entidades.Fenomeno;
-
+import com.entidades.Telefono;
 import com.exception.ServiciosException;
 
 
 
 import interfaz.locator.ClientePDT;
+import interfaz.locator.EJBLocator;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -33,6 +34,8 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JPopupMenu;
@@ -42,37 +45,61 @@ import java.awt.event.MouseEvent;
 
 public class FrameEliminarFenomeno implements ActionListener {
 
-	/** Frame de la ventana */
-	private JFrame frame;
+	//Probando
+		private JFrame frame;
 
-	/** Atributos de labels */
-	private JLabel labelfenomeno;
-	
-	/** Atributos de TexField */
-	private JTextField textcodFen;
-
-	/** Atributos de Botones */
-	private JButton buttonEliminar;
-	private JButton buttonCancelar;
-
-	public FrameEliminarFenomeno(JFrame framePadre) {
-
-		this.labelfenomeno = new JLabel("Ingrese el Codigo de Fenomeno a eliminar: ");
-	
-		this.textcodFen = new JTextField(15);
+		Long fieldID = null;
+		/** Atributos de labels */
+		private JLabel labelCodigo;
+		private JLabel labelNombre;
+		private JLabel labelDescripcion;
+		private JLabel labeltelefono;
 		
-		JButton buttonEliminar = new JButton("Eliminar");
-		buttonEliminar.addActionListener(this);
+		private JComboBox<String> comboTel;
+		
+		
+		
+		/** Atributos de TexField */
+		private JTextField textNombre;
+		private JTextField textDescripcion;
+		private JTextField textCodigo;
+		private JTextField textCodigofen;
 
-		JButton buttonCancelar = new JButton("Cancelar");
-		buttonCancelar.addActionListener(this);
+		/** Atributos de Botones */
+		private JButton buttonEliminar;
+		private JButton buttonCancelar;
+		private JButton buttonBuscar;
+		
+		private List<Telefono> telefonos;
 
-		this.buttonEliminar = buttonEliminar;
-		this.buttonCancelar = buttonCancelar;
+		public FrameEliminarFenomeno(JFrame framePadre) {
 
-		this.initalizeFrame(framePadre);
-	}
-	
+		
+			this.labelCodigo = new JLabel("Codigo:"); 
+			this.labelNombre = new JLabel("Nombre:");
+			this.labelDescripcion = new JLabel("Descripcion:");
+			this.labeltelefono = new JLabel ("Telefonos de Emergencia:");
+			
+			 this.textCodigo=new JTextField(15);
+			 this.textNombre= new JTextField(15);
+			 this.textDescripcion = new JTextField(15);
+			 
+			
+			JButton buttonEliminar = new JButton("Eliminar");
+			buttonEliminar.addActionListener(this);
+			
+			JButton buttonCancelar = new JButton("Cancelar");
+			buttonCancelar.addActionListener(this);
+
+			JButton buttonBuscar = new JButton ("Buscar");
+			buttonBuscar.addActionListener(this);
+			
+			this.buttonEliminar =buttonEliminar ;
+			this.buttonCancelar = buttonCancelar;
+			this.buttonBuscar = buttonBuscar;
+
+			this.initalizeFrame(framePadre);
+		}
 	private void initalizeFrame(JFrame framePadre) {
 
 		JFrame frame = new JFrame("Eliminar Fenomeno");
@@ -89,65 +116,183 @@ public class FrameEliminarFenomeno implements ActionListener {
 
 		constraints.gridx = 0;
 		constraints.gridy = 0;
-		eliminarFenomenoPanel.add(this.labelfenomeno, constraints);
+		eliminarFenomenoPanel.add(this.labelCodigo, constraints);
 
 		constraints.gridx = 1;
-		eliminarFenomenoPanel.add(this.textcodFen, constraints);
+		eliminarFenomenoPanel.add(this.textCodigo, constraints);
 		
-				
+		constraints.gridx = 0;
+		constraints.gridy = 1;
+		eliminarFenomenoPanel.add(this.labelNombre, constraints);
+
+		constraints.gridx = 1;
+		eliminarFenomenoPanel.add(this.textNombre, constraints);
+		
+		constraints.gridx = 0;
+		constraints.gridy = 2;
+		eliminarFenomenoPanel.add(this.labelDescripcion, constraints);
+
+		constraints.gridx = 1;
+		eliminarFenomenoPanel.add(this.textDescripcion, constraints);
+
 		constraints.gridx = 0;
 		constraints.gridy = 3;
-		constraints.gridwidth = 3;
-		constraints.anchor = GridBagConstraints.CENTER;
-		eliminarFenomenoPanel.add(buttonEliminar, constraints);
-
-		constraints.gridx = 1;
-		constraints.gridy = 3;
-		constraints.gridwidth = 3;
-		constraints.anchor = GridBagConstraints.CENTER;
-		eliminarFenomenoPanel.add(buttonCancelar, constraints);
+		eliminarFenomenoPanel.add(this.labeltelefono, constraints);
 		
+		constraints.gridx = 1;
+		 this.comboTel = this.completarComboTelefono(frame);
+		
+			if (this.comboTel!=null) {
+				eliminarFenomenoPanel.add(this.comboTel,constraints);
+				comboTel.setEnabled(false);
+			
+			
+				constraints.gridx = 2;
+				constraints.gridy = 10;
+				constraints.gridwidth = 3;
+				constraints.anchor = GridBagConstraints.SOUTH;
+				eliminarFenomenoPanel.add(buttonEliminar, constraints);
+				this.buttonEliminar.setEnabled(false);
 
-		eliminarFenomenoPanel
-				.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Eliminacion de un Fenomeno"));
+				constraints.gridx = 1;
+				constraints.gridy = 10;
+				constraints.gridwidth = 4;
+				constraints.anchor = GridBagConstraints.SOUTH;
+				eliminarFenomenoPanel.add(buttonCancelar, constraints);
+				
 
-		frame.add(eliminarFenomenoPanel);
+				constraints.gridx = 0;
+				constraints.gridy = 10;
+				constraints.gridwidth = 3;
+				constraints.anchor = GridBagConstraints.SOUTH;
+				eliminarFenomenoPanel.add(buttonBuscar, constraints);
+				
 
-		frame.pack();
-		frame.setVisible(true);
+				eliminarFenomenoPanel
+					.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Datos del Usuario"));
 
-		this.frame = frame;
+			frame.getContentPane().add(eliminarFenomenoPanel);
 
-	}
-	@Override
+			frame.pack();
+			frame.setVisible(true);
+
+			this.frame = frame;
+
+		}else
+		{
+			JOptionPane.showMessageDialog(frame, "Error en el servidor, por favor contacte a soporte tecnico",
+					"Error de conexión!", JOptionPane.WARNING_MESSAGE);
+			frame.dispose();}
+			
+		}
+		private JComboBox<String> completarComboTelefono(JFrame frame) {
+			
+			try{
+				this.telefonos = ClientePDT.obtenerTelefonoE();
+				
+			}
+			catch (Exception e){
+				return null;
+			}
+			
+			JComboBox<String> combo = new JComboBox<>();
+			
+			for(Telefono tu : this.telefonos){
+				
+				combo.addItem(tu.getNombre());
+				
+			}
+			
+			return combo;
+		}
+		 
+		 
+		 
+		 @Override
 	public void actionPerformed(ActionEvent e) {
 
 		/* Debo primero conocer que botón fue clickeado */
+				if (e.getSource() == this.buttonCancelar) {
+					this.accionCancelar();
+				} else if (e.getSource() == this.buttonBuscar) 
+				{
+					this.accionBuscar();
+				}
+				else if (e.getSource()==this.buttonEliminar)
+				{
+					this.accionEliminar();
+				}
+				
 
-		if (e.getSource() == this.buttonCancelar) {
-			this.accionCancelar();
-		} else {
-			this.accionIngesar();
+			}
+		 private void accionBuscar() {
+
+				
+				
+				
+				try{
+					
+					//FenomenoBeanRemote fenomenobeanremote = EJBLocator.getInstance().lookup(FenomenoBeanRemote.class);
+					String codigo = this.textCodigo.getText();
+					List <Fenomeno> fenomenos= ClientePDT.existecodigo(codigo);
+					//List <Fenomeno> fenomenos = fenomenobeanremote.existecodigo(codigo);
+					if (fenomenos.isEmpty())
+					{
+						JOptionPane.showMessageDialog(null, "Fenomeno no encontrado");
+						return;
+					}else {
+						for(Fenomeno CFen : fenomenos)
+						{
+																					
+							String dato=CFen.getCodigo();
+							textCodigo.setText(dato);
+							String desc=CFen.getDescripcion();
+							this.textDescripcion.setText(desc);
+							String nom=CFen.getNombreFen();
+							textNombre.setText(nom);
+							comboTel.setEnabled(false);
+							String nombretel = CFen.getTelefonos().getNombre();
+							this.comboTel.setToolTipText(nombretel);
+							this.comboTel.setEnabled(true);							
+							this.fieldID = CFen.getId();
+							buttonEliminar.setEnabled(true);
+							
+							
+							
+							
+							
+						}
+					}
+					 
+				}
+					catch(Exception e) {
+						JOptionPane.showMessageDialog(frame, "Error de conexión con el servidor. Intente más tarde.",
+								"Error de conexión!", JOptionPane.WARNING_MESSAGE);
+						return;
+					}
+	}			
+	public void accionEliminar(){
+		
+		String fieldDescripcion = this.textDescripcion.getText().toUpperCase();
+		String fieldNombre= this.textNombre.getText().toUpperCase();
+		String fieldcodigo = this.textCodigo.getText().toUpperCase();
+		String tel = (String) this.comboTel.getSelectedItem();
+		
+		
+		
+		// Si alguno es vacío, mostramos una ventana de mensaje
+		if (fieldcodigo.equals("")){
+			JOptionPane.showMessageDialog(frame, "Debe ingresar el nombre de usuario", "Datos incompletos!",
+					JOptionPane.WARNING_MESSAGE);
+
+			return;
 		}
 
-	}
-	
-	public void accionIngesar(){
-		//long fieldcodigo = Integer.parseInt(this.textcodFen.getText());
-			String 	fieldcodigofen = this.textcodFen.getText().toUpperCase();
-			
-			
-			// Si alguno es vacío, mostramos una ventana de mensaje
-			if (fieldcodigofen.equals("")) {
-				JOptionPane.showMessageDialog(frame, "Debe ingresar el usuario a eliminar", "Datos incompletos!",
-						JOptionPane.WARNING_MESSAGE);
-				return;
-				
-			}
+
 		boolean almaceno;
 		
 		try {
-			List<Fenomeno> us = ClientePDT.existecodigo(fieldcodigofen);
+			List<Fenomeno> us = ClientePDT.existecodigo(fieldcodigo);
 			
 			if(us==null || us.size()==0)
 			{

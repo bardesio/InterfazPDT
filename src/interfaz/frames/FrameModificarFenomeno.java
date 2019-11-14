@@ -226,10 +226,11 @@ public class FrameModificarFenomeno implements ActionListener{
 		
 				try{
 					
-					FenomenoBeanRemote fenomenobeanremote = EJBLocator.getInstance().lookup(FenomenoBeanRemote.class);
-					String codigo = this.textCodigo.getText().toUpperCase();
 					
-					List <Fenomeno> fenomenos = fenomenobeanremote.existecodigo(codigo);
+					//FenomenoBeanRemote fenomenobeanremote = EJBLocator.getInstance().lookup(FenomenoBeanRemote.class);
+					String codigo = this.textCodigo.getText();
+					List <Fenomeno> fenomenos= ClientePDT.existecodigo(codigo);
+					//List <Fenomeno> fenomenos = fenomenobeanremote.existecodigo(codigo);
 					if (fenomenos.isEmpty())
 					{
 						JOptionPane.showMessageDialog(null, "Fenomeno no encontrado");
