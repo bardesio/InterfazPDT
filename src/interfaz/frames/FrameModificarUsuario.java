@@ -19,9 +19,11 @@ import javax.swing.JTextField;
 
 import com.entidades.TipoUsuario;
 import com.entidades.Usuario;
+import com.exception.ServiciosException;
 
 import interfaz.constantes.Constantes;
 import interfaz.locator.ClientePDT;
+import interfaz.validaciones.ValidacionUsuario;
 
 public class FrameModificarUsuario implements ActionListener{
 
@@ -240,14 +242,12 @@ public class FrameModificarUsuario implements ActionListener{
 		this.frame = frame;
 
 	}
-
 	
 	private JComboBox<String> completarComboTipo() {
 		String[] valores = {"CI", "PASAPORTE", "CARTA DE CIUDADANIA", "OTROS"};
 		return new JComboBox<>(valores);
 	}
-	
-	
+		
 	private JComboBox<String> completarComboUsuario(JFrame frame) {
 		
 		try{
@@ -268,10 +268,6 @@ public class FrameModificarUsuario implements ActionListener{
 		
 }
 	
-	/**
-	 * Como implementos Action Listener, quiere decir que soy escuchado de
-	 * eventos. Este método es quien se ejecutan cuando tocan un boton .
-	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
@@ -285,7 +281,11 @@ public class FrameModificarUsuario implements ActionListener{
 		}
 		else if (e.getSource()==this.buttonModificar)
 		{
-			this.accionModificar();
+			try {
+				this.accionModificar();
+			} catch (ServiciosException e1) {
+				e1.printStackTrace();
+			}
 		}
 		
 
@@ -293,14 +293,14 @@ public class FrameModificarUsuario implements ActionListener{
 	
 	private void accionBuscar() {
 
-		String fieldUsuario = this.textUsuario.getText();
+		String fieldUsuario = this.textUsuario.getText().toUpperCase();
 		
 		
 		// Validamos ahora, que exista un Usuario con dicha CI
 				List<Usuario> usuarios;
 				
 				try{
-					usuarios = ClientePDT.existeUsuario(fieldUsuario.toUpperCase());
+					usuarios = ClientePDT.existeUsuario(fieldUsuario);
 				} catch (Exception e){
 					JOptionPane.showMessageDialog(frame, "Error de conexión con el servidor. Intente más tarde.",
 							"Error de conexión!", JOptionPane.WARNING_MESSAGE);
@@ -332,6 +332,10 @@ public class FrameModificarUsuario implements ActionListener{
 					this.comboTipo.setEnabled(true);
 					this.comboTipoUsu.setEnabled(true);
 					
+					//Deshabilito campos
+					this.buttonBuscar.setEnabled(false);
+					this.textUsuario.setEnabled(false);
+					
 					//Cargo los campos
 					
 					this.textApellido.setText(usuarios.get(0).getApellido());
@@ -348,7 +352,7 @@ public class FrameModificarUsuario implements ActionListener{
 		
 	}
 	
-	private void accionModificar() {
+	private void accionModificar() throws ServiciosException {
 
 		// Si es ingresar se validan datos!
 
@@ -359,21 +363,21 @@ public class FrameModificarUsuario implements ActionListener{
 		String fieldMail = this.textMail.getText().toUpperCase();
 		String fieldNumeroDoc = this.textNumeroDoc.getText().toUpperCase();
 		String fieldPass = this.textPass.getText().toUpperCase();
-		String fieldUsuario = this.textUsuario.getText();
+		String fieldUsuario = this.textUsuario.getText().toUpperCase();
 		String Tipodoc = (String) this.comboTipo.getSelectedItem();
 		String tipoUsu = (String) this.comboTipoUsu.getSelectedItem();		
 		
 				
 
-		// Si alguno es vacío, mostramos una ventana de mensaje
-		if (fieldNombre.equals("") || fieldApellido.equals("") || 
-				fieldDireccion.equals("")|| fieldEstado.equals("")|| fieldMail.equals("")|| 
-				fieldNumeroDoc.equals("")|| fieldPass.equals("")) {
-			JOptionPane.showMessageDialog(frame, "Debe completar todos los datos solicitados.", "Datos incompletos!",
-					JOptionPane.WARNING_MESSAGE);
-
-			return;
-		}
+		//Validacion para datos vacios
+				boolean vacio = ValidacionUsuario.verificarVacio(fieldNombre, fieldApellido, fieldUsuario, fieldDireccion, fieldEstado, fieldMail, fieldNumeroDoc, fieldPass);
+				if (vacio == true)
+				{
+					JOptionPane.showMessageDialog(frame, "Debe completar todos los datos solicitados.", "Datos incompletos!",
+							JOptionPane.WARNING_MESSAGE);
+					
+					return;
+				}
 
 
 		boolean almacenado;
@@ -405,7 +409,6 @@ public class FrameModificarUsuario implements ActionListener{
 		}
 
 	}
-	
 	
 	private void accionCancelar() {
 		// si se cancela, se eliminar la ventana

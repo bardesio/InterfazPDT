@@ -15,21 +15,17 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-
-import com.Remote.FenomenoBeanRemote;
-import com.Remote.TIpoUsuarioBeanRemote;
-import com.entidades.Fenomeno;
 import com.entidades.TipoUsuario;
 import com.entidades.Usuario;
-
-import interfaz.constantes.Constantes;
+import com.exception.ServiciosException;
 import interfaz.locator.ClientePDT;
-import interfaz.locator.EJBLocator;
-
+import interfaz.validaciones.*;
 
 public class FrameNuevoUsuario implements ActionListener{
 
+	
 	Long fieldID = null;
 	
 	/** Frame de la ventana */
@@ -79,7 +75,7 @@ public class FrameNuevoUsuario implements ActionListener{
 		this.labelNumeroDoc = new JLabel("Numero de documento:");
 		this.labelPass = new JLabel("Password:");
 		this.labelTipoDoc = new JLabel("Tipo de documento:");
-		this.labelUsuario = new JLabel("Usuario:");
+		this.labelUsuario = new JLabel("Nombre de Usuario:");
 		this.labelTipoUsu = new JLabel("Tipo de Usuario:");
 
 		
@@ -90,7 +86,7 @@ public class FrameNuevoUsuario implements ActionListener{
 		this.textEstado = new JTextField(15);
 		this.textMail = new JTextField(15);
 		this.textNumeroDoc = new JTextField(15);
-		this.textPass = new JTextField(15);
+		this.textPass = new JPasswordField (15);
 		this.textUsuario = new JTextField(15);
 		
 		JButton buttonIngresar = new JButton("Ingresar");
@@ -230,8 +226,6 @@ public class FrameNuevoUsuario implements ActionListener{
 		frame.dispose();}
 	}
 
-	
-
 	private JComboBox<String> completarComboTipo() {
 		String[] valores = {"CI", "PASAPORTE", "CARTA DE CIUDADANIA", "OTROS"};
 		return new JComboBox<>(valores);
@@ -255,10 +249,6 @@ public class FrameNuevoUsuario implements ActionListener{
 		return combo;
 	}
 
-	/**
-	 * Como implementos Action Listener, quiere decir que soy escuchado de
-	 * eventos. Este método es quien se ejecutan cuando tocan un boton .
-	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
@@ -267,12 +257,17 @@ public class FrameNuevoUsuario implements ActionListener{
 		if (e.getSource() == this.buttonCancelar) {
 			this.accionCancelar();
 		} else {
-			this.accionIngesar();
+				try {
+					this.accionIngesar();
+				} catch (ServiciosException e1) {
+					e1.printStackTrace();
+				}
+		 
 		}
 
 	}
 	
-	private void accionIngesar() {
+	private void accionIngesar() throws ServiciosException {
 
 		// Si es ingresar se validan datos!
 
@@ -287,16 +282,17 @@ public class FrameNuevoUsuario implements ActionListener{
 		String Tipodoc = (String) this.comboTipo.getSelectedItem();
 		String tipoUsu = (String) this.comboTipoUsu.getSelectedItem();		
 
-		// Si alguno es vacío, mostramos una ventana de mensaje
-		if (fieldNombre.equals("") || fieldApellido.equals("") || fieldUsuario.equals("")|| 
-				fieldDireccion.equals("")|| fieldEstado.equals("")|| fieldMail.equals("")|| 
-				fieldNumeroDoc.equals("")|| fieldPass.equals("")) {
+		
+		//Validacion para datos vacios
+		boolean vacio = ValidacionUsuario.verificarVacio(fieldNombre, fieldApellido, fieldUsuario, fieldDireccion, fieldEstado, fieldMail, fieldNumeroDoc, fieldPass);
+		if (vacio == true)
+		{
 			JOptionPane.showMessageDialog(frame, "Debe completar todos los datos solicitados.", "Datos incompletos!",
 					JOptionPane.WARNING_MESSAGE);
-
+			
 			return;
 		}
-
+	
 		
 		// Si estamos aquí,..quiere decir que no hay errores. Almacenamos el
 		// Usuario y volvemos al menu
@@ -307,7 +303,7 @@ public class FrameNuevoUsuario implements ActionListener{
 			
 			List<Usuario> us = ClientePDT.existeUsuario(fieldUsuario);
 			
-			//Si la lista es de tamaño
+			//Si la lista es de tamaño 0
 			if (us == null || us.size() == 0)
 			{
 				//Intento crear el usuario
@@ -320,7 +316,6 @@ public class FrameNuevoUsuario implements ActionListener{
 						JOptionPane.showMessageDialog(frame, "El Usuario ha sido registrado con éxito.",
 								"Usuario Registrado!", JOptionPane.INFORMATION_MESSAGE);
 						
-						// cerramos la ventanta
 						this.frame.dispose();
 		
 					}
@@ -373,12 +368,11 @@ public class FrameNuevoUsuario implements ActionListener{
 		}
 	}
 		
-
-	
 	private void accionCancelar() {
 		// si se cancela, se eliminar la ventana
 		this.frame.dispose();
 
 	}
 
+	
 }
