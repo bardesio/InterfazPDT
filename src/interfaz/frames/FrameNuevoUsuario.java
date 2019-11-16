@@ -333,7 +333,7 @@ public class FrameNuevoUsuario implements ActionListener{
 				}
 				
 				//El usuario existe pero esta inactivo
-			}else if (!String.valueOf(us.get(0).getEstado()).equals(Constantes.ACTIVO))
+			}else if (!String.valueOf(us.get(0).getEstado()).equals("ACTIVO"))
 				{
 				try {
 					fieldID = us.get(0).getId();

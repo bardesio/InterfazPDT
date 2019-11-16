@@ -309,7 +309,7 @@ public class FrameModificarUsuario implements ActionListener{
 				}
 				
 				
-				if (usuarios==null || usuarios.size() == 0 || usuarios.get(0).getEstado().equals(Constantes.INACTIVO)) {
+				if (usuarios==null || usuarios.size() == 0 || usuarios.get(0).getEstado().equals("INACTIVO")) {
 					JOptionPane.showMessageDialog(frame, "El nombre de usuario ingresado no existe.",
 							"Usuario Existente!", JOptionPane.WARNING_MESSAGE);
 
