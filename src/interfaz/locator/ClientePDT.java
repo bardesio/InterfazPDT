@@ -61,17 +61,13 @@ public class ClientePDT {
 		List<TipoUsuario> TP = tipousuarioBeanRemote.obtenerTodoslosTipos(); 
 		return TP;
 	}
-	
-	
 		
-	
-	public  List<Usuario> Login(String usuario, String pass) throws Exception {
+	public  static List<Usuario> Login(String usuario, String pass) throws Exception {
 
 		UsuarioBeanRemote usuarioBeanRemote = EJBLocator.getInstance().lookup(UsuarioBeanRemote.class);
 		return usuarioBeanRemote.Login(usuario, pass);
 	}
 	
-		
 /***************************************************FENOMENO*******************************************************/
 	public static boolean ingresarnuevoFenomeno(long id,String fieldCodigo ,String fieldNombre , String fieldDescripcion,String tels) throws  Exception {
 		

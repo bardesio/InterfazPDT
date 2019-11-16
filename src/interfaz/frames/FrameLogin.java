@@ -1,3 +1,4 @@
+
 package interfaz.frames;
 
 import java.awt.EventQueue;
@@ -34,10 +35,12 @@ import com.Remote.*;
 
 public class FrameLogin extends JFrame {
 
+	/** Frame de la ventana */
 	private JFrame jframe;
+	
 	private JPanel jpanel;
-	public static JTextField txt_usu;
-	public static JTextField pass;
+	public static JTextField textUsuario;
+	public static JTextField textPass;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -52,26 +55,15 @@ public class FrameLogin extends JFrame {
 		});
 	}
 	
-
-	
-
-	/**
-	 * Initialize the contents of the frame.
-	 */
 	private void initialize() {
 		jframe = new JFrame();
 		jframe.setBounds(100, 100, 450, 300);
 		jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
-	
-	
-	
-	
 	public FrameLogin()
 
-	{
-		
+	{		
 		initialize();
 		jframe.setTitle("Bienvenido 404 Not Found");
 		jframe.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
@@ -83,35 +75,29 @@ public class FrameLogin extends JFrame {
 		jpanel.setLayout(null);
 	
 		//Defino la etiqueta Usuario
-		JLabel lblNewLabel = new JLabel("Usuario");
-		lblNewLabel.setBounds(54, 44, 46, 14);
+		JLabel lblNewLabel = new JLabel("Nombre de Usuario:");
+		lblNewLabel.setBounds(36, 44, 120, 14);
 		jpanel.add(lblNewLabel);
 				
 		//Defino la etiqueta Contraseña
-		JLabel lblContrasea = new JLabel("Contraseña");
-		lblContrasea.setBounds(36, 76, 89, 14);
+		JLabel lblContrasea = new JLabel("Contraseña: ");
+		lblContrasea.setBounds(36, 76, 90, 14);
 		jpanel.add(lblContrasea);  
 	
 		//Defino el cuadro de texto Usuario 
-		txt_usu = new JTextField();
-		txt_usu.setBounds(110, 41, 86, 20);
-		jpanel.add(txt_usu);
-		txt_usu.setColumns(10);
-		txt_usu.requestFocus();        	
+		this.textUsuario = new JTextField();
+		this.textUsuario.setBounds(170, 41, 86, 20);
+		jpanel.add(textUsuario);
+		textUsuario.setColumns(10);
+		textUsuario.requestFocus();        	
 	
 		//Defino el cuadro de texto de la contraseña
-		pass = new JPasswordField();
-		pass.setBounds(110, 73, 86, 20);
-		pass.transferFocus();
-		jpanel.add(pass);
+		textPass = new JPasswordField();
+		textPass.setBounds(170, 73, 86, 20);
+		textPass.transferFocus();
+		jpanel.add(textPass);
 		
 	
-		//Defino el objeto Menú del tipo Menu Principal 
-		//que es la clase que contiene el menú de todo el programa
-		 //VentanaPrincipal menuprincipal= new VentanaPrincipal();
-		 //VerificarUsuario usu= new VerificarUsuario();
-		this.dispose();
-
                     
 		//Defino el botón Aceptar
 				JButton btnAceptar = new JButton("Aceptar");
@@ -119,60 +105,64 @@ public class FrameLogin extends JFrame {
 					@Override//Establezco que debe hacer cuando hago clic
 					public void actionPerformed(ActionEvent e) {
 						
-						String usuario = txt_usu.getText();
-						String password = pass.getText();
+						String usuario = textUsuario.getText().toUpperCase();
+						String password = textPass.getText().toUpperCase();
 					
 						//Usuario u1= new Usuario();
 						try {
-							UsuarioBeanRemote usuariobeanremote = EJBLocator.getInstance().lookup(UsuarioBeanRemote.class);		
-							List<Usuario>u = usuariobeanremote.Login(usuario,password);
+							List<Usuario> usuarios = ClientePDT.Login(usuario, password);
 							//llamarlo desde el clietnte
-							if(u.isEmpty())
+							if(usuarios.isEmpty())
 							{
-								JOptionPane.showMessageDialog(null, "Usuario no encontrado, Datos Invalidos!");
+								JOptionPane.showMessageDialog(null, "Usuario y/o Contraseña invalida");
 								return;
 							}
-							else {	
-							for (Usuario usu : u)
-							{
-								String user=usu.getUsuario();
-								String pass=usu.getPass();
-								usu.setUsuario(user);
-								usu.setPass(pass);
-							     JOptionPane.showMessageDialog(null, "Bienvenido\n"
-						                    + "Has ingresado satisfactoriamente al sistema",   "Mensaje de bienvenida",
-						                    JOptionPane.INFORMATION_MESSAGE);
+							else {
 								
-							}	
+									jframe.dispose();
+									FramePrincipal menuprincipal= new FramePrincipal(usuarios);
+								    menuprincipal.setVisible(true);
+								
+								for (Usuario usu : usuarios)
+								{
+									String user=usu.getUsuario();
+									String pass=usu.getPass();
+									usu.setUsuario(user);
+									usu.setPass(pass);
+								     JOptionPane.showMessageDialog(null, "Bienvenido \n"
+							                    + usuario + " Has ingresado satisfactoriamente al sistema",   "Mensaje de bienvenida",
+							                    JOptionPane.INFORMATION_MESSAGE); 
+									
+								}								
+								
 							}
-							this.dispose();
-		                    FramePrincipal bienvenido = new FramePrincipal();
-		                    bienvenido.setVisible(true);
+							
 						}
 							
-						
-			               
-			                    //menuprincipal.setVisible(true);
-			                    
-								//dispose();
-						
-							
 						catch (Exception e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}					
-					
+							JOptionPane.showMessageDialog(null, "Error en el servidor, por favor contacte a soporte tecnico",
+									"Error de conexión!", JOptionPane.WARNING_MESSAGE);
+							dispose();
+							}				
 					}
 
-					private void dispose() {
-						// TODO Auto-generated method stub
-						
-					}
+					
 					
 				});
-				btnAceptar.setBounds(120, 111, 98, 20);
+				btnAceptar.setBounds(100, 109, 89, 23);
 				jpanel.add(btnAceptar);
-	}
+				
+				//Defino el botón Cancelar
+				JButton btnCancelar = new JButton("Cancelar");
+				btnCancelar.addActionListener(new ActionListener() { //Establezco que debe hacer cuando hago clic en Cancelar
+					public void actionPerformed(ActionEvent e) {
+						System.exit(0); // Salgo del sistema
+					}
+				});
+				btnCancelar.setBounds(200, 109, 89, 23);
+				jpanel.add(btnCancelar);
+			
+				}
 	
 }
 

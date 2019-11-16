@@ -2,33 +2,37 @@ package interfaz.frames;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
+import com.entidades.Usuario;
+import interfaz.locator.ClientePDT;
+
 public class FramePrincipal {
 
-	/**
-	 * Launch the application.
-	 */
+	
+	static List<Usuario> listUsuarios = null;
+	
+	public FramePrincipal(List<Usuario> usuarios) {
+	listUsuarios = usuarios;
+	}
+	
 	public static void main(String[] args) {
 	javax.swing.SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				
 				createAndShowGUI();
 			}
 		});
 	}
 
 	
-	
-	
 /** Método que inicializa toda la ventana principal */
 	
 	private static void createAndShowGUI() {
-
 		
 		JFrame frame = new JFrame("Green Place");
 		
@@ -37,8 +41,6 @@ public class FramePrincipal {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		initializeMenuBar(frame);
-
-		// Display the window.
 		frame.setVisible(true);
 	}
 	
@@ -46,24 +48,37 @@ public class FramePrincipal {
 	
 	private static void initializeMenuBar(JFrame frame) {
 		
-		JMenuBar menuBar = new JMenuBar();
+	
+		try {
+			JMenuBar menuBar = new JMenuBar();
+			
+			if (listUsuarios.get(0).getTipousuario().getNombre().equals("ADMINISTRADOR"))
+			{
+				initializeMenuUsuarios(menuBar, frame);
+				initializeMenuObservaciones(menuBar, frame);
+				initializeMenuFenomenos(menuBar, frame);
+			}
+			else if (listUsuarios.get(0).getTipousuario().getNombre().equals("EXPERTO"))
+			{
+				initializeMenuObservaciones(menuBar, frame);
+			}
+			else if (listUsuarios.get(0).getTipousuario().getNombre().equals("VOLUNTARIO"))
+			{
+				initializeMenuListadoporZona(menuBar, frame);
+				initializeMenuObservaciones(menuBar, frame);
+			}
+			
+			frame.setJMenuBar(menuBar);
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
-		initializeMenuUsuarios(menuBar, frame);
-		initializeMenuFenomenos(menuBar, frame);
-		initializeMenuObservaciones(menuBar, frame);
-		initializeMenuListadoporZona(menuBar, frame);
-		
-		//initializeMenuListadoporFiltros(menuBar, frame);
-		
-		
-		frame.setJMenuBar(menuBar);
-
 }
-
 	
 
-
-	/** Inicialicación de botones del menu de Fenomeno */
+/** Inicialicación de botones del menu de Fenomeno */
 
 private static void initializeMenuFenomenos(JMenuBar menuBar, final JFrame frame) {
 JMenu fenomeno = new JMenu("Fenomeno");
@@ -127,7 +142,7 @@ menuBar.add(listado);
 
 /** Inicialicación de botones del menu de clientes */
 	
-	private static void initializeMenuUsuarios(JMenuBar menuBar, final JFrame frame) {
+private static void initializeMenuUsuarios(JMenuBar menuBar, final JFrame frame) {
 		
 		JMenu usuarios = new JMenu("Usuarios");
 		
@@ -166,8 +181,10 @@ menuBar.add(listado);
 		usuarios.add(eliminarUsuario);
 		menuBar.add(usuarios);		
 	}
+
+	/** Inicialicación de botones del menu de clientes */	
 	
-	private static void initializeMenuObservaciones(JMenuBar menuBar, final JFrame frame) {
+private static void initializeMenuObservaciones(JMenuBar menuBar, final JFrame frame) {
 		JMenu menu = new JMenu("Observaciones");
 		JMenuItem item1 = new JMenuItem("Observaciones");
 
@@ -185,10 +202,13 @@ menuBar.add(listado);
 		menuBar.add(menu);
 		}
 
-public void setVisible(boolean b) {
-	// TODO Auto-generated method stub
-	
-}
+
+
+
+	public void setVisible(boolean b) {
+		createAndShowGUI();
+	}
+
 	
 
 }

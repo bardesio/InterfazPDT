@@ -223,7 +223,8 @@ public class FrameNuevoUsuario implements ActionListener{
 	}else{
 		JOptionPane.showMessageDialog(frame, "Error en el servidor, por favor contacte a soporte tecnico",
 				"Error de conexión!", JOptionPane.WARNING_MESSAGE);
-		frame.dispose();}
+		frame.dispose();
+		}
 	}
 
 	private JComboBox<String> completarComboTipo() {
