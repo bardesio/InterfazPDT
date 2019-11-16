@@ -21,6 +21,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.RowFilter;
+import javax.swing.RowFilter.ComparisonType;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
@@ -41,7 +42,8 @@ public class FrameListadoporZona implements ActionListener {
 	private JTable tablaObservaciones;
 
 	/** Date Picker */
-	private JDatePickerImpl datePicker;
+	private JDatePickerImpl datePickerFin;
+	private JDatePickerImpl datePickerInicio;
 
 	/** Labels */
 	private JLabel labelFechaInicio;
@@ -96,16 +98,16 @@ public class FrameListadoporZona implements ActionListener {
 		listarObservacionesPanel.add(this.labelFechaInicio, constraints);
 
 		constraints.gridx = 1;
-		this.datePicker = this.crearDatePicker();
-		listarObservacionesPanel.add(this.datePicker, constraints);
+		this.datePickerInicio = this.crearDatePicker();
+		listarObservacionesPanel.add(this.datePickerInicio, constraints);
 
 		constraints.gridx = 0;
 		constraints.gridy = 1;
 		listarObservacionesPanel.add(this.labelFechaFin, constraints);
 		
 		constraints.gridx = 1;
-		this.datePicker = this.crearDatePicker();
-		listarObservacionesPanel.add(this.datePicker, constraints);
+		this.datePickerFin = this.crearDatePicker();
+		listarObservacionesPanel.add(this.datePickerFin, constraints);
 		
 		constraints.gridx = 0;
 		constraints.gridy = 2;
@@ -164,14 +166,14 @@ public class FrameListadoporZona implements ActionListener {
 			return null;
 		}
 
-		String[] nombreColumnas = { "Id", "Usuario", "Codigo Fenomeno", "Localidad", "Descripcion", "Imagen"
-				, "Latitud", "Longitud","Altitud","Estado", "Fecha"};
+		String[] nombreColumnas = { "Nombre de Zona", "Nombre del Fenomeno", "Descripcion", "Latitud", "Longitud", "Altitud"
+				, "Fecha"};
 
 		/*
-		 * El tamaño de la tabla es, 11 columnas (cantidad de datos a mostrar) y
+		 * El tamaño de la tabla es, 7 columnas (cantidad de datos a mostrar) y
 		 * la cantidad de filas depende de la cantida de consultas
 		 */
-		Object[][] datos = new Object[observaciones.size()][11];
+		Object[][] datos = new Object[observaciones.size()][7];
 
 		/* Cargamos la matriz con todos los datos */
 		int fila = 0;
@@ -180,17 +182,13 @@ public class FrameListadoporZona implements ActionListener {
 
 		for (Observacion o : observaciones) {
 
-			datos[fila][0] = o.getId();
-			datos[fila][1] = o.getUsuario().getNombre();
-			datos[fila][2] = o.getFenomeno().getCodigo();
-			datos[fila][3] = o.getLocalidad().getNombreLoc();
-			datos[fila][4] = o.getDescripcion();
-			datos[fila][5] = o.getImagen();
-			datos[fila][6] = o.getLatitud();
-			datos[fila][7] = o.getLongitud();
-			datos[fila][8] = o.getAltitud();
-			datos[fila][9] = o.getEstado().getNombre();
-			datos[fila][10] = formateadorFecha.format(o.getFecha());
+			datos[fila][0] = o.getLocalidad().getDepartamento().getZona().getNombre_zona();
+			datos[fila][1] = o.getFenomeno().getNombreFen();
+			datos[fila][2] = o.getDescripcion();
+			datos[fila][3] = o.getLatitud();
+			datos[fila][4] = o.getLongitud();
+			datos[fila][5] = o.getAltitud();
+			datos[fila][6] = formateadorFecha.format(o.getFecha());
 			fila++;
 
 		}
@@ -245,25 +243,34 @@ public class FrameListadoporZona implements ActionListener {
 	private void accionLimpiarFiltro() {
 
 		this.tablaObservaciones.setRowSorter(null);
-		this.datePicker.getModel().setValue(null);
+		this.datePickerFin.getModel().setValue(null);
+		this.textZona.setText("");
+		this.datePickerInicio.getModel().setValue(null);
+
 	}
 
 	private void accionFiltrar() {
 
 		TableRowSorter<TableModel> filtro = new TableRowSorter<>(this.tablaObservaciones.getModel());
 
-		Date fecha = (Date) this.datePicker.getModel().getValue();
-
+		Date fechaInicio = (Date) this.datePickerInicio.getModel().getValue();
+		Date fechaFin = (Date) this.datePickerFin.getModel().getValue();
+		
 		SimpleDateFormat formateadorFecha = new SimpleDateFormat("dd/MM/yyyy");
-
-		if (fecha != null) {
-
-			String fechaString = formateadorFecha.format(fecha);
-
-			filtro.setRowFilter(RowFilter.regexFilter(fechaString, 0));
-
+		String fieldZona = this.textZona.getText();
+		
+		if (fechaInicio != null && fechaFin != null && fieldZona != null) {
+			
+			filtro.setRowFilter(RowFilter.dateFilter(ComparisonType.AFTER, fechaInicio , 6));
+			filtro.setRowFilter(RowFilter.dateFilter(ComparisonType.BEFORE, fechaFin, 6));
+			filtro.setRowFilter(RowFilter.regexFilter(this.textZona.getText(), 0));
 			this.tablaObservaciones.setRowSorter(filtro);
-
+		}
+		
+		else {
+			JOptionPane.showMessageDialog(frame, "Debe completar todos los datos solicitados.", "Datos incompletos!",
+					JOptionPane.WARNING_MESSAGE);
+			return;
 		}
 	}
 
