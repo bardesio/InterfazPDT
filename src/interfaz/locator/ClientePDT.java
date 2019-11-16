@@ -69,10 +69,10 @@ public class ClientePDT {
 	}
 	
 /***************************************************FENOMENO*******************************************************/
-	public static boolean ingresarnuevoFenomeno(long id,String fieldCodigo ,String fieldNombre , String fieldDescripcion,String tels) throws  Exception {
+	public static boolean ingresarnuevoFenomeno(long id,String fieldCodigo ,String fieldNombre, String fieldEstado , String fieldDescripcion,String tels) throws  Exception {
 		
 		FenomenoBeanRemote fenomenobeanremote = EJBLocator.getInstance().lookup(FenomenoBeanRemote.class);
-		return fenomenobeanremote.crearFenomeno(id,fieldCodigo, fieldNombre, fieldDescripcion,tels);
+		return fenomenobeanremote.crearFenomeno(id,fieldCodigo,fieldEstado, fieldNombre, fieldDescripcion,tels);
 	}
 	
 	public static List<Fenomeno> existecodigo(String codigo) throws Exception {
@@ -83,10 +83,10 @@ public class ClientePDT {
 
 	}
 	
-	public static boolean ModificarFenomeno (long id, String codigo, String nombreFen,String descripcion,String tel) throws Exception
+	public static boolean ModificarFenomeno (Long id, String codigo,String fieldEstado, String nombreFen,String descripcion,String tel) throws Exception
 	{
 		FenomenoBeanRemote fenomenobeanremote = EJBLocator.getInstance().lookup(FenomenoBeanRemote.class);
-		return fenomenobeanremote.modificarFenomeno(id, codigo, nombreFen, descripcion,tel);
+		return fenomenobeanremote.modificarFenomeno(id, codigo,fieldEstado, nombreFen, descripcion,tel);
 	}
 	
 	public static boolean EliminarFenomeno(long codigo) throws Exception {

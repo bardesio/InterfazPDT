@@ -20,14 +20,16 @@ import javax.swing.JTextField;
 
 import org.jgroups.protocols.TUNNEL;
 
+import com.entidades.Fenomeno;
 import com.entidades.Telefono;
 import com.entidades.TipoUsuario;
 
+import interfaz.constantes.Constantes;
 import interfaz.locator.ClientePDT;
 
 public class FrameNuevoFenomeno implements ActionListener {
 
-	
+	Long id =  null;
 	private JFrame frame;
 
 	/** Atributos de labels */
@@ -35,6 +37,7 @@ public class FrameNuevoFenomeno implements ActionListener {
 	private JLabel labelNombre;
 	private JLabel labelDescripcion;
 	private JLabel labeltelefono;
+	private JLabel labelestado;
 	
 	private JComboBox<String> comboTel;
 	
@@ -42,7 +45,7 @@ public class FrameNuevoFenomeno implements ActionListener {
 	private JTextField textNombre;
 	private JTextField textDescripcion;
 	private JTextField textCodigo;
-
+	private JTextField textEstado;
 	/** Atributos de Botones */
 	private JButton buttonIngresar;
 	private JButton buttonCancelar;
@@ -55,6 +58,7 @@ public class FrameNuevoFenomeno implements ActionListener {
 	
 		
 		this.labelCodigo = new JLabel("Codigo:"); 
+		this.labelestado = new JLabel("Estado:");
 		this.labelNombre = new JLabel("Nombre:");
 		this.labelDescripcion = new JLabel("Descripcion:");
 		this.labeltelefono = new JLabel ("Telefonos de Emergencia:");
@@ -62,6 +66,7 @@ public class FrameNuevoFenomeno implements ActionListener {
 		 this.textCodigo=new JTextField(15);
 		 this.textNombre= new JTextField(15);
 		 this.textDescripcion = new JTextField(15);
+		 this.textEstado = new JTextField(15);
 		
 		JButton buttonIngresar = new JButton("Ingresar");
 		buttonIngresar.addActionListener((ActionListener) this);
@@ -99,21 +104,35 @@ public class FrameNuevoFenomeno implements ActionListener {
 		
 		constraints.gridx = 0;
 		constraints.gridy = 1;
-		nuevaFenomenoPanel.add(this.labelNombre, constraints);
+		nuevaFenomenoPanel.add(this.labelestado, constraints);
 
+		constraints.gridx = 1;
+		nuevaFenomenoPanel.add(this.textEstado, constraints);
+		this.textEstado.setText("ACTIVO");
+		this.textEstado.setEditable(false);
+		
+		
+		constraints.gridx = 0;
+		constraints.gridy = 2;
+		nuevaFenomenoPanel.add(this.labelNombre, constraints);
+		
 		constraints.gridx = 1;
 		nuevaFenomenoPanel.add(this.textNombre, constraints);
 		
 		constraints.gridx = 0;
-		constraints.gridy = 2;
+		constraints.gridy = 3;
 		nuevaFenomenoPanel.add(this.labelDescripcion, constraints);
 
 		constraints.gridx = 1;
 		nuevaFenomenoPanel.add(this.textDescripcion, constraints);
 		
 		constraints.gridx = 0;
-		constraints.gridy = 3;
+		constraints.gridy = 4;
 		nuevaFenomenoPanel.add(this.labeltelefono, constraints);
+		
+		
+		
+		
 		
 		constraints.gridx = 1;
 		 this.comboTel = this.completarComboTelefono(frame);
@@ -132,16 +151,16 @@ public class FrameNuevoFenomeno implements ActionListener {
 			constraints.gridy = 10;
 			constraints.gridwidth = 5;
 			constraints.anchor = GridBagConstraints.CENTER;
-			nuevaFenomenoPanel.add(buttonCancelar, constraints);
+			nuevaFenomenoPanel.add(buttonCancelar, constraints);																																																																															
 							
 	
 			nuevaFenomenoPanel
 					.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Datos del Fenomeno"));
 	
 			frame.getContentPane().add(nuevaFenomenoPanel);
-	
-			frame.pack();
-			frame.setVisible(true);
+																																																																												
+			frame.pack();																																							
+			frame.setVisible(true);																																												
 	
 			this.frame = frame;
 		}else
@@ -166,7 +185,7 @@ public class FrameNuevoFenomeno implements ActionListener {
 		
 		for(Telefono tu : this.telefonos){
 			
-			combo.addItem(tu.getNombre());
+			combo.addItem(tu.getNombre()+'-'+tu.getNumero());
 			
 		}
 		
@@ -204,11 +223,12 @@ public class FrameNuevoFenomeno implements ActionListener {
 		String fieldNombre = this.textNombre.getText();
 		String fieldDescripcion = this.textDescripcion.getText();
 		String fieldCodigo = this.textCodigo.getText();
+		String fieldEstado = "ACTIVO";
 		
 		String tels =(String) this.comboTel.getSelectedItem();
 				
 		// Si alguno es vacío, mostramos una ventana de mensaje
-		if (fieldNombre.equals("") || fieldDescripcion.equals("")|| fieldCodigo.equals("")) {
+		if (fieldNombre.equals("") || fieldDescripcion.equals("")|| fieldCodigo.equals("")|| fieldEstado.equals("")){
 			JOptionPane.showMessageDialog(frame, "Debe completar todos los datos solicitados.", "Datos incompletos!",
 					JOptionPane.WARNING_MESSAGE);
 
@@ -217,44 +237,79 @@ public class FrameNuevoFenomeno implements ActionListener {
 		
 			
 		boolean almacenado;
-		long id=0;
+		
 		
 		try{
+			List<Fenomeno> fn = ClientePDT.existecodigo(fieldCodigo);
 			
-			almacenado= ClientePDT.ingresarnuevoFenomeno(id,fieldCodigo, fieldNombre, fieldDescripcion,tels);
+			
+			if(fn == null || fn.size() == 0)
+			{
+				try {
+					long id=1l;
+					almacenado= ClientePDT.ingresarnuevoFenomeno(id,fieldCodigo,fieldEstado, fieldNombre, fieldDescripcion,tels);
+					
+					
+					//Quiere decir que Almacenado devolvio true
+					if(almacenado) {
+						JOptionPane.showMessageDialog(frame, "El Usuario ha sido registrado con éxito.",
+								"Usuario Registrado!", JOptionPane.INFORMATION_MESSAGE);
+						// cerramos la ventanta
+						this.frame.dispose();
+		
+					}
+				
+			
+			}catch (Exception e){
+				JOptionPane.showMessageDialog(frame, "Error de conexión con el servidor. Intente más tarde.",
+						"Error de conexión!", JOptionPane.WARNING_MESSAGE);
+
+				return;
+			}
+			}else if (!String.valueOf(fn.get(0).getEstado()).equals(Constantes.ACTIVO))
+				{
+				try {
+					id = fn.get(0).getId();
+					almacenado = ClientePDT.ModificarFenomeno(id,fieldCodigo,fieldEstado, fieldNombre, fieldDescripcion,tels);
+					
+					if(almacenado) {
+						
+						JOptionPane.showMessageDialog(frame, "El Usuario ha sido registrado con éxito.",
+								"Usuario Registrado!", JOptionPane.INFORMATION_MESSAGE);
+						
+						// cerramos la ventanta
+						this.frame.dispose();
+		
+					}
+				}
+				catch(Exception e){
+					JOptionPane.showMessageDialog(frame, "Error de conexión con el servidor. Intente más tarde.",
+							"Error de conexión!", JOptionPane.WARNING_MESSAGE);
+					
+					return;
+					}
+				}
+			//El usuario ya existe en el sistema
+			else {
+				JOptionPane.showMessageDialog(null, "El usuario ya existe en el sistema");
+				return;
+				}
 			
 			
-		}
-		catch (Exception e){
-			JOptionPane.showMessageDialog(frame, "Error de conexión con el servidor. Intente más tarde.",
+		}catch(Exception e){
+			JOptionPane.showMessageDialog(frame, "Error con el servidor, por favor contacte con su administrador",
 					"Error de conexión!", JOptionPane.WARNING_MESSAGE);
-			
-			// cerramos la ventanta
-			this.frame.dispose();
+
 			return;
 		}
-
-		if (almacenado) {
-			JOptionPane.showMessageDialog(frame, "El Fenomeno ha sido registrada con éxito.",
-					"Fenomeno Registrada!", JOptionPane.INFORMATION_MESSAGE);
-			
-			// cerramos la ventanta
-			this.frame.dispose();
-
-			
-		}
-		else{
-			JOptionPane.showMessageDialog(frame, "Hubo un error al almacenar. Intente nuevamente más tarde",
-					"Error al registrar!", JOptionPane.ERROR_MESSAGE);
-		}
-
 	}
+		
 
+	
 	private void accionCancelar() {
 		// si se cancela, se eliminar la ventana
 		this.frame.dispose();
 
 	}
-
 
 }
