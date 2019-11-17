@@ -185,7 +185,7 @@ public class FrameNuevoFenomeno implements ActionListener {
 		
 		for(Telefono tu : this.telefonos){
 			
-			combo.addItem(tu.getNombre()+'-'+tu.getNumero());
+			combo.addItem(tu.getNombre());
 			
 		}
 		
@@ -266,7 +266,7 @@ public class FrameNuevoFenomeno implements ActionListener {
 
 				return;
 			}
-			}else if (!String.valueOf(fn.get(0).getEstado()).equals(Constantes.ACTIVO))
+			}else if (!String.valueOf(fn.get(0).getEstado()).equals("ACTIVO"))
 				{
 				try {
 					id = fn.get(0).getId();

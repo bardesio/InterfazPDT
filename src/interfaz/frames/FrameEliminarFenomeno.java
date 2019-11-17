@@ -54,6 +54,7 @@ public class FrameEliminarFenomeno implements ActionListener {
 		private JLabel labelNombre;
 		private JLabel labelDescripcion;
 		private JLabel labeltelefono;
+		private JLabel labelestado;
 		
 		private JComboBox<String> comboTel;
 		
@@ -64,6 +65,7 @@ public class FrameEliminarFenomeno implements ActionListener {
 		private JTextField textDescripcion;
 		private JTextField textCodigo;
 		private JTextField textCodigofen;
+		private JTextField textEstado;
 
 		/** Atributos de Botones */
 		private JButton buttonEliminar;
@@ -77,13 +79,14 @@ public class FrameEliminarFenomeno implements ActionListener {
 		
 			this.labelCodigo = new JLabel("Codigo:"); 
 			this.labelNombre = new JLabel("Nombre:");
+			this.labelestado = new JLabel("Estado:");
 			this.labelDescripcion = new JLabel("Descripcion:");
 			this.labeltelefono = new JLabel ("Telefonos de Emergencia:");
 			
 			 this.textCodigo=new JTextField(15);
 			 this.textNombre= new JTextField(15);
 			 this.textDescripcion = new JTextField(15);
-			 
+			 this.textEstado = new JTextField(15);
 			
 			JButton buttonEliminar = new JButton("Eliminar");
 			buttonEliminar.addActionListener(this);
@@ -121,26 +124,42 @@ public class FrameEliminarFenomeno implements ActionListener {
 		constraints.gridx = 1;
 		eliminarFenomenoPanel.add(this.textCodigo, constraints);
 		
+		
 		constraints.gridx = 0;
 		constraints.gridy = 1;
-		eliminarFenomenoPanel.add(this.labelNombre, constraints);
+		eliminarFenomenoPanel.add(this.labelestado, constraints);
 
+		constraints.gridx = 1;
+		eliminarFenomenoPanel.add(this.textEstado, constraints);
+		this.textEstado.setText("ACTIVO");
+		this.textEstado.setEditable(false);
+		
+		
+		constraints.gridx = 0;
+		constraints.gridy = 2;
+		eliminarFenomenoPanel.add(this.labelNombre, constraints);
+		
 		constraints.gridx = 1;
 		eliminarFenomenoPanel.add(this.textNombre, constraints);
 		
 		constraints.gridx = 0;
-		constraints.gridy = 2;
+		constraints.gridy = 3;
 		eliminarFenomenoPanel.add(this.labelDescripcion, constraints);
 
 		constraints.gridx = 1;
 		eliminarFenomenoPanel.add(this.textDescripcion, constraints);
-
+		
 		constraints.gridx = 0;
-		constraints.gridy = 3;
+		constraints.gridy = 4;
 		eliminarFenomenoPanel.add(this.labeltelefono, constraints);
+		
+		
+		
+		
 		
 		constraints.gridx = 1;
 		 this.comboTel = this.completarComboTelefono(frame);
+
 		
 			if (this.comboTel!=null) {
 				eliminarFenomenoPanel.add(this.comboTel,constraints);
@@ -246,6 +265,8 @@ public class FrameEliminarFenomeno implements ActionListener {
 																					
 							String dato=CFen.getCodigo();
 							textCodigo.setText(dato);
+							String estado=CFen.getEstado();
+							this.textEstado.setText(estado);
 							String desc=CFen.getDescripcion();
 							this.textDescripcion.setText(desc);
 							String nom=CFen.getNombreFen();
