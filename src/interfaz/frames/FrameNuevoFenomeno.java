@@ -274,7 +274,7 @@ public class FrameNuevoFenomeno implements ActionListener {
 					
 					if(almacenado) {
 						
-						JOptionPane.showMessageDialog(frame, "El Usuario ha sido registrado con éxito.",
+						JOptionPane.showMessageDialog(frame, "El Fenomeno ha sido registrado con éxito.",
 								"Usuario Registrado!", JOptionPane.INFORMATION_MESSAGE);
 						
 						// cerramos la ventanta
@@ -291,7 +291,7 @@ public class FrameNuevoFenomeno implements ActionListener {
 				}
 			//El usuario ya existe en el sistema
 			else {
-				JOptionPane.showMessageDialog(null, "El usuario ya existe en el sistema");
+				JOptionPane.showMessageDialog(null, "El fenomeno ya existe en el sistema");
 				return;
 				}
 			
