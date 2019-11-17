@@ -1,10 +1,14 @@
 package interfaz.locator;
 
+import java.sql.Blob;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.Remote.*;
+import com.entidades.Estado;
 import com.entidades.Fenomeno;
+import com.entidades.Localidad;
 import com.entidades.Observacion;
 import com.entidades.Telefono;
 import com.entidades.TipoUsuario;
@@ -40,7 +44,6 @@ public class ClientePDT {
 		UsuarioBeanRemote usuarioBeanRemote = EJBLocator.getInstance().lookup(UsuarioBeanRemote.class);
 		return usuarioBeanRemote.CrearUsuario(id, pass, usuario, nombre, apellido, estado, tipodoc, numerodoc, direccion, mail, tipousuario);
 	}
-	
 	
 	public static boolean ModificarUsuario(Long id, String pass, String usuario, String nombre, String apellido, String estado, String tipodoc,
 			String numerodoc, String direccion, String mail, String tipousuario)  throws Exception{
@@ -120,4 +123,71 @@ public class ClientePDT {
 				return null;
 			}
 		}
+		
+		public static List<Fenomeno> obtenerTodosFenomenos() throws Exception {
+			
+			try {
+		ObservacionBeanRemote observacionesBeanRemote = EJBLocator.getInstance().lookup(ObservacionBeanRemote.class);
+		List<Fenomeno> fenomenos = new ArrayList<Fenomeno>();
+		fenomenos = observacionesBeanRemote.obtenerTodosFenomenos();
+		 return fenomenos;
+			}
+			catch (Exception e){
+				System.out.print(e.getLocalizedMessage());
+				return null;
+			}
+		}
+		
+		public static List<Localidad> obtenerTodasLocalidades() throws Exception {
+			
+			try {
+		ObservacionBeanRemote observacionesBeanRemote = EJBLocator.getInstance().lookup(ObservacionBeanRemote.class);
+		List<Localidad> localidades = new ArrayList<Localidad>();
+		localidades = observacionesBeanRemote.obtenerTodasLocalidades();
+		 return localidades;
+			}
+			catch (Exception e){
+				System.out.print(e.getLocalizedMessage());
+				return null;
+			}
+		}
+		
+		public static List<Estado> obtenerTodosEstados() throws Exception {
+			
+			try {
+		ObservacionBeanRemote observacionesBeanRemote = EJBLocator.getInstance().lookup(ObservacionBeanRemote.class);
+		List<Estado> estados = new ArrayList<Estado>();
+		estados = observacionesBeanRemote.obtenerTodosEstados();
+		 return estados;
+			}
+			catch (Exception e){
+				System.out.print(e.getLocalizedMessage());
+				return null;
+			}
+		}
+		
+		public static boolean CrearObservacion(Long id, Usuario usuario, Fenomeno fenomeno, Localidad localidad, 
+	    		String descripcion, Blob imagen, float latitud, float longitud, float altitud, Estado estado, Date fecha) throws Exception{
+			
+			ObservacionBeanRemote observacionBeanRemote = EJBLocator.getInstance().lookup(ObservacionBeanRemote.class);
+			return observacionBeanRemote.CrearObservacion(id, usuario, fenomeno, localidad, descripcion, imagen, latitud, longitud, altitud, estado, fecha);
+		}
+		
+		public static boolean ModificarObservacion(Long id, Usuario usuario, Fenomeno fenomeno, Localidad localidad, 
+	    		String descripcion, Blob imagen, float latitud, float longitud, float altitud, Estado estado, Date fecha)   throws Exception{
+			
+			ObservacionBeanRemote observacionBeanRemote = EJBLocator.getInstance().lookup(ObservacionBeanRemote.class);
+			return observacionBeanRemote.ModificarObservacion(id, usuario, fenomeno, localidad, descripcion, imagen, latitud, longitud, altitud, estado, fecha);
+		}
+		
+		public static boolean EliminarObservacion(long id) throws Exception {
+
+			ObservacionBeanRemote observacionBeanRemote = EJBLocator.getInstance().lookup(ObservacionBeanRemote.class);
+			return observacionBeanRemote.EliminarObservacion(id);
+		}
+
+
+
+
+
 }
