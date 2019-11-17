@@ -84,11 +84,7 @@ public class FrameNuevaObservacion implements ActionListener{
 	private List<Localidad> localidades;
 	private List<Estado> estados;
 
-	public FrameNuevaObservacion(JFrame frame2) {
-		// TODO Auto-generated constructor stub
-	}
-
-	private void FrameNuevaObservacion(JFrame framePadre) {
+	public FrameNuevaObservacion(JFrame framePadre) {
 
 		this.labelIdentificacion = new JLabel("Identificacion:");
 		this.labelUsuario = new JLabel("Nombre de usuario:");
@@ -217,7 +213,7 @@ public class FrameNuevaObservacion implements ActionListener{
 		nuevaObservacionPanel.add(this.labelFecha, constraints);		 
 		
 		constraints.gridx = 1;
-		nuevaObservacionPanel.add(this.datePickerFecha, constraints);
+		//nuevaObservacionPanel.add(this.datePickerFecha, constraints);
 		
 		
 		if (this.comboEstado!=null || this.comboFenomenos!= null || this.comboLocalidad!= null){
@@ -253,8 +249,6 @@ public class FrameNuevaObservacion implements ActionListener{
 		frame.dispose();
 		}
 	}
-
-	
 
 	private JComboBox<String> completarComboFenomeno(JFrame frame) {
 		

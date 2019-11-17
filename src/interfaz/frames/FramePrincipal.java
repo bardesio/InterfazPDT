@@ -190,7 +190,7 @@ private static void initializeMenuUsuarios(JMenuBar menuBar, final JFrame frame)
 
 	private static void initializeMenuObservaciones(JMenuBar menuBar, final JFrame frame) {
 		
-		JMenu observaciones = new JMenu("Observaciones");
+		JMenu observacion = new JMenu("Observaciones");
 		
 		JMenuItem nuevaObservacion = new JMenuItem("Nueva Observacion");
 		
@@ -201,7 +201,7 @@ private static void initializeMenuUsuarios(JMenuBar menuBar, final JFrame frame)
             	new FrameNuevaObservacion(frame);
             }
         });
-			
+	/*		
 		JMenuItem modificarObservacion = new JMenuItem("Modificar Observacion");
 		
 		modificarObservacion.addActionListener(new ActionListener() {
@@ -221,11 +221,11 @@ private static void initializeMenuUsuarios(JMenuBar menuBar, final JFrame frame)
             	new FrameEliminarObservacion(frame);
             }
         });
-		
-		observaciones.add(nuevaObservacion);
-		observaciones.add(modificarObservacion);		
-		observaciones.add(eliminarObservacion);
-		menuBar.add(observaciones);		
+		*/
+		observacion.add(nuevaObservacion);
+		//observacion.add(modificarObservacion);		
+		//observacion.add(eliminarObservacion);
+		menuBar.add(observacion);		
 	}
 
 
