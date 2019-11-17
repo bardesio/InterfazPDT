@@ -6,6 +6,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Blob;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -22,6 +24,7 @@ import javax.swing.JTextField;
 import com.entidades.Estado;
 import com.entidades.Fenomeno;
 import com.entidades.Localidad;
+import com.entidades.Observacion;
 import com.entidades.TipoUsuario;
 import com.entidades.Usuario;
 import com.exception.ServiciosException;
@@ -80,6 +83,10 @@ public class FrameNuevaObservacion implements ActionListener{
 	private List<Fenomeno> fenomenos;
 	private List<Localidad> localidades;
 	private List<Estado> estados;
+
+	public FrameNuevaObservacion(JFrame frame2) {
+		// TODO Auto-generated constructor stub
+	}
 
 	private void FrameNuevaObservacion(JFrame framePadre) {
 
@@ -154,14 +161,14 @@ public class FrameNuevaObservacion implements ActionListener{
 		nuevaObservacionPanel.add(this.labelFenomeno, constraints);
 
 		constraints.gridx = 1;
-		nuevaObservacionPanel.add(this.comboFenomenos, constraints);
+		this.comboFenomenos = this.completarComboFenomeno(frame);
 		
 		constraints.gridx = 0;
 		constraints.gridy = 3;
 		nuevaObservacionPanel.add(this.labelLocalidad, constraints);
 
 		constraints.gridx = 1;
-		nuevaObservacionPanel.add(this.comboLocalidad, constraints);
+		this.comboLocalidad = this.completarComboLocalidad(frame);
 
 		constraints.gridx = 0;
 		constraints.gridy = 4;
@@ -184,7 +191,6 @@ public class FrameNuevaObservacion implements ActionListener{
 		constraints.gridx = 1;
 		nuevaObservacionPanel.add(this.textLatitud, constraints);
 		
-		
 		constraints.gridx = 0;
 		constraints.gridy = 7;
 		nuevaObservacionPanel.add(this.labelLongitud, constraints);
@@ -204,7 +210,7 @@ public class FrameNuevaObservacion implements ActionListener{
 		nuevaObservacionPanel.add(this.labelEstado, constraints);		 
 		
 		constraints.gridx = 1;
-		nuevaObservacionPanel.add(this.comboEstado, constraints);
+		 this.comboEstado = this.completarComboEstado(frame);
 		
 		constraints.gridx = 0;
 		constraints.gridy = 10;
@@ -253,7 +259,7 @@ public class FrameNuevaObservacion implements ActionListener{
 	private JComboBox<String> completarComboFenomeno(JFrame frame) {
 		
 		try{
-			this.fenomenos = ClientePDT.obtenerTodoslosTipos();
+			this.fenomenos = ClientePDT.obtenerTodosFenomenos();
 		}
 		catch (Exception e){
 			return null;
@@ -261,17 +267,49 @@ public class FrameNuevaObservacion implements ActionListener{
 		
 		JComboBox<String> combo = new JComboBox<>();
 		
-		for(TipoUsuario tu : this.tipoUsuarios){
-			combo.addItem(tu.getNombre());
+		for(Fenomeno fen : this.fenomenos){
+			combo.addItem(fen.getNombreFen());
 		}
 		
 		return combo;
 	}
 	
+	private JComboBox<String> completarComboLocalidad(JFrame frame) {
+		
+		try{
+			this.localidades = ClientePDT.obtenerTodasLocalidades();
+		}
+		catch (Exception e){
+			return null;
+		}
+		
+		JComboBox<String> combo = new JComboBox<>();
+		
+		for(Localidad loc : this.localidades){
+			combo.addItem(loc.getNombreLoc());
+		}
+		
+		return combo;
+	}
 	
+	private JComboBox<String> completarComboEstado(JFrame frame) {
+		
+		try{
+			this.estados = ClientePDT.obtenerTodosEstados();
+		}
+		catch (Exception e){
+			return null;
+		}
+		
+		JComboBox<String> combo = new JComboBox<>();
+		
+		for(Estado est : this.estados){
+			combo.addItem(est.getNombre());
+		}
+		
+		return combo;
+	}
 	
-	
-
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
@@ -294,22 +332,23 @@ public class FrameNuevaObservacion implements ActionListener{
 
 		// Si es ingresar se validan datos!
 
-		String fieldNombre = this.textNombre.getText().toUpperCase();
-		String fieldApellido = this.textApellido.getText().toUpperCase();
+		String fieldIdentificacion = this.textIdentificacion.getText().toUpperCase();
 		String fieldUsuario = this.textUsuario.getText().toUpperCase();
-		String fieldDireccion = this.textDireccion.getText().toUpperCase();
-		String fieldEstado = "ACTIVO";
-		String fieldMail = this.textMail.getText().toUpperCase();
-		String fieldNumeroDoc = this.textNumeroDoc.getText().toUpperCase();
-		String fieldPass = this.textPass.getText().toUpperCase();
-		String Tipodoc = (String) this.comboTipo.getSelectedItem();
-		String tipoUsu = (String) this.comboTipoUsu.getSelectedItem();		
+		String fieldFenomeno = (String) this.comboFenomenos.getSelectedItem();
+		String fieldEstado = (String) this.comboEstado.getSelectedItem();
+		String fieldLocalidad = (String) this.comboLocalidad.getSelectedItem();
+		String fieldDescripcion = this.textDescripcion.getText();
+		Blob fieldImagen = (Blob) this.fileChooser;
+		float fieldLatitud = Float.parseFloat(this.textLatitud.getText()); 
+		float fieldLongitud = Float.parseFloat(this.textLongitud.getText());
+		float fieldAltitud = Float.parseFloat(this.textAltitud.getText());
+		Date fieldFecha = (Date) this.datePickerFecha.getModel().getValue();
+
 
 		
 		//Validacion para datos vacios
-		boolean vacio = ValidacionUsuario.verificarVacio(fieldNombre, fieldApellido, fieldUsuario, fieldDireccion, fieldEstado, fieldMail, fieldNumeroDoc, fieldPass);
-		if (vacio == true)
-		{
+		if (fieldIdentificacion.equals("") || fieldDescripcion.equals("") ) {
+			
 			JOptionPane.showMessageDialog(frame, "Debe completar todos los datos solicitados.", "Datos incompletos!",
 					JOptionPane.WARNING_MESSAGE);
 			
@@ -324,19 +363,19 @@ public class FrameNuevaObservacion implements ActionListener{
 				
 		try{
 			
-			List<Usuario> us = ClientePDT.existeUsuario(fieldUsuario);
+			List<Observacion> observaciones = ClientePDT.existeObservacion(fieldIdentificacion);
 			
 			//Si la lista es de tamaño 0
-			if (us == null || us.size() == 0)
+			if (observaciones == null || observaciones.size() == 0)
 			{
-				//Intento crear el usuario
+				//Intento crear la observacion
 				try{
 					fieldID = 1l;
-					almacenado = ClientePDT.CrearUsuario(fieldID, fieldPass, fieldUsuario, fieldNombre, fieldApellido, fieldEstado, Tipodoc, fieldNumeroDoc, fieldDireccion, fieldMail, tipoUsu);
+					almacenado = ClientePDT.CrearObservacion(fieldID, fieldUsuario, fieldFenomeno, fieldLocalidad, fieldDescripcion, fieldImagen, fieldLatitud, fieldLongitud, fieldAltitud, fieldEstado, fieldFecha);
 				
 					//Si se devolvio verdadero el almacenado
 					if (almacenado) {
-						JOptionPane.showMessageDialog(frame, "El Usuario ha sido registrado con éxito.",
+						JOptionPane.showMessageDialog(frame, "La observacion ha sido registrado con éxito.",
 								"Usuario Registrado!", JOptionPane.INFORMATION_MESSAGE);
 						
 						this.frame.dispose();
@@ -350,15 +389,15 @@ public class FrameNuevaObservacion implements ActionListener{
 					return;
 				}
 				
-				//El usuario existe pero esta inactivo
-			}else if (!String.valueOf(us.get(0).getEstado()).equals("ACTIVO"))
+				//La observacion existe pero esta inactiva
+			}else if (!String.valueOf(observaciones.get(0).getEstado()).equals("ACTIVO"))
 				{
 				try {
-					fieldID = us.get(0).getId();
-					almacenado = ClientePDT.ModificarUsuario(fieldID, fieldPass, fieldUsuario, fieldNombre, fieldApellido, fieldEstado, Tipodoc, fieldNumeroDoc, fieldDireccion, fieldMail, tipoUsu);
+					fieldID = observaciones.get(0).getId();
+					almacenado = ClientePDT.ModificarObservacion(fieldID, fieldUsuario, fieldFenomeno, fieldLocalidad, fieldDescripcion, fieldImagen, fieldLatitud, fieldLongitud, fieldAltitud, fieldEstado, fieldFecha);
 				
 					if (almacenado) {
-						JOptionPane.showMessageDialog(frame, "El Usuario ha sido registrado con éxito.",
+						JOptionPane.showMessageDialog(frame, "Se ha registrado la observación ha sido registrado con éxito.",
 								"Usuario Registrado!", JOptionPane.INFORMATION_MESSAGE);
 						
 						// cerramos la ventanta
@@ -375,9 +414,9 @@ public class FrameNuevaObservacion implements ActionListener{
 					}
 				}
 
-				//El usuario ya existe en el sistema
+				//La observación ya existe en el sistema
 			else {
-				JOptionPane.showMessageDialog(null, "El usuario ya existe en el sistema");
+				JOptionPane.showMessageDialog(null, "La observación ya existe en el sistema");
 				return;
 				}
 			
@@ -400,12 +439,4 @@ public class FrameNuevaObservacion implements ActionListener{
 	
 }
 
-	
 
-
-
-
-
-
-
-}

@@ -108,7 +108,7 @@ public class ClientePDT {
 	}
 	
 		
-	/***************************************************LISTAR OBSERVACION POR ZONA  *******************************************************/
+	/***************************************************OBSERVACIONES*******************************************************/
 	
 		public static List<Observacion> obtenerTodasObservaciones() throws Exception {
 		
@@ -127,9 +127,9 @@ public class ClientePDT {
 		public static List<Fenomeno> obtenerTodosFenomenos() throws Exception {
 			
 			try {
-		ObservacionBeanRemote observacionesBeanRemote = EJBLocator.getInstance().lookup(ObservacionBeanRemote.class);
+		FenomenoBeanRemote fenomenoBeanRemote = EJBLocator.getInstance().lookup(FenomenoBeanRemote.class);
 		List<Fenomeno> fenomenos = new ArrayList<Fenomeno>();
-		fenomenos = observacionesBeanRemote.obtenerTodosFenomenos();
+		fenomenos = fenomenoBeanRemote.Obtenertodoslosfenomenos();
 		 return fenomenos;
 			}
 			catch (Exception e){
@@ -141,9 +141,9 @@ public class ClientePDT {
 		public static List<Localidad> obtenerTodasLocalidades() throws Exception {
 			
 			try {
-		ObservacionBeanRemote observacionesBeanRemote = EJBLocator.getInstance().lookup(ObservacionBeanRemote.class);
+		LocalidadBeanRemote localidadBeanRemote = EJBLocator.getInstance().lookup(LocalidadBeanRemote.class);
 		List<Localidad> localidades = new ArrayList<Localidad>();
-		localidades = observacionesBeanRemote.obtenerTodasLocalidades();
+		localidades = localidadBeanRemote.obtenerTodasLocalidades();
 		 return localidades;
 			}
 			catch (Exception e){
@@ -155,9 +155,9 @@ public class ClientePDT {
 		public static List<Estado> obtenerTodosEstados() throws Exception {
 			
 			try {
-		ObservacionBeanRemote observacionesBeanRemote = EJBLocator.getInstance().lookup(ObservacionBeanRemote.class);
+		EstadoBeanRemote estadoBeanRemote = EJBLocator.getInstance().lookup(EstadoBeanRemote.class);
 		List<Estado> estados = new ArrayList<Estado>();
-		estados = observacionesBeanRemote.obtenerTodosEstados();
+		estados = estadoBeanRemote.obtenerTodosEstados();
 		 return estados;
 			}
 			catch (Exception e){
@@ -166,15 +166,15 @@ public class ClientePDT {
 			}
 		}
 		
-		public static boolean CrearObservacion(Long id, Usuario usuario, Fenomeno fenomeno, Localidad localidad, 
-	    		String descripcion, Blob imagen, float latitud, float longitud, float altitud, Estado estado, Date fecha) throws Exception{
+		public static boolean CrearObservacion(Long id, String usuario, String fenomeno, String localidad, 
+	    		String descripcion, Blob imagen, float latitud, float longitud, float altitud, String estado, Date fecha) throws Exception{
 			
 			ObservacionBeanRemote observacionBeanRemote = EJBLocator.getInstance().lookup(ObservacionBeanRemote.class);
 			return observacionBeanRemote.CrearObservacion(id, usuario, fenomeno, localidad, descripcion, imagen, latitud, longitud, altitud, estado, fecha);
 		}
 		
-		public static boolean ModificarObservacion(Long id, Usuario usuario, Fenomeno fenomeno, Localidad localidad, 
-	    		String descripcion, Blob imagen, float latitud, float longitud, float altitud, Estado estado, Date fecha)   throws Exception{
+		public static boolean ModificarObservacion(Long id, String usuario, String fenomeno, String localidad, 
+	    		String descripcion, Blob imagen, float latitud, float longitud, float altitud, String estado, Date fecha)   throws Exception{
 			
 			ObservacionBeanRemote observacionBeanRemote = EJBLocator.getInstance().lookup(ObservacionBeanRemote.class);
 			return observacionBeanRemote.ModificarObservacion(id, usuario, fenomeno, localidad, descripcion, imagen, latitud, longitud, altitud, estado, fecha);
@@ -186,8 +186,10 @@ public class ClientePDT {
 			return observacionBeanRemote.EliminarObservacion(id);
 		}
 
+		public static List<Observacion> existeObservacion(String codigo) throws Exception {
 
-
-
-
+			ObservacionBeanRemote observacionBeanRemote = EJBLocator.getInstance().lookup(ObservacionBeanRemote.class);
+			return observacionBeanRemote.existeObservacion(codigo);
+		}
+		
 }

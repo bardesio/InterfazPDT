@@ -188,7 +188,7 @@ private static void initializeMenuUsuarios(JMenuBar menuBar, final JFrame frame)
 
 /** Inicialicación de botones del menu de observacion */
 
-private static void initializeMenuObservaciones(JMenuBar menuBar, final JFrame frame) {
+	private static void initializeMenuObservaciones(JMenuBar menuBar, final JFrame frame) {
 		
 		JMenu observaciones = new JMenu("Observaciones");
 		
@@ -201,7 +201,7 @@ private static void initializeMenuObservaciones(JMenuBar menuBar, final JFrame f
             	new FrameNuevaObservacion(frame);
             }
         });
-		
+			
 		JMenuItem modificarObservacion = new JMenuItem("Modificar Observacion");
 		
 		modificarObservacion.addActionListener(new ActionListener() {
