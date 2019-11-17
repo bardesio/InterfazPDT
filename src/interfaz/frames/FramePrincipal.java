@@ -57,10 +57,14 @@ public class FramePrincipal {
 				initializeMenuUsuarios(menuBar, frame);
 				initializeMenuObservaciones(menuBar, frame);
 				initializeMenuFenomenos(menuBar, frame);
+				initializeMenuListadoporZona(menuBar, frame);
+
 			}
 			else if (listUsuarios.get(0).getTipousuario().getNombre().equals("EXPERTO"))
 			{
 				initializeMenuObservaciones(menuBar, frame);
+				initializeMenuListadoporZona(menuBar, frame);
+
 			}
 			else if (listUsuarios.get(0).getTipousuario().getNombre().equals("VOLUNTARIO"))
 			{
@@ -140,7 +144,7 @@ menuBar.add(listado);
 }
 
 
-/** Inicialicación de botones del menu de clientes */
+/** Inicialicación de botones del menu de usuario */
 	
 private static void initializeMenuUsuarios(JMenuBar menuBar, final JFrame frame) {
 		
@@ -182,27 +186,47 @@ private static void initializeMenuUsuarios(JMenuBar menuBar, final JFrame frame)
 		menuBar.add(usuarios);		
 	}
 
-	/** Inicialicación de botones del menu de clientes */	
-	
-private static void initializeMenuObservaciones(JMenuBar menuBar, final JFrame frame) {
-		JMenu menu = new JMenu("Observaciones");
-		JMenuItem item1 = new JMenuItem("Observaciones");
+/** Inicialicación de botones del menu de observacion */
 
+	private static void initializeMenuObservaciones(JMenuBar menuBar, final JFrame frame) {
 		
+		JMenu observacion = new JMenu("Observaciones");
+		
+		JMenuItem nuevaObservacion = new JMenuItem("Nueva Observacion");
+		
+		nuevaObservacion.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                
+            	new FrameNuevaObservacion(frame);
+            }
+        });
+	/*		
+		JMenuItem modificarObservacion = new JMenuItem("Modificar Observacion");
+		
+		modificarObservacion.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                
+            	new FrameModificarObservacion(frame);
+            }
+        });
 
-		item1.addActionListener(new ActionListener() {
-		    @Override
-		    public void actionPerformed(ActionEvent event) {
-		        
-		    	new FrameMantenimientoObservacion(frame);
-		    	
-		    }
-		});
-		menu.add(item1);
-		menuBar.add(menu);
-		}
-
-
+		JMenuItem eliminarObservacion = new JMenuItem("Eliminar Observacion");
+		
+		eliminarObservacion.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                
+            	new FrameEliminarObservacion(frame);
+            }
+        });
+		*/
+		observacion.add(nuevaObservacion);
+		//observacion.add(modificarObservacion);		
+		//observacion.add(eliminarObservacion);
+		menuBar.add(observacion);		
+	}
 
 
 	public void setVisible(boolean b) {
