@@ -246,8 +246,8 @@ public class FrameNuevoFenomeno implements ActionListener {
 			if(fn == null || fn.size() == 0)
 			{
 				try {
-					long id=1l;
-					almacenado= ClientePDT.ingresarnuevoFenomeno(id,fieldCodigo,fieldEstado, fieldNombre, fieldDescripcion,tels);
+					
+					almacenado= ClientePDT.ingresarnuevoFenomeno(fieldCodigo,fieldEstado, fieldNombre, fieldDescripcion,tels);
 					
 					
 					//Quiere decir que Almacenado devolvio true

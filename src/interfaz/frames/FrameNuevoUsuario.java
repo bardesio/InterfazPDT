@@ -309,8 +309,8 @@ public class FrameNuevoUsuario implements ActionListener{
 			{
 				//Intento crear el usuario
 				try{
-					fieldID = 1l;
-					almacenado = ClientePDT.CrearUsuario(fieldID, fieldPass, fieldUsuario, fieldNombre, fieldApellido, fieldEstado, Tipodoc, fieldNumeroDoc, fieldDireccion, fieldMail, tipoUsu);
+					
+					almacenado = ClientePDT.CrearUsuario( fieldPass, fieldUsuario, fieldNombre, fieldApellido, fieldEstado, Tipodoc, fieldNumeroDoc, fieldDireccion, fieldMail, tipoUsu);
 				
 					//Si se devolvio verdadero el almacenado
 					if (almacenado) {
