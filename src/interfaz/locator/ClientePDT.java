@@ -166,11 +166,11 @@ public class ClientePDT {
 			}
 		}
 		
-		public static boolean CrearObservacion(Long id, String usuario, String fenomeno, String localidad, 
+		public static boolean CrearObservacion(String CodOBS, String usuario, String fenomeno, String localidad, 
 	    		String descripcion, Blob imagen, float latitud, float longitud, float altitud, String estado, Date fecha) throws Exception{
 			
 			ObservacionBeanRemote observacionBeanRemote = EJBLocator.getInstance().lookup(ObservacionBeanRemote.class);
-			return observacionBeanRemote.CrearObservacion(id, usuario, fenomeno, localidad, descripcion, imagen, latitud, longitud, altitud, estado, fecha);
+			return observacionBeanRemote.CrearObservacion(CodOBS, usuario, fenomeno, localidad, descripcion, imagen, latitud, longitud, altitud, estado, fecha);
 		}
 		
 		public static boolean ModificarObservacion(Long id, String usuario, String fenomeno, String localidad, 

@@ -163,7 +163,7 @@ public class FrameNuevaObservacion implements ActionListener{
 		constraints.gridy = 3;
 		nuevaObservacionPanel.add(this.labelLocalidad, constraints);
 
-		constraints.gridx = 1;
+		constraints.gridx = 2;
 		this.comboLocalidad = this.completarComboLocalidad(frame);
 
 		constraints.gridx = 0;
@@ -203,23 +203,27 @@ public class FrameNuevaObservacion implements ActionListener{
 		
 		constraints.gridx = 0;
 		constraints.gridy = 9;
-		nuevaObservacionPanel.add(this.labelEstado, constraints);		 
+		nuevaObservacionPanel.add(this.labelEstado, constraints);	
 		
 		constraints.gridx = 1;
 		 this.comboEstado = this.completarComboEstado(frame);
+		 this.comboEstado.setEditable(true);
+		
 		
 		constraints.gridx = 0;
 		constraints.gridy = 10;
 		nuevaObservacionPanel.add(this.labelFecha, constraints);		 
 		
-		constraints.gridx = 1;
+		
+		
+		//constraints.gridx = 1;
 		//nuevaObservacionPanel.add(this.datePickerFecha, constraints);
 		
 		
 		if (this.comboEstado!=null || this.comboFenomenos!= null || this.comboLocalidad!= null){
-			nuevaObservacionPanel.add(this.comboEstado, constraints);
-			nuevaObservacionPanel.add(this.comboFenomenos, constraints);
-			nuevaObservacionPanel.add(this.comboLocalidad, constraints);
+			nuevaObservacionPanel.add(this.comboEstado,constraints);
+			nuevaObservacionPanel.add(this.comboFenomenos,constraints);
+			nuevaObservacionPanel.add(this.comboLocalidad,constraints);
 			
 			constraints.gridx = 0;
 			constraints.gridy = 10;
@@ -263,6 +267,7 @@ public class FrameNuevaObservacion implements ActionListener{
 		
 		for(Fenomeno fen : this.fenomenos){
 			combo.addItem(fen.getNombreFen());
+			
 		}
 		
 		return combo;
@@ -332,7 +337,7 @@ public class FrameNuevaObservacion implements ActionListener{
 		String fieldEstado = (String) this.comboEstado.getSelectedItem();
 		String fieldLocalidad = (String) this.comboLocalidad.getSelectedItem();
 		String fieldDescripcion = this.textDescripcion.getText();
-		Blob fieldImagen = (Blob) this.fileChooser;
+		Blob fieldImagen = (Blob) this.fileChooser; 
 		float fieldLatitud = Float.parseFloat(this.textLatitud.getText()); 
 		float fieldLongitud = Float.parseFloat(this.textLongitud.getText());
 		float fieldAltitud = Float.parseFloat(this.textAltitud.getText());
@@ -364,8 +369,8 @@ public class FrameNuevaObservacion implements ActionListener{
 			{
 				//Intento crear la observacion
 				try{
-					fieldID = 1l;
-					almacenado = ClientePDT.CrearObservacion(fieldID, fieldUsuario, fieldFenomeno, fieldLocalidad, fieldDescripcion, fieldImagen, fieldLatitud, fieldLongitud, fieldAltitud, fieldEstado, fieldFecha);
+					
+					almacenado = ClientePDT.CrearObservacion(fieldIdentificacion, fieldUsuario, fieldFenomeno, fieldLocalidad, fieldDescripcion, fieldImagen, fieldLatitud, fieldLongitud, fieldAltitud, fieldEstado, fieldFecha);
 				
 					//Si se devolvio verdadero el almacenado
 					if (almacenado) {

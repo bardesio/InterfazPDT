@@ -189,6 +189,7 @@ public class FrameListadoporZona implements ActionListener {
 			datos[fila][4] = o.getLongitud();
 			datos[fila][5] = o.getAltitud();
 			datos[fila][6] = formateadorFecha.format(o.getFecha());
+			datos[fila] [7] =o.getCodigo_OBS();
 			fila++;
 
 		}
