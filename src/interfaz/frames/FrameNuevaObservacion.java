@@ -60,9 +60,6 @@ public class FrameNuevaObservacion implements ActionListener {
 	/** Date Picker */
 	private JDatePickerImpl datePickerFecha;
 
-	/** File Chooser */
-	JFileChooser fileChooser = new JFileChooser();
-
 	/** Atributos de TexField */
 	private JTextField textIdentificacion;
 	private JTextField textDescripcion;
@@ -152,17 +149,20 @@ public class FrameNuevaObservacion implements ActionListener {
 		constraints.gridx = 0;
 		constraints.gridy = 2;
 		nuevaObservacionPanel.add(this.labelFenomeno, constraints);
-		
+	
 		constraints.gridx = 1;
 		this.comboFenomenos = this.completarComboFenomeno(frame);
-		this.comboFenomenos.setEnabled(true);
+		nuevaObservacionPanel.add(this.comboFenomenos, constraints);
+		
 		constraints.gridx = 0;
 		constraints.gridy = 3;
 		nuevaObservacionPanel.add(this.labelLocalidad, constraints);
 
-		constraints.gridx = 2;
+		constraints.gridx = 1;
 		this.comboLocalidad = this.completarComboLocalidad(frame);
-		this.comboLocalidad.setEnabled(true);
+		nuevaObservacionPanel.add(this.comboLocalidad, constraints);
+		
+		
 		constraints.gridx = 0;
 		constraints.gridy = 4;
 		nuevaObservacionPanel.add(this.labelDescripcion, constraints);
@@ -173,9 +173,6 @@ public class FrameNuevaObservacion implements ActionListener {
 		constraints.gridx = 0;
 		constraints.gridy = 5;
 		nuevaObservacionPanel.add(this.labelImagen, constraints);
-
-		constraints.gridx = 1;
-		nuevaObservacionPanel.add(this.fileChooser, constraints);
 
 		constraints.gridx = 0;
 		constraints.gridy = 6;
@@ -202,23 +199,17 @@ public class FrameNuevaObservacion implements ActionListener {
 		constraints.gridy = 9;
 		nuevaObservacionPanel.add(this.labelEstado, constraints);
 
-		constraints.gridx = 3;
+		constraints.gridx = 1;
 		this.comboEstado = this.completarComboEstado(frame);
-		this.comboEstado.setEditable(true);
+		nuevaObservacionPanel.add(this.comboEstado, constraints);
+		this.comboEstado.setEnabled(false);
+
 
 		constraints.gridx = 0;
 		constraints.gridy = 10;
 		nuevaObservacionPanel.add(this.labelFecha, constraints);
 
-		// constraints.gridx = 1;
-		// nuevaObservacionPanel.add(this.datePickerFecha, constraints);
-
-		if (this.comboEstado != null || this.comboFenomenos != null || this.comboLocalidad != null) {
-			
-			nuevaObservacionPanel.add(this.comboFenomenos,constraints);
-			nuevaObservacionPanel.add(this.comboLocalidad,constraints);
-			nuevaObservacionPanel.add(this.comboEstado,constraints);
-
+		
 			constraints.gridx = 0;
 			constraints.gridy = 10;
 			constraints.gridwidth = 3;
@@ -227,7 +218,7 @@ public class FrameNuevaObservacion implements ActionListener {
 
 			constraints.gridx = 1;
 			constraints.gridy = 10;
-			constraints.gridwidth = 4;
+			constraints.gridwidth = 3;
 			constraints.anchor = GridBagConstraints.SOUTH;
 			nuevaObservacionPanel.add(buttonCancelar, constraints);
 
@@ -241,11 +232,6 @@ public class FrameNuevaObservacion implements ActionListener {
 
 			this.frame = frame;
 
-		} else {
-			JOptionPane.showMessageDialog(frame, "Error en el servidor, por favor contacte a soporte tecnico",
-					"Error de conexión!", JOptionPane.WARNING_MESSAGE);
-			frame.dispose();
-		}
 	}
 
 	private JComboBox<String> completarComboFenomeno(JFrame frame) {
@@ -328,7 +314,7 @@ public class FrameNuevaObservacion implements ActionListener {
 		String fieldEstado = (String) this.comboEstado.getSelectedItem();
 		String fieldLocalidad = (String) this.comboLocalidad.getSelectedItem();
 		String fieldDescripcion = this.textDescripcion.getText();
-		Blob fieldImagen = (Blob) this.fileChooser;
+		Blob fieldImagen = null;
 		float fieldLatitud = Float.parseFloat(this.textLatitud.getText());
 		float fieldLongitud = Float.parseFloat(this.textLongitud.getText());
 		float fieldAltitud = Float.parseFloat(this.textAltitud.getText());

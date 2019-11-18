@@ -160,7 +160,6 @@ public class FrameNuevoUsuario implements ActionListener{
 
 		constraints.gridx = 1;
 		nuevoUsuarioPanel.add(this.textEstado, constraints);
-		this.textEstado.setText("ACTIVO");
 		this.textEstado.setEditable(false);
 		
 		
