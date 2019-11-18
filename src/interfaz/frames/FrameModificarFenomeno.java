@@ -325,7 +325,7 @@ public class FrameModificarFenomeno implements ActionListener{
 		}
 
 		if (almacenado) {
-			JOptionPane.showMessageDialog(frame, "El Usuario ha sido modificado con éxito.",
+			JOptionPane.showMessageDialog(frame, "El Fenomeno ha sido modificado con éxito.",
 					"Usuario Registrado!", JOptionPane.INFORMATION_MESSAGE);
 			
 			// cerramos la ventanta

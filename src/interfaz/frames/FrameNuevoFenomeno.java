@@ -252,7 +252,7 @@ public class FrameNuevoFenomeno implements ActionListener {
 					
 					//Quiere decir que Almacenado devolvio true
 					if(almacenado) {
-						JOptionPane.showMessageDialog(frame, "El Usuario ha sido registrado con éxito.",
+						JOptionPane.showMessageDialog(frame, "El Fenomeno ha sido registrado con éxito.",
 								"Usuario Registrado!", JOptionPane.INFORMATION_MESSAGE);
 						// cerramos la ventanta
 						this.frame.dispose();
