@@ -173,7 +173,7 @@ public class FrameListadoporZona implements ActionListener {
 		 * El tamaño de la tabla es, 7 columnas (cantidad de datos a mostrar) y
 		 * la cantidad de filas depende de la cantida de consultas
 		 */
-		Object[][] datos = new Object[observaciones.size()][7];
+			Object[][] datos = new Object[observaciones.size()][7];
 
 		/* Cargamos la matriz con todos los datos */
 		int fila = 0;
@@ -189,7 +189,7 @@ public class FrameListadoporZona implements ActionListener {
 			datos[fila][4] = o.getLongitud();
 			datos[fila][5] = o.getAltitud();
 			datos[fila][6] = formateadorFecha.format(o.getFecha());
-			datos[fila] [7] =o.getCodigo_OBS();
+			
 			fila++;
 
 		}

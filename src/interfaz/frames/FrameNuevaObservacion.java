@@ -33,11 +33,10 @@ import interfaz.locator.ClientePDT;
 import interfaz.validaciones.ValidacionUsuario;
 import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
 
-public class FrameNuevaObservacion implements ActionListener{
-	
-	
+public class FrameNuevaObservacion implements ActionListener {
+
 	Long fieldID = null;
-	
+
 	/** Frame de la ventana */
 	private JFrame frame;
 
@@ -53,16 +52,16 @@ public class FrameNuevaObservacion implements ActionListener{
 	private JLabel labelAltitud;
 	private JLabel labelEstado;
 	private JLabel labelFecha;
-	
+
 	private JComboBox<String> comboFenomenos;
 	private JComboBox<String> comboLocalidad;
 	private JComboBox<String> comboEstado;
-	
+
 	/** Date Picker */
 	private JDatePickerImpl datePickerFecha;
 
-	/** File Chooser */	
-	JFileChooser fileChooser =new JFileChooser();
+	/** File Chooser */
+	JFileChooser fileChooser = new JFileChooser();
 
 	/** Atributos de TexField */
 	private JTextField textIdentificacion;
@@ -73,11 +72,10 @@ public class FrameNuevaObservacion implements ActionListener{
 	private JTextField textDireccion;
 	private JTextField textMail;
 	private JTextField textUsuario;
-	
+
 	/** Atributos de Botones */
 	private JButton buttonIngresar;
 	private JButton buttonCancelar;
-
 
 	/** Lista de Tipos del sistema */
 	private List<Fenomeno> fenomenos;
@@ -98,16 +96,16 @@ public class FrameNuevaObservacion implements ActionListener{
 		this.labelLongitud = new JLabel("Longitud:");
 		this.labelEstado = new JLabel("Estado:");
 		this.labelFecha = new JLabel("Fecha:");
-		
+
 		this.textAltitud = new JTextField(15);
 		this.textDescripcion = new JTextField(15);
 		this.textDireccion = new JTextField(15);
 		this.textIdentificacion = new JTextField(15);
 		this.textMail = new JTextField(15);
 		this.textLatitud = new JTextField(15);
-		this.textLongitud = new JTextField (15);
-		this.textUsuario = new JTextField (15);
-		
+		this.textLongitud = new JTextField(15);
+		this.textUsuario = new JTextField(15);
+
 		JButton buttonIngresar = new JButton("Ingresar");
 		buttonIngresar.addActionListener(this);
 
@@ -119,7 +117,7 @@ public class FrameNuevaObservacion implements ActionListener{
 
 		this.initalizeFrame(framePadre);
 	}
-	
+
 	private void initalizeFrame(JFrame framePadre) {
 
 		JFrame frame = new JFrame("Nueva Observacion");
@@ -129,43 +127,42 @@ public class FrameNuevaObservacion implements ActionListener{
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
 		GridBagLayout gbl_nuevaObservacionPanel = new GridBagLayout();
-		gbl_nuevaObservacionPanel.rowWeights = new double[]{};
-		gbl_nuevaObservacionPanel.columnWeights = new double[]{};
+		gbl_nuevaObservacionPanel.rowWeights = new double[] {};
+		gbl_nuevaObservacionPanel.columnWeights = new double[] {};
 		JPanel nuevaObservacionPanel = new JPanel(gbl_nuevaObservacionPanel);
 
 		GridBagConstraints constraints = new GridBagConstraints();
 		constraints.anchor = GridBagConstraints.WEST;
 		constraints.insets = new Insets(10, 10, 10, 10);
 
-		
 		constraints.gridx = 0;
 		constraints.gridy = 0;
 		nuevaObservacionPanel.add(this.labelIdentificacion, constraints);
-		
+
 		constraints.gridx = 1;
 		nuevaObservacionPanel.add(this.textIdentificacion, constraints);
-		
+
 		constraints.gridx = 0;
 		constraints.gridy = 1;
 		nuevaObservacionPanel.add(this.labelUsuario, constraints);
 
 		constraints.gridx = 1;
 		nuevaObservacionPanel.add(this.textUsuario, constraints);
-		
+
 		constraints.gridx = 0;
 		constraints.gridy = 2;
 		nuevaObservacionPanel.add(this.labelFenomeno, constraints);
-
+		
 		constraints.gridx = 1;
 		this.comboFenomenos = this.completarComboFenomeno(frame);
-		
+		this.comboFenomenos.setEnabled(true);
 		constraints.gridx = 0;
 		constraints.gridy = 3;
 		nuevaObservacionPanel.add(this.labelLocalidad, constraints);
 
 		constraints.gridx = 2;
 		this.comboLocalidad = this.completarComboLocalidad(frame);
-
+		this.comboLocalidad.setEnabled(true);
 		constraints.gridx = 0;
 		constraints.gridy = 4;
 		nuevaObservacionPanel.add(this.labelDescripcion, constraints);
@@ -179,52 +176,49 @@ public class FrameNuevaObservacion implements ActionListener{
 
 		constraints.gridx = 1;
 		nuevaObservacionPanel.add(this.fileChooser, constraints);
-		
+
 		constraints.gridx = 0;
 		constraints.gridy = 6;
 		nuevaObservacionPanel.add(this.labelLatitud, constraints);
 
 		constraints.gridx = 1;
 		nuevaObservacionPanel.add(this.textLatitud, constraints);
-		
+
 		constraints.gridx = 0;
 		constraints.gridy = 7;
 		nuevaObservacionPanel.add(this.labelLongitud, constraints);
 
 		constraints.gridx = 1;
 		nuevaObservacionPanel.add(this.textLongitud, constraints);
-		
+
 		constraints.gridx = 0;
 		constraints.gridy = 8;
-		nuevaObservacionPanel.add(this.labelAltitud, constraints);		 
-		
+		nuevaObservacionPanel.add(this.labelAltitud, constraints);
+
 		constraints.gridx = 1;
 		nuevaObservacionPanel.add(this.textAltitud, constraints);
-		
+
 		constraints.gridx = 0;
 		constraints.gridy = 9;
-		nuevaObservacionPanel.add(this.labelEstado, constraints);	
-		
-		constraints.gridx = 1;
-		 this.comboEstado = this.completarComboEstado(frame);
-		 this.comboEstado.setEditable(true);
-		
-		
+		nuevaObservacionPanel.add(this.labelEstado, constraints);
+
+		constraints.gridx = 3;
+		this.comboEstado = this.completarComboEstado(frame);
+		this.comboEstado.setEditable(true);
+
 		constraints.gridx = 0;
 		constraints.gridy = 10;
-		nuevaObservacionPanel.add(this.labelFecha, constraints);		 
-		
-		
-		
-		//constraints.gridx = 1;
-		//nuevaObservacionPanel.add(this.datePickerFecha, constraints);
-		
-		
-		if (this.comboEstado!=null || this.comboFenomenos!= null || this.comboLocalidad!= null){
-			nuevaObservacionPanel.add(this.comboEstado,constraints);
+		nuevaObservacionPanel.add(this.labelFecha, constraints);
+
+		// constraints.gridx = 1;
+		// nuevaObservacionPanel.add(this.datePickerFecha, constraints);
+
+		if (this.comboEstado != null || this.comboFenomenos != null || this.comboLocalidad != null) {
+			
 			nuevaObservacionPanel.add(this.comboFenomenos,constraints);
 			nuevaObservacionPanel.add(this.comboLocalidad,constraints);
-			
+			nuevaObservacionPanel.add(this.comboEstado,constraints);
+
 			constraints.gridx = 0;
 			constraints.gridy = 10;
 			constraints.gridwidth = 3;
@@ -237,78 +231,75 @@ public class FrameNuevaObservacion implements ActionListener{
 			constraints.anchor = GridBagConstraints.SOUTH;
 			nuevaObservacionPanel.add(buttonCancelar, constraints);
 
-			nuevaObservacionPanel
-				.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Datos de la Observacion"));
+			nuevaObservacionPanel.setBorder(
+					BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Datos de la Observacion"));
 
-		frame.getContentPane().add(nuevaObservacionPanel);
+			frame.getContentPane().add(nuevaObservacionPanel);
 
-		frame.pack();
-		frame.setVisible(true);
+			frame.pack();
+			frame.setVisible(true);
 
-		this.frame = frame;
+			this.frame = frame;
 
-	}else{
-		JOptionPane.showMessageDialog(frame, "Error en el servidor, por favor contacte a soporte tecnico",
-				"Error de conexión!", JOptionPane.WARNING_MESSAGE);
-		frame.dispose();
+		} else {
+			JOptionPane.showMessageDialog(frame, "Error en el servidor, por favor contacte a soporte tecnico",
+					"Error de conexión!", JOptionPane.WARNING_MESSAGE);
+			frame.dispose();
 		}
 	}
 
 	private JComboBox<String> completarComboFenomeno(JFrame frame) {
-		
-		try{
+
+		try {
 			this.fenomenos = ClientePDT.obtenerTodosFenomenos();
-		}
-		catch (Exception e){
+		} catch (Exception e) {
 			return null;
 		}
-		
+
 		JComboBox<String> combo = new JComboBox<>();
-		
-		for(Fenomeno fen : this.fenomenos){
+
+		for (Fenomeno fen : this.fenomenos) {
 			combo.addItem(fen.getNombreFen());
-			
+
 		}
-		
+
 		return combo;
 	}
-	
+
 	private JComboBox<String> completarComboLocalidad(JFrame frame) {
-		
-		try{
+
+		try {
 			this.localidades = ClientePDT.obtenerTodasLocalidades();
-		}
-		catch (Exception e){
+		} catch (Exception e) {
 			return null;
 		}
-		
+
 		JComboBox<String> combo = new JComboBox<>();
-		
-		for(Localidad loc : this.localidades){
+
+		for (Localidad loc : this.localidades) {
 			combo.addItem(loc.getNombreLoc());
 		}
-		
+
 		return combo;
 	}
-	
+
 	private JComboBox<String> completarComboEstado(JFrame frame) {
-		
-		try{
+
+		try {
 			this.estados = ClientePDT.obtenerTodosEstados();
-		}
-		catch (Exception e){
+		} catch (Exception e) {
 			return null;
 		}
-		
+
 		JComboBox<String> combo = new JComboBox<>();
-		
-		for(Estado est : this.estados){
+
+		for (Estado est : this.estados) {
 			combo.addItem(est.getNombre());
 		}
-		
+
 		return combo;
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
@@ -317,16 +308,16 @@ public class FrameNuevaObservacion implements ActionListener{
 		if (e.getSource() == this.buttonCancelar) {
 			this.accionCancelar();
 		} else {
-				try {
-					this.accionIngesar();
-				} catch (ServiciosException e1) {
-					e1.printStackTrace();
-				}
-		 
+			try {
+				this.accionIngesar();
+			} catch (ServiciosException e1) {
+				e1.printStackTrace();
+			}
+
 		}
 
 	}
-	
+
 	private void accionIngesar() throws ServiciosException {
 
 		// Si es ingresar se validan datos!
@@ -337,105 +328,98 @@ public class FrameNuevaObservacion implements ActionListener{
 		String fieldEstado = (String) this.comboEstado.getSelectedItem();
 		String fieldLocalidad = (String) this.comboLocalidad.getSelectedItem();
 		String fieldDescripcion = this.textDescripcion.getText();
-		Blob fieldImagen = (Blob) this.fileChooser; 
-		float fieldLatitud = Float.parseFloat(this.textLatitud.getText()); 
+		Blob fieldImagen = (Blob) this.fileChooser;
+		float fieldLatitud = Float.parseFloat(this.textLatitud.getText());
 		float fieldLongitud = Float.parseFloat(this.textLongitud.getText());
 		float fieldAltitud = Float.parseFloat(this.textAltitud.getText());
 		Date fieldFecha = (Date) this.datePickerFecha.getModel().getValue();
 
+		// Validacion para datos vacios
+		if (fieldIdentificacion.equals("") || fieldDescripcion.equals("")) {
 
-		
-		//Validacion para datos vacios
-		if (fieldIdentificacion.equals("") || fieldDescripcion.equals("") ) {
-			
 			JOptionPane.showMessageDialog(frame, "Debe completar todos los datos solicitados.", "Datos incompletos!",
 					JOptionPane.WARNING_MESSAGE);
-			
+
 			return;
 		}
-	
-		
+
 		// Si estamos aquí,..quiere decir que no hay errores. Almacenamos el
 		// Usuario y volvemos al menu
 		boolean almacenado;
-		
-				
-		try{
-			
+
+		try {
+
 			List<Observacion> observaciones = ClientePDT.existeObservacion(fieldIdentificacion);
-			
-			//Si la lista es de tamaño 0
-			if (observaciones == null || observaciones.size() == 0)
-			{
-				//Intento crear la observacion
-				try{
-					
-					almacenado = ClientePDT.CrearObservacion(fieldIdentificacion, fieldUsuario, fieldFenomeno, fieldLocalidad, fieldDescripcion, fieldImagen, fieldLatitud, fieldLongitud, fieldAltitud, fieldEstado, fieldFecha);
-				
-					//Si se devolvio verdadero el almacenado
+
+			// Si la lista es de tamaño 0
+			if (observaciones == null || observaciones.size() == 0) {
+				// Intento crear la observacion
+				try {
+
+					almacenado = ClientePDT.CrearObservacion(fieldIdentificacion, fieldUsuario, fieldFenomeno,
+							fieldLocalidad, fieldDescripcion, fieldImagen, fieldLatitud, fieldLongitud, fieldAltitud,
+							fieldEstado, fieldFecha);
+
+					// Si se devolvio verdadero el almacenado
 					if (almacenado) {
 						JOptionPane.showMessageDialog(frame, "La observacion ha sido registrado con éxito.",
 								"Usuario Registrado!", JOptionPane.INFORMATION_MESSAGE);
-						
+
 						this.frame.dispose();
-		
+
 					}
-				
-				}catch (Exception e){
+
+				} catch (Exception e) {
 					JOptionPane.showMessageDialog(frame, "Error de conexión con el servidor. Intente más tarde.",
 							"Error de conexión!", JOptionPane.WARNING_MESSAGE);
 
 					return;
 				}
-				
-				//La observacion existe pero esta inactiva
-			}else if (!String.valueOf(observaciones.get(0).getEstado()).equals("ACTIVO"))
-				{
+
+				// La observacion existe pero esta inactiva
+			} else if (!String.valueOf(observaciones.get(0).getEstado()).equals("ACTIVO")) {
 				try {
 					fieldID = observaciones.get(0).getId();
-					almacenado = ClientePDT.ModificarObservacion(fieldID, fieldUsuario, fieldFenomeno, fieldLocalidad, fieldDescripcion, fieldImagen, fieldLatitud, fieldLongitud, fieldAltitud, fieldEstado, fieldFecha);
-				
+					almacenado = ClientePDT.ModificarObservacion(fieldID, fieldUsuario, fieldFenomeno, fieldLocalidad,
+							fieldDescripcion, fieldImagen, fieldLatitud, fieldLongitud, fieldAltitud, fieldEstado,
+							fieldFecha);
+
 					if (almacenado) {
-						JOptionPane.showMessageDialog(frame, "Se ha registrado la observación ha sido registrado con éxito.",
-								"Usuario Registrado!", JOptionPane.INFORMATION_MESSAGE);
-						
+						JOptionPane.showMessageDialog(frame,
+								"Se ha registrado la observación ha sido registrado con éxito.", "Usuario Registrado!",
+								JOptionPane.INFORMATION_MESSAGE);
+
 						// cerramos la ventanta
 						this.frame.dispose();
-		
+
 					}
-				
-				}
-				catch(Exception e){
+
+				} catch (Exception e) {
 					JOptionPane.showMessageDialog(frame, "Error de conexión con el servidor. Intente más tarde.",
 							"Error de conexión!", JOptionPane.WARNING_MESSAGE);
-					
-					return;
-					}
-				}
 
-				//La observación ya existe en el sistema
+					return;
+				}
+			}
+
+			// La observación ya existe en el sistema
 			else {
 				JOptionPane.showMessageDialog(null, "La observación ya existe en el sistema");
 				return;
-				}
-			
-			
-	
-		}catch(Exception e){
+			}
+
+		} catch (Exception e) {
 			JOptionPane.showMessageDialog(frame, "Error con el servidor, por favor contacte con su administrador",
 					"Error de conexión!", JOptionPane.WARNING_MESSAGE);
 
 			return;
 		}
 	}
-		
+
 	private void accionCancelar() {
 		// si se cancela, se eliminar la ventana
 		this.frame.dispose();
 
 	}
 
-	
 }
-
-

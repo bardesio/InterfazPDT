@@ -220,9 +220,9 @@ public class FrameNuevoFenomeno implements ActionListener {
 
 		// Si es ingresar se validan datos!
 
-		String fieldNombre = this.textNombre.getText();
-		String fieldDescripcion = this.textDescripcion.getText();
-		String fieldCodigo = this.textCodigo.getText();
+		String fieldNombre = this.textNombre.getText().toUpperCase();
+		String fieldDescripcion = this.textDescripcion.getText().toUpperCase();
+		String fieldCodigo = this.textCodigo.getText().toUpperCase();
 		String fieldEstado = "ACTIVO";
 		
 		String tels =(String) this.comboTel.getSelectedItem();
