@@ -317,7 +317,7 @@ public class FrameEliminarFenomeno implements ActionListener {
 			
 			if(us==null || us.size()==0)
 			{
-				JOptionPane.showMessageDialog(null, "Usuario no encontrado");
+				JOptionPane.showMessageDialog(null, "Fenomeno no encontrado");
 				return;
 			}
 			else {
@@ -333,7 +333,7 @@ public class FrameEliminarFenomeno implements ActionListener {
 		
 	}
 		if (almaceno) {
-			JOptionPane.showMessageDialog(frame, "El usuario ha sido eliminado con éxito.",
+			JOptionPane.showMessageDialog(frame, "El fenomeno ha sido eliminado con éxito.",
 					"Usuario eliminado!", JOptionPane.INFORMATION_MESSAGE);
 			
 			// cerramos la ventanta
