@@ -298,7 +298,7 @@ public class FrameEliminarFenomeno implements ActionListener {
 		String fieldNombre= this.textNombre.getText().toUpperCase();
 		String fieldcodigo = this.textCodigo.getText().toUpperCase();
 		String tel = (String) this.comboTel.getSelectedItem();
-		
+		String Estado = "INACTIVO";
 		
 		
 		// Si alguno es vacío, mostramos una ventana de mensaje
@@ -321,7 +321,7 @@ public class FrameEliminarFenomeno implements ActionListener {
 				return;
 			}
 			else {
-				almaceno= ClientePDT.EliminarFenomeno(us.get(0).getId());
+				almaceno= ClientePDT.ModificarFenomeno(fieldID, fieldcodigo, Estado, fieldNombre, fieldDescripcion, tel);
 			}
 				
 			
