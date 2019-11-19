@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.nio.file.Files;
 import java.sql.Blob;
 import java.util.Date;
 import java.util.List;
@@ -361,8 +362,7 @@ public class FrameNuevaObservacion implements ActionListener {
 		String fieldEstado = (String) this.comboEstado.getSelectedItem();
 		String fieldLocalidad = (String) this.comboLocalidad.getSelectedItem();
 		String fieldDescripcion = this.textDescripcion.getText();
-		byte[] fieldImagen =  this.txtImagen.getText().getBytes();
-		//Blob fieldImagen =  (Blob) this.txtImagen;
+		byte[] fieldImagen =  null;
 		float fieldLatitud = Float.parseFloat(this.textLatitud.getText());
 		float fieldLongitud = Float.parseFloat(this.textLongitud.getText());
 		float fieldAltitud = Float.parseFloat(this.textAltitud.getText());
@@ -376,14 +376,27 @@ public class FrameNuevaObservacion implements ActionListener {
 
 			return;
 		}
+		
+		
+		
+		if (!txtImagen.getText().equals("")) {
+		try {	
+			 fieldImagen = Files.readAllBytes(archivoImagen.toPath());
+		}catch(Exception e){
+			JOptionPane.showMessageDialog(frame, "Error al leer la imagen, cargue nuevamente el archivo", "Error", JOptionPane.WARNING_MESSAGE);
+		}
+		}
+		
+		
+		
 
 		// Si estamos aquí,..quiere decir que no hay errores. Almacenamos el
 		// Usuario y volvemos al menu
 		boolean almacenado;
 
 		try {
-
-			List<Observacion> observaciones = ClientePDT.existeObservacion(fieldIdentificacion);
+			
+						List<Observacion> observaciones = ClientePDT.existeObservacion(fieldIdentificacion);
 
 			// Si la lista es de tamaño 0
 			if (observaciones == null || observaciones.size() == 0) {
