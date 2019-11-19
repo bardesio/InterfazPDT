@@ -31,7 +31,9 @@ import com.exception.ServiciosException;
 
 import interfaz.locator.ClientePDT;
 import interfaz.validaciones.ValidacionUsuario;
+import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
 import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
+import net.sourceforge.jdatepicker.impl.UtilDateModel;
 
 public class FrameNuevaObservacion implements ActionListener {
 
@@ -198,27 +200,34 @@ public class FrameNuevaObservacion implements ActionListener {
 		constraints.gridx = 0;
 		constraints.gridy = 9;
 		nuevaObservacionPanel.add(this.labelEstado, constraints);
+	
 
 		constraints.gridx = 1;
 		this.comboEstado = this.completarComboEstado(frame);
 		nuevaObservacionPanel.add(this.comboEstado, constraints);
-		this.comboEstado.setEnabled(false);
+		
 
 
 		constraints.gridx = 0;
 		constraints.gridy = 10;
 		nuevaObservacionPanel.add(this.labelFecha, constraints);
+		
+		
+		constraints.gridx = 1;
+		this.datePickerFecha =this.crearDatePicker();
+		nuevaObservacionPanel.add(datePickerFecha,constraints);
+
 
 		
-			constraints.gridx = 0;
-			constraints.gridy = 10;
+			constraints.gridx = 1;
+			constraints.gridy = 12;
 			constraints.gridwidth = 3;
 			constraints.anchor = GridBagConstraints.SOUTH;
 			nuevaObservacionPanel.add(buttonIngresar, constraints);
 
-			constraints.gridx = 1;
-			constraints.gridy = 10;
-			constraints.gridwidth = 3;
+			constraints.gridx = 2;
+			constraints.gridy = 12;
+			constraints.gridwidth = 4;
 			constraints.anchor = GridBagConstraints.SOUTH;
 			nuevaObservacionPanel.add(buttonCancelar, constraints);
 
@@ -302,6 +311,13 @@ public class FrameNuevaObservacion implements ActionListener {
 
 		}
 
+	}
+	private JDatePickerImpl crearDatePicker() {
+
+		UtilDateModel model = new UtilDateModel();
+		JDatePanelImpl datePanel = new JDatePanelImpl(model);
+		JDatePickerImpl datePicker = new JDatePickerImpl(datePanel);
+		return datePicker;
 	}
 
 	private void accionIngesar() throws ServiciosException {
