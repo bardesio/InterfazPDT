@@ -62,6 +62,7 @@ public class FrameNuevaObservacion implements ActionListener {
 	private JLabel labelAltitud;
 	private JLabel labelEstado;
 	private JLabel labelFecha;
+	private JLabel labelfoto;
 
 	private JComboBox<String> comboFenomenos;
 	private JComboBox<String> comboLocalidad;
@@ -104,6 +105,7 @@ public class FrameNuevaObservacion implements ActionListener {
 		this.labelLongitud = new JLabel("Longitud:");
 		this.labelEstado = new JLabel("Estado:");
 		this.labelFecha = new JLabel("Fecha:");
+		
 
 		this.textAltitud = new JTextField(15);
 		this.textDescripcion = new JTextField(15);
@@ -184,6 +186,7 @@ public class FrameNuevaObservacion implements ActionListener {
 		constraints.gridx = 0;
 		constraints.gridy = 5;
 		nuevaObservacionPanel.add(this.labelImagen, constraints);
+		labelImagen = this.seleccionarImagen(frame);
 
 		constraints.gridx = 0;
 		constraints.gridy = 6;
@@ -339,7 +342,7 @@ public class FrameNuevaObservacion implements ActionListener {
 		String fieldEstado = (String) this.comboEstado.getSelectedItem();
 		String fieldLocalidad = (String) this.comboLocalidad.getSelectedItem();
 		String fieldDescripcion = this.textDescripcion.getText();
-		Blob fieldImagen = null;
+//		 byte[] fieldImagen = 
 		float fieldLatitud = Float.parseFloat(this.textLatitud.getText());
 		float fieldLongitud = Float.parseFloat(this.textLongitud.getText());
 		float fieldAltitud = Float.parseFloat(this.textAltitud.getText());
@@ -462,7 +465,7 @@ public class FrameNuevaObservacion implements ActionListener {
 			try {
 				BufferedImage img = ImageIO.read(archivoImagen);
 				ImageIcon imagen = new ImageIcon(img.getScaledInstance(300, 150, Image.SCALE_SMOOTH));
-						foto.setIcon(imagen);
+						labelfoto.setIcon(imagen);
 			}catch(Exception e){
 				JOptionPane.showMessageDialog(frame, "Error al cargar el archivo","Error", JOptionPane.WARNING_MESSAGE);
 				
