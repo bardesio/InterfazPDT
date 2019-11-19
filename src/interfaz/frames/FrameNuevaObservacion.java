@@ -45,7 +45,7 @@ import net.sourceforge.jdatepicker.impl.UtilDateModel;
 public class FrameNuevaObservacion implements ActionListener {
 
 	Long fieldID = null;
-	
+		
 	File archivoImagen = null;
 
 	/** Frame de la ventana */
@@ -286,7 +286,7 @@ public class FrameNuevaObservacion implements ActionListener {
 		JComboBox<String> combo = new JComboBox<>();
 
 		for (Fenomeno fen : this.fenomenos) {
-			combo.addItem(fen.getNombreFen());
+			combo.addItem(fen.getCodigo());
 
 		}
 
@@ -362,12 +362,14 @@ public class FrameNuevaObservacion implements ActionListener {
 		String fieldEstado = (String) this.comboEstado.getSelectedItem();
 		String fieldLocalidad = (String) this.comboLocalidad.getSelectedItem();
 		String fieldDescripcion = this.textDescripcion.getText();
-		byte[] fieldImagen =  null;
 		float fieldLatitud = Float.parseFloat(this.textLatitud.getText());
 		float fieldLongitud = Float.parseFloat(this.textLongitud.getText());
 		float fieldAltitud = Float.parseFloat(this.textAltitud.getText());
 		Date fieldFecha = (Date) this.datePickerFecha.getModel().getValue();
-
+		byte[] imagen = null;
+		
+		
+		
 		// Validacion para datos vacios
 		if (fieldIdentificacion.equals("") || fieldDescripcion.equals("")) {
 
@@ -381,7 +383,7 @@ public class FrameNuevaObservacion implements ActionListener {
 		
 		if (!txtImagen.getText().equals("")) {
 		try {	
-			 fieldImagen = Files.readAllBytes(archivoImagen.toPath());
+			imagen = Files.readAllBytes(archivoImagen.toPath());
 		}catch(Exception e){
 			JOptionPane.showMessageDialog(frame, "Error al leer la imagen, cargue nuevamente el archivo", "Error", JOptionPane.WARNING_MESSAGE);
 		}
@@ -404,7 +406,7 @@ public class FrameNuevaObservacion implements ActionListener {
 				try {
 
 					almacenado = ClientePDT.CrearObservacion(fieldIdentificacion, fieldUsuario, fieldFenomeno,
-							fieldLocalidad, fieldDescripcion, fieldImagen, fieldLatitud, fieldLongitud, fieldAltitud,
+							fieldLocalidad, fieldDescripcion, imagen, fieldLatitud, fieldLongitud, fieldAltitud,
 							fieldEstado, fieldFecha);
 
 					// Si se devolvio verdadero el almacenado
@@ -428,7 +430,7 @@ public class FrameNuevaObservacion implements ActionListener {
 				try {
 					fieldID = observaciones.get(0).getId();
 					almacenado = ClientePDT.ModificarObservacion(fieldID, fieldUsuario, fieldFenomeno, fieldLocalidad,
-							fieldDescripcion, fieldImagen, fieldLatitud, fieldLongitud, fieldAltitud, fieldEstado,
+							fieldDescripcion, imagen, fieldLatitud, fieldLongitud, fieldAltitud, fieldEstado,
 							fieldFecha);
 
 					if (almacenado) {
