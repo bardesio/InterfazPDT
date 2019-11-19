@@ -3,14 +3,19 @@ package interfaz.frames;
 import java.awt.EventQueue;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.sql.Blob;
 import java.util.Date;
 import java.util.List;
 
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
@@ -20,6 +25,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import com.entidades.Estado;
 import com.entidades.Fenomeno;
@@ -38,6 +44,8 @@ import net.sourceforge.jdatepicker.impl.UtilDateModel;
 public class FrameNuevaObservacion implements ActionListener {
 
 	Long fieldID = null;
+	
+	File archivoImagen = null;
 
 	/** Frame de la ventana */
 	private JFrame frame;
@@ -71,6 +79,7 @@ public class FrameNuevaObservacion implements ActionListener {
 	private JTextField textDireccion;
 	private JTextField textMail;
 	private JTextField textUsuario;
+	private JTextField txtImagen;
 
 	/** Atributos de Botones */
 	private JButton buttonIngresar;
@@ -423,5 +432,45 @@ public class FrameNuevaObservacion implements ActionListener {
 		this.frame.dispose();
 
 	}
+	
+	private void seleccionarImagen() {
+		
+		//Creamos el objeto JFileChooser
+		JFileChooser fc = new JFileChooser();
+		
+		//Indicamos lo que podemos seleccionar
+		fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+		
+		//Creamos el filtro
+		FileNameExtensionFilter filtro = new FileNameExtensionFilter("JPG, PNG & GIF", "jpg", "png", "gir");
+		fc.setFileFilter(filtro);
+		
+		//Abrimos la ventana guardamos la opcion seleccionada por el usuario
+		int seleccion = fc.showOpenDialog(frame.getContentPane());
+		
+		//Si el usuario picha en aceptar 
+		if (seleccion == JFileChooser.APPROVE_OPTION) {
+			
+			//Seleccionamos el fichero
+			archivoImagen = fc.getSelectedFile();
+			
+			
+			//Escribe la ruta del fichero seleccionado en el campo de texto
+			txtImagen.setText(archivoImagen.getAbsolutePath());
+			
+			//Cargar imagen en JLabel
+			try {
+				BufferedImage img = ImageIO.read(archivoImagen);
+				ImageIcon imagen = new ImageIcon(img.getScaledInstance(300, 150, Image.SCALE_SMOOTH));
+						foto.setIcon(imagen);
+			}catch(Exception e){
+				JOptionPane.showMessageDialog(frame, "Error al cargar el archivo","Error", JOptionPane.WARNING_MESSAGE);
+				
+			}
+			
+		}
+		
+	}
+	
 
 }
