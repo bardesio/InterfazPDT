@@ -105,7 +105,7 @@ public class FrameNuevaObservacion implements ActionListener {
 		this.labelLongitud = new JLabel("Longitud:");
 		this.labelEstado = new JLabel("Estado:");
 		this.labelFecha = new JLabel("Fecha:");
-		
+		this.labelfoto = new JLabel("");
 
 		this.textAltitud = new JTextField(15);
 		this.textDescripcion = new JTextField(15);
@@ -115,13 +115,15 @@ public class FrameNuevaObservacion implements ActionListener {
 		this.textLatitud = new JTextField(15);
 		this.textLongitud = new JTextField(15);
 		this.textUsuario = new JTextField(15);
+		this.txtImagen = new JTextField(15);
 
+		
 		JButton buttonIngresar = new JButton("Ingresar");
 		buttonIngresar.addActionListener(this);
 
 		JButton buttonCancelar = new JButton("Cancelar");
 		buttonCancelar.addActionListener(this);
-
+		
 		this.buttonIngresar = buttonIngresar;
 		this.buttonCancelar = buttonCancelar;
 
@@ -131,11 +133,11 @@ public class FrameNuevaObservacion implements ActionListener {
 	private void initalizeFrame(JFrame framePadre) {
 
 		JFrame frame = new JFrame("Nueva Observacion");
-		frame.setSize(136, 133);
+		frame.setSize(500, 500);
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(framePadre);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
+		
 		GridBagLayout gbl_nuevaObservacionPanel = new GridBagLayout();
 		gbl_nuevaObservacionPanel.rowWeights = new double[] {};
 		gbl_nuevaObservacionPanel.columnWeights = new double[] {};
@@ -143,8 +145,8 @@ public class FrameNuevaObservacion implements ActionListener {
 
 		GridBagConstraints constraints = new GridBagConstraints();
 		constraints.anchor = GridBagConstraints.WEST;
-		constraints.insets = new Insets(10, 10, 10, 10);
-
+		constraints.insets = new Insets(10, 10, 10, 30);
+		
 		constraints.gridx = 0;
 		constraints.gridy = 0;
 		nuevaObservacionPanel.add(this.labelIdentificacion, constraints);
@@ -186,8 +188,14 @@ public class FrameNuevaObservacion implements ActionListener {
 		constraints.gridx = 0;
 		constraints.gridy = 5;
 		nuevaObservacionPanel.add(this.labelImagen, constraints);
-		labelImagen = this.seleccionarImagen(frame);
 
+		constraints.gridx = 1;
+		nuevaObservacionPanel.add(this.txtImagen, constraints);
+		
+		constraints.gridx = 2;
+		nuevaObservacionPanel.add(this.labelfoto, constraints);
+
+		
 		constraints.gridx = 0;
 		constraints.gridy = 6;
 		nuevaObservacionPanel.add(this.labelLatitud, constraints);
@@ -228,8 +236,7 @@ public class FrameNuevaObservacion implements ActionListener {
 		constraints.gridx = 1;
 		this.datePickerFecha =this.crearDatePicker();
 		nuevaObservacionPanel.add(datePickerFecha,constraints);
-
-
+		
 		
 			constraints.gridx = 1;
 			constraints.gridy = 12;
@@ -252,7 +259,9 @@ public class FrameNuevaObservacion implements ActionListener {
 			frame.setVisible(true);
 
 			this.frame = frame;
+			
 
+			this.seleccionarImagen();
 	}
 
 	private JComboBox<String> completarComboFenomeno(JFrame frame) {
@@ -342,7 +351,7 @@ public class FrameNuevaObservacion implements ActionListener {
 		String fieldEstado = (String) this.comboEstado.getSelectedItem();
 		String fieldLocalidad = (String) this.comboLocalidad.getSelectedItem();
 		String fieldDescripcion = this.textDescripcion.getText();
-//		 byte[] fieldImagen = 
+		byte[] fieldImagen =  this.txtImagen.getText().getBytes();
 		float fieldLatitud = Float.parseFloat(this.textLatitud.getText());
 		float fieldLongitud = Float.parseFloat(this.textLongitud.getText());
 		float fieldAltitud = Float.parseFloat(this.textAltitud.getText());
@@ -464,7 +473,7 @@ public class FrameNuevaObservacion implements ActionListener {
 			//Cargar imagen en JLabel
 			try {
 				BufferedImage img = ImageIO.read(archivoImagen);
-				ImageIcon imagen = new ImageIcon(img.getScaledInstance(300, 150, Image.SCALE_SMOOTH));
+				ImageIcon imagen = new ImageIcon(img.getScaledInstance(50, 50, Image.SCALE_SMOOTH));
 						labelfoto.setIcon(imagen);
 			}catch(Exception e){
 				JOptionPane.showMessageDialog(frame, "Error al cargar el archivo","Error", JOptionPane.WARNING_MESSAGE);
