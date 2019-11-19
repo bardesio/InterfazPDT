@@ -186,10 +186,10 @@ public class ClientePDT {
 			return observacionBeanRemote.EliminarObservacion(id);
 		}
 
-		public static List<Observacion> existeObservacion(String codigo) throws Exception {
+		public static List<Observacion> existeObservacion(String identificacion) throws Exception {
 
 			ObservacionBeanRemote observacionBeanRemote = EJBLocator.getInstance().lookup(ObservacionBeanRemote.class);
-			return observacionBeanRemote.existeObservacion(codigo);
+			return observacionBeanRemote.existeObservacion(identificacion);
 		}
 		
 }

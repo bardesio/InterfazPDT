@@ -198,7 +198,7 @@ private static void initializeMenuUsuarios(JMenuBar menuBar, final JFrame frame)
             @Override
             public void actionPerformed(ActionEvent event) {
                 
-            	new FrameNuevaObservacion(frame);
+            	new FrameNuevaObservacion(frame, listUsuarios);
             }
         });
 	/*		

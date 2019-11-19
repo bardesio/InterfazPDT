@@ -91,8 +91,16 @@ public class FrameNuevaObservacion implements ActionListener {
 	private List<Localidad> localidades;
 	private List<Estado> estados;
 
-	public FrameNuevaObservacion(JFrame framePadre) {
+	List<Usuario> listaUsuarios = null;
+	
+	public FrameNuevaObservacion(JFrame framePadre, List<Usuario> listUsuarios) {
+	
 
+		listaUsuarios = listUsuarios;
+
+		
+		
+		
 		this.labelIdentificacion = new JLabel("Identificacion:");
 		this.labelUsuario = new JLabel("Nombre de usuario:");
 		this.labelFenomeno = new JLabel("Fenomeno:");
@@ -160,6 +168,8 @@ public class FrameNuevaObservacion implements ActionListener {
 
 		constraints.gridx = 1;
 		nuevaObservacionPanel.add(this.textUsuario, constraints);
+		this.textUsuario.setText(this.listaUsuarios.get(0).getUsuario());
+		this.textUsuario.setEditable(false);
 
 		constraints.gridx = 0;
 		constraints.gridy = 2;
@@ -192,6 +202,7 @@ public class FrameNuevaObservacion implements ActionListener {
 		constraints.gridx = 1;
 		nuevaObservacionPanel.add(this.txtImagen, constraints);
 		
+	
 		constraints.gridx = 2;
 		nuevaObservacionPanel.add(this.labelfoto, constraints);
 
@@ -225,7 +236,7 @@ public class FrameNuevaObservacion implements ActionListener {
 		constraints.gridx = 1;
 		this.comboEstado = this.completarComboEstado(frame);
 		nuevaObservacionPanel.add(this.comboEstado, constraints);
-		
+		this.comboEstado.setEnabled(false);
 
 
 		constraints.gridx = 0;
@@ -236,7 +247,6 @@ public class FrameNuevaObservacion implements ActionListener {
 		constraints.gridx = 1;
 		this.datePickerFecha =this.crearDatePicker();
 		nuevaObservacionPanel.add(datePickerFecha,constraints);
-		
 		
 			constraints.gridx = 1;
 			constraints.gridy = 12;
@@ -346,12 +356,13 @@ public class FrameNuevaObservacion implements ActionListener {
 		// Si es ingresar se validan datos!
 
 		String fieldIdentificacion = this.textIdentificacion.getText().toUpperCase();
-		String fieldUsuario = this.textUsuario.getText().toUpperCase();
+		String fieldUsuario = listaUsuarios.get(0).getUsuario().toString();
 		String fieldFenomeno = (String) this.comboFenomenos.getSelectedItem();
 		String fieldEstado = (String) this.comboEstado.getSelectedItem();
 		String fieldLocalidad = (String) this.comboLocalidad.getSelectedItem();
 		String fieldDescripcion = this.textDescripcion.getText();
 		byte[] fieldImagen =  this.txtImagen.getText().getBytes();
+		//Blob fieldImagen =  (Blob) this.txtImagen;
 		float fieldLatitud = Float.parseFloat(this.textLatitud.getText());
 		float fieldLongitud = Float.parseFloat(this.textLongitud.getText());
 		float fieldAltitud = Float.parseFloat(this.textAltitud.getText());
@@ -400,7 +411,7 @@ public class FrameNuevaObservacion implements ActionListener {
 				}
 
 				// La observacion existe pero esta inactiva
-			} else if (!String.valueOf(observaciones.get(0).getEstado()).equals("ACTIVO")) {
+			} else if (observaciones.get(0).getEstado().toString() == "ACTIVO") {
 				try {
 					fieldID = observaciones.get(0).getId();
 					almacenado = ClientePDT.ModificarObservacion(fieldID, fieldUsuario, fieldFenomeno, fieldLocalidad,
@@ -473,7 +484,7 @@ public class FrameNuevaObservacion implements ActionListener {
 			//Cargar imagen en JLabel
 			try {
 				BufferedImage img = ImageIO.read(archivoImagen);
-				ImageIcon imagen = new ImageIcon(img.getScaledInstance(50, 50, Image.SCALE_SMOOTH));
+				ImageIcon imagen = new ImageIcon(img.getScaledInstance(15, 15, Image.SCALE_SMOOTH));
 						labelfoto.setIcon(imagen);
 			}catch(Exception e){
 				JOptionPane.showMessageDialog(frame, "Error al cargar el archivo","Error", JOptionPane.WARNING_MESSAGE);
