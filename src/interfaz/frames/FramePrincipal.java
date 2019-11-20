@@ -176,7 +176,7 @@ private static void initializeMenuUsuarios(JMenuBar menuBar, final JFrame frame)
             @Override
             public void actionPerformed(ActionEvent event) {
                 
-            	new FrameEliminarUsuario(frame);
+            	new FrameEliminarUsuario(frame, listUsuarios);
             }
         });
 		

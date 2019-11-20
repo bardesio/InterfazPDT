@@ -26,6 +26,9 @@ import interfaz.locator.ClientePDT;
 
 public class FrameEliminarUsuario implements ActionListener{
 
+	
+	List<Usuario> usuarioActual = null;
+	
 	/** Frame de la ventana */
 	private JFrame frame;
 
@@ -68,8 +71,11 @@ public class FrameEliminarUsuario implements ActionListener{
 	/** Lista de Tipos del sistema */
 	private List<TipoUsuario> tipoUsuarios;
 	
-	public FrameEliminarUsuario(JFrame framePadre) {
+	public FrameEliminarUsuario(JFrame framePadre, List<Usuario> listUsuarios) {
 
+		//Cargo el usuario actual con lo que me pasan de frame principal
+		usuarioActual = listUsuarios;
+		
 		
 		this.labelApellido = new JLabel("Apellido:");
 		this.labelNombre = new JLabel("Nombre:");
@@ -313,6 +319,13 @@ public class FrameEliminarUsuario implements ActionListener{
 				
 				if (usuarios==null || usuarios.size() == 0 || usuarios.get(0).getEstado().equals("INACTIVO")) {
 					JOptionPane.showMessageDialog(frame, "El nombre de usuario ingresado no existe.",
+							"Usuario Existente!", JOptionPane.WARNING_MESSAGE);
+
+					return;
+				}
+				
+				else if (usuarioActual.get(0).getUsuario().equals(usuarios.get(0).getUsuario())){
+					JOptionPane.showMessageDialog(frame, "No se puede eliminar a si mismo",
 							"Usuario Existente!", JOptionPane.WARNING_MESSAGE);
 
 					return;
