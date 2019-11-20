@@ -201,8 +201,9 @@ private static void initializeMenuUsuarios(JMenuBar menuBar, final JFrame frame)
             	new FrameNuevaObservacion(frame, listUsuarios);
             }
         });
-	/*		
+			
 		JMenuItem modificarObservacion = new JMenuItem("Modificar Observacion");
+		
 		
 		modificarObservacion.addActionListener(new ActionListener() {
             @Override
@@ -210,6 +211,7 @@ private static void initializeMenuUsuarios(JMenuBar menuBar, final JFrame frame)
                 
             	new FrameModificarObservacion(frame);
             }
+            
         });
 
 		JMenuItem eliminarObservacion = new JMenuItem("Eliminar Observacion");
@@ -221,10 +223,16 @@ private static void initializeMenuUsuarios(JMenuBar menuBar, final JFrame frame)
             	new FrameEliminarObservacion(frame);
             }
         });
-		*/
-		observacion.add(nuevaObservacion);
-		//observacion.add(modificarObservacion);		
-		//observacion.add(eliminarObservacion);
+		
+		if (!(listUsuarios.get(0).getTipousuario().getNombre().equals("VOLUNTARIO")))
+		{
+			observacion.add(nuevaObservacion);
+			observacion.add(modificarObservacion);		
+			observacion.add(eliminarObservacion);	
+		}
+		else {
+			observacion.add(nuevaObservacion);
+		}		
 		menuBar.add(observacion);		
 	}
 

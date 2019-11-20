@@ -31,6 +31,10 @@ public class FrameModificarObservacion {
 		initialize();
 	}
 
+	public FrameModificarObservacion(JFrame frame2) {
+		// TODO Auto-generated constructor stub
+	}
+
 	private void initialize() {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);
