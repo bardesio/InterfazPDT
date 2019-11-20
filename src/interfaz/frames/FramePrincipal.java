@@ -201,7 +201,11 @@ private static void initializeMenuUsuarios(JMenuBar menuBar, final JFrame frame)
             	new FrameNuevaObservacion(frame, listUsuarios);
             }
         });
+<<<<<<< Updated upstream
 			
+=======
+	/*	
+>>>>>>> Stashed changes
 		JMenuItem modificarObservacion = new JMenuItem("Modificar Observacion");
 		
 		
@@ -211,8 +215,12 @@ private static void initializeMenuUsuarios(JMenuBar menuBar, final JFrame frame)
                 
             	new FrameModificarObservacion(frame);
             }
+<<<<<<< Updated upstream
             
         });
+=======
+        });*/
+>>>>>>> Stashed changes
 
 		JMenuItem eliminarObservacion = new JMenuItem("Eliminar Observacion");
 		
@@ -220,10 +228,11 @@ private static void initializeMenuUsuarios(JMenuBar menuBar, final JFrame frame)
             @Override
             public void actionPerformed(ActionEvent event) {
                 
-            	new FrameEliminarObservacion(frame);
+            	new FrameEliminarObservacion(frame, listUsuarios);
             }
         });
 		
+<<<<<<< Updated upstream
 		if (!(listUsuarios.get(0).getTipousuario().getNombre().equals("VOLUNTARIO")))
 		{
 			observacion.add(nuevaObservacion);
@@ -233,6 +242,11 @@ private static void initializeMenuUsuarios(JMenuBar menuBar, final JFrame frame)
 		else {
 			observacion.add(nuevaObservacion);
 		}		
+=======
+		observacion.add(nuevaObservacion);
+		//observacion.add(modificarObservacion);		
+		observacion.add(eliminarObservacion);
+>>>>>>> Stashed changes
 		menuBar.add(observacion);		
 	}
 
