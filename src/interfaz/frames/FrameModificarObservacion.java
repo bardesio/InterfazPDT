@@ -409,7 +409,7 @@ public class FrameModificarObservacion implements ActionListener {
 			this.textLongitud.setEnabled(true);
 			this.textLatitud.setEnabled(true);
 			this.comboLocalidad.setEnabled(true);
-			this.buttonEditar.setEnabled(false);
+			this.buttonEditar.setEnabled(true);
 			
 			//Deshabilito campos
 			this.buttonBuscar.setEnabled(false);

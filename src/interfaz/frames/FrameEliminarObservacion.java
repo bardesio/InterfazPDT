@@ -514,9 +514,10 @@ public class FrameEliminarObservacion implements ActionListener{
 			} else if (observaciones.get(0).getEstado().toString() == "ACTIVO") {
 				try {
 					fieldID = observaciones.get(0).getId();
-					almacenado = ClientePDT.ModificarObservacion(fieldID, fieldUsuario, fieldFenomeno, fieldLocalidad,
-							fieldDescripcion, imagen, fieldLatitud, fieldLongitud, fieldAltitud, fieldEstado,
-							fieldFecha);
+					almacenado = ClientePDT.ModificarObservacion(fieldID ,fieldIdentificacion,fieldUsuario, fieldFenomeno,  
+							fieldLocalidad, fieldDescripcion, imagen, fieldLatitud, fieldLongitud, fieldAltitud,
+							fieldEstado, fieldFecha);
+
 
 					if (almacenado) {
 						JOptionPane.showMessageDialog(frame,
