@@ -428,10 +428,13 @@ public class FrameModificarObservacion implements ActionListener {
 			this.fieldID = observaciones.get(0).getId();
 			
 			//Revisar esto	
-			this.datePickerFecha.getModel().setDay(observaciones.get(0).getFecha().getDay());
-			this.datePickerFecha.getModel().setMonth(observaciones.get(0).getFecha().getMonth());
-			this.datePickerFecha.getModel().setYear(observaciones.get(0).getFecha().getYear());
+			String dateString = observaciones.get(0).getFecha().toString();
+			dateString = dateString.split(" ")[0];
+			String[] yyyymmdd = dateString.split("-");
 			
+			this.datePickerFecha.getModel().setDay(Integer.parseInt(yyyymmdd[2]));
+			this.datePickerFecha.getModel().setMonth(Integer.parseInt(yyyymmdd[1]));
+			this.datePickerFecha.getModel().setYear(Integer.parseInt(yyyymmdd[0]));
 			
 			 
 			BufferedImage img = null;
