@@ -345,9 +345,12 @@ public class FrameNuevaObservacion implements ActionListener {
 
 	}
 	private JDatePickerImpl crearDatePicker() {
-
+		
+		Date fechaActual = new Date();
+		
 		UtilDateModel model = new UtilDateModel();
-		JDatePanelImpl datePanel = new JDatePanelImpl(model);
+		model.setSelected(true);
+		JDatePanelImpl datePanel = new JDatePanelImpl(model);		
 		JDatePickerImpl datePicker = new JDatePickerImpl(datePanel);
 		return datePicker;
 	}
@@ -429,7 +432,7 @@ public class FrameNuevaObservacion implements ActionListener {
 			} else if (observaciones.get(0).getEstado().toString() == "ACTIVO") {
 				try {
 					fieldID = observaciones.get(0).getId();
-					almacenado = ClientePDT.ModificarObservacion(fieldID, fieldUsuario, fieldFenomeno, fieldLocalidad,
+					almacenado = ClientePDT.ModificarObservacion(fieldID, fieldIdentificacion, fieldUsuario, fieldFenomeno, fieldLocalidad,
 							fieldDescripcion, imagen, fieldLatitud, fieldLongitud, fieldAltitud, fieldEstado,
 							fieldFecha);
 

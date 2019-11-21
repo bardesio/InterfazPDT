@@ -213,7 +213,7 @@ private static void initializeMenuUsuarios(JMenuBar menuBar, final JFrame frame)
             @Override
             public void actionPerformed(ActionEvent event) {
                 
-            	new FrameModificarObservacion(frame);
+            	new FrameModificarObservacion(frame, listUsuarios);
             }
 <<<<<<< Updated upstream
             
