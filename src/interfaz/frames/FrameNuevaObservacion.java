@@ -45,6 +45,7 @@ import net.sourceforge.jdatepicker.impl.UtilDateModel;
 public class FrameNuevaObservacion implements ActionListener {
 
 	Long fieldID = null;
+	String camino = "";
 		
 	File archivoImagen = null;
 
@@ -78,15 +79,15 @@ public class FrameNuevaObservacion implements ActionListener {
 	private JTextField textLatitud;
 	private JTextField textLongitud;
 	private JTextField textAltitud;
-	private JTextField textDireccion;
-	private JTextField textMail;
 	private JTextField textUsuario;
-	private JTextField txtImagen;
 
 	/** Atributos de Botones */
 	private JButton buttonIngresar;
 	private JButton buttonCancelar;
-
+	private JButton buttonSeleccionar;
+	
+	
+	
 	/** Lista de Tipos del sistema */
 	private List<Fenomeno> fenomenos;
 	private List<Localidad> localidades;
@@ -98,9 +99,6 @@ public class FrameNuevaObservacion implements ActionListener {
 	
 
 		listaUsuarios = listUsuarios;
-
-		
-		
 		
 		this.labelIdentificacion = new JLabel("Identificacion:");
 		this.labelUsuario = new JLabel("Nombre de usuario:");
@@ -118,14 +116,10 @@ public class FrameNuevaObservacion implements ActionListener {
 
 		this.textAltitud = new JTextField(15);
 		this.textDescripcion = new JTextField(15);
-		this.textDireccion = new JTextField(15);
 		this.textIdentificacion = new JTextField(15);
-		this.textMail = new JTextField(15);
 		this.textLatitud = new JTextField(15);
 		this.textLongitud = new JTextField(15);
 		this.textUsuario = new JTextField(15);
-		this.txtImagen = new JTextField(15);
-
 		
 		JButton buttonIngresar = new JButton("Ingresar");
 		buttonIngresar.addActionListener(this);
@@ -133,9 +127,14 @@ public class FrameNuevaObservacion implements ActionListener {
 		JButton buttonCancelar = new JButton("Cancelar");
 		buttonCancelar.addActionListener(this);
 		
+		JButton buttonSeleccionar = new JButton("Selecionar Imagen");
+		buttonSeleccionar.addActionListener(this);
+		
+		
 		this.buttonIngresar = buttonIngresar;
 		this.buttonCancelar = buttonCancelar;
-
+		this.buttonSeleccionar = buttonSeleccionar;
+		
 		this.initalizeFrame(framePadre);
 	}
 
@@ -201,9 +200,9 @@ public class FrameNuevaObservacion implements ActionListener {
 		nuevaObservacionPanel.add(this.labelImagen, constraints);
 
 		constraints.gridx = 1;
-		nuevaObservacionPanel.add(this.txtImagen, constraints);
+		constraints.gridwidth = 3;
+		nuevaObservacionPanel.add(buttonSeleccionar, constraints);
 		
-	
 		constraints.gridx = 2;
 		nuevaObservacionPanel.add(this.labelfoto, constraints);
 
@@ -271,8 +270,6 @@ public class FrameNuevaObservacion implements ActionListener {
 
 			this.frame = frame;
 			
-
-			this.seleccionarImagen();
 	}
 
 	private JComboBox<String> completarComboFenomeno(JFrame frame) {
@@ -334,19 +331,28 @@ public class FrameNuevaObservacion implements ActionListener {
 
 		if (e.getSource() == this.buttonCancelar) {
 			this.accionCancelar();
-		} else {
-			try {
-				this.accionIngesar();
-			} catch (ServiciosException e1) {
-				e1.printStackTrace();
-			}
-
+		} else if(e.getSource() == this.buttonIngresar){
+				try {
+					this.accionIngesar();
+				} catch (ServiciosException e1) {
+					e1.printStackTrace();
+				}
+		}
+			else if(e.getSource() == this.buttonSeleccionar){
+				
+				this.accionSeleccionar();
+				
 		}
 
 	}
-	private JDatePickerImpl crearDatePicker() {
+	
+	private void accionSeleccionar() {
 		
-		Date fechaActual = new Date();
+		this.seleccionarImagen();
+		
+	}
+
+	private JDatePickerImpl crearDatePicker() {
 		
 		UtilDateModel model = new UtilDateModel();
 		model.setSelected(true);
@@ -384,7 +390,7 @@ public class FrameNuevaObservacion implements ActionListener {
 		
 		
 		
-		if (!txtImagen.getText().equals("")) {
+		if (!(camino.toString().equals(""))) {
 		try {	
 			imagen = Files.readAllBytes(archivoImagen.toPath());
 		}catch(Exception e){
@@ -393,8 +399,6 @@ public class FrameNuevaObservacion implements ActionListener {
 		}
 		
 		
-		
-
 		// Si estamos aquí,..quiere decir que no hay errores. Almacenamos el
 		// Usuario y volvemos al menu
 		boolean almacenado;
@@ -497,7 +501,7 @@ public class FrameNuevaObservacion implements ActionListener {
 			
 			
 			//Escribe la ruta del fichero seleccionado en el campo de texto
-			txtImagen.setText(archivoImagen.getAbsolutePath());
+			camino = archivoImagen.getAbsolutePath();
 			
 			//Cargar imagen en JLabel
 			try {

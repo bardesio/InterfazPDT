@@ -48,6 +48,8 @@ public class FrameModificarObservacion implements ActionListener {
 	
 	Long fieldID = null;
 	
+	String camino = "";
+	
 	File archivoImagen = null;
 
 	/** Frame de la ventana */
@@ -81,13 +83,12 @@ public class FrameModificarObservacion implements ActionListener {
 	private JTextField textLongitud;
 	private JTextField textAltitud;
 	private JTextField textUsuario;
-	private JTextField txtImagen;
 
 	/** Atributos de Botones */
 	private JButton buttonModificar;
 	private JButton buttonCancelar;
 	private JButton buttonBuscar;
-	private JButton buttonEditar;
+	private JButton buttonSeleccionar;
 
 	
 	/** Lista de Tipos del sistema */
@@ -122,8 +123,6 @@ public class FrameModificarObservacion implements ActionListener {
 		this.textLatitud = new JTextField(15);
 		this.textLongitud = new JTextField(15);
 		this.textUsuario = new JTextField(15);
-		this.txtImagen = new JTextField(15);
-
 		
 		JButton buttonModificar = new JButton("Modificar");
 		buttonModificar.addActionListener(this);
@@ -134,13 +133,13 @@ public class FrameModificarObservacion implements ActionListener {
 		JButton buttonBuscar = new JButton("Buscar");
 		buttonBuscar.addActionListener(this);
 		
-		JButton buttonEditar = new JButton("Editar");
-		buttonEditar.addActionListener(this);
+		JButton buttonSeleccionar = new JButton("Seleccionar Imagen");
+		buttonSeleccionar.addActionListener(this);
 		
 		this.buttonModificar = buttonModificar;
 		this.buttonCancelar = buttonCancelar;
 		this.buttonBuscar = buttonBuscar;
-		this.buttonEditar = buttonEditar;
+		this.buttonSeleccionar = buttonSeleccionar;
 		
 		this.initalizeFrame(framePadre);
 	}
@@ -209,13 +208,13 @@ public class FrameModificarObservacion implements ActionListener {
 		nuevaObservacionPanel.add(this.labelImagen, constraints);
 
 		constraints.gridx = 1;
-		nuevaObservacionPanel.add(this.txtImagen, constraints);
-		this.txtImagen.setEnabled(false);
-	
+		constraints.gridwidth = 3;
+		nuevaObservacionPanel.add(buttonSeleccionar, constraints);
+		this.buttonSeleccionar.setEnabled(false);
+		
 		constraints.gridx = 2;
 		nuevaObservacionPanel.add(this.labelfoto, constraints);
 
-		
 		constraints.gridx = 0;
 		constraints.gridy = 6;
 		nuevaObservacionPanel.add(this.labelLatitud, constraints);
@@ -282,14 +281,6 @@ public class FrameModificarObservacion implements ActionListener {
 			constraints.anchor = GridBagConstraints.SOUTH;
 			nuevaObservacionPanel.add(buttonBuscar, constraints);
 
-			
-			constraints.gridx = -2;
-			constraints.gridy = 12;
-			constraints.gridwidth = 3;
-			constraints.anchor = GridBagConstraints.SOUTH;
-			nuevaObservacionPanel.add(buttonEditar, constraints);
-			this.buttonEditar.setEnabled(false);
-			
 			
 			nuevaObservacionPanel.setBorder(
 					BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Datos de la Observacion"));
@@ -372,7 +363,7 @@ public class FrameModificarObservacion implements ActionListener {
 				e1.printStackTrace();
 			}
 		}
-		else if (e.getSource()==this.buttonEditar)
+		else if (e.getSource()==this.buttonSeleccionar)
 		{
 			this.seleccionarImagen();
 		}
@@ -391,7 +382,7 @@ public class FrameModificarObservacion implements ActionListener {
 			return;
 		}
 		
-		if (observaciones==null || observaciones.size() == 0 || observaciones.get(0).getEstado().equals("INACTIVO")) {
+		if (observaciones==null || observaciones.size() == 0 || observaciones.get(0).getEstado().getNombre().equals("INACTIVO")) {
 			JOptionPane.showMessageDialog(frame, "La identificacion ingresada no existe.",
 					"Usuario Existente!", JOptionPane.WARNING_MESSAGE);
 
@@ -404,12 +395,11 @@ public class FrameModificarObservacion implements ActionListener {
 			
 			this.buttonModificar.setEnabled(true);
 			this.textDescripcion.setEnabled(true);
-			this.txtImagen.setEnabled(true);
 			this.textAltitud.setEnabled(true);
 			this.textLongitud.setEnabled(true);
 			this.textLatitud.setEnabled(true);
 			this.comboLocalidad.setEnabled(true);
-			this.buttonEditar.setEnabled(true);
+			this.buttonSeleccionar.setEnabled(true);
 			
 			//Deshabilito campos
 			this.buttonBuscar.setEnabled(false);
@@ -427,13 +417,13 @@ public class FrameModificarObservacion implements ActionListener {
 			this.comboLocalidad.setSelectedItem(observaciones.get(0).getLocalidad());
 			this.fieldID = observaciones.get(0).getId();
 			
-			//Revisar esto	
+			//Cargo la fecha actual
 			String dateString = observaciones.get(0).getFecha().toString();
 			dateString = dateString.split(" ")[0];
 			String[] yyyymmdd = dateString.split("-");
 			
 			this.datePickerFecha.getModel().setDay(Integer.parseInt(yyyymmdd[2]));
-			this.datePickerFecha.getModel().setMonth(Integer.parseInt(yyyymmdd[1]));
+			this.datePickerFecha.getModel().setMonth(Integer.parseInt(yyyymmdd[1])-1);
 			this.datePickerFecha.getModel().setYear(Integer.parseInt(yyyymmdd[0]));
 			
 			 
@@ -490,13 +480,13 @@ public class FrameModificarObservacion implements ActionListener {
 			return;
 		}
 		
-		if (!txtImagen.getText().equals("")) {
+		if (!camino.toString().equals("")) {
 			try {	
 				imagen = Files.readAllBytes(archivoImagen.toPath());
 			}catch(Exception e){
 				JOptionPane.showMessageDialog(frame, "Error al leer la imagen, cargue nuevamente el archivo", "Error", JOptionPane.WARNING_MESSAGE);
 			}
-			}
+		}
 			
 		
 		
@@ -505,6 +495,11 @@ public class FrameModificarObservacion implements ActionListener {
 		boolean almacenado;
 
 		try {
+			
+				if (camino == "")
+				{
+					imagen = observaciones.get(0).getImagen();
+				}
 				almacenado = ClientePDT.ModificarObservacion(fieldID ,fieldIdentificacion,fieldUsuario, fieldFenomeno,  
 							fieldLocalidad, fieldDescripcion, imagen, fieldLatitud, fieldLongitud, fieldAltitud,
 							fieldEstado, fieldFecha);
@@ -563,7 +558,7 @@ public class FrameModificarObservacion implements ActionListener {
 			
 			
 			//Escribe la ruta del fichero seleccionado en el campo de texto
-			txtImagen.setText(archivoImagen.getAbsolutePath());
+			camino = archivoImagen.getAbsolutePath();
 			
 			//Cargar imagen en JLabel
 			try {

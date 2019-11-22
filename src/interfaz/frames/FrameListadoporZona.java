@@ -166,14 +166,14 @@ public class FrameListadoporZona implements ActionListener {
 			return null;
 		}
 
-		String[] nombreColumnas = { "Nombre de Zona", "Nombre del Fenomeno", "Descripcion", "Latitud", "Longitud", "Altitud"
+		String[] nombreColumnas = {"Identificación", "Nombre de Zona", "Nombre del Fenomeno", "Descripcion", "Latitud", "Longitud", "Altitud"
 				, "Fecha"};
 
 		/*
 		 * El tamaño de la tabla es, 7 columnas (cantidad de datos a mostrar) y
 		 * la cantidad de filas depende de la cantida de consultas
 		 */
-			Object[][] datos = new Object[observaciones.size()][7];
+			Object[][] datos = new Object[observaciones.size()][8];
 
 		/* Cargamos la matriz con todos los datos */
 		int fila = 0;
@@ -182,13 +182,14 @@ public class FrameListadoporZona implements ActionListener {
 
 		for (Observacion o : observaciones) {
 
-			datos[fila][0] = o.getLocalidad().getDepartamento().getZona().getNombre_zona();
-			datos[fila][1] = o.getFenomeno().getNombreFen();
-			datos[fila][2] = o.getDescripcion();
-			datos[fila][3] = o.getLatitud();
-			datos[fila][4] = o.getLongitud();
-			datos[fila][5] = o.getAltitud();
-			datos[fila][6] = formateadorFecha.format(o.getFecha());
+			datos[fila][0] = o.getCodigo_OBS();
+			datos[fila][1] = o.getLocalidad().getDepartamento().getZona().getNombre_zona();
+			datos[fila][2] = o.getFenomeno().getNombreFen();
+			datos[fila][3] = o.getDescripcion();
+			datos[fila][4] = o.getLatitud();
+			datos[fila][5] = o.getLongitud();
+			datos[fila][6] = o.getAltitud();
+			datos[fila][7] = formateadorFecha.format(o.getFecha());
 			
 			fila++;
 
