@@ -166,11 +166,11 @@ public class FrameListadoporZona implements ActionListener {
 			return null;
 		}
 
-		String[] nombreColumnas = {"Identificación", "Nombre de Zona", "Nombre del Fenomeno", "Descripcion", "Latitud", "Longitud", "Altitud"
+		String[] nombreColumnas = { "Identificación", "Nombre de Zona", "Nombre del Fenomeno", "Descripcion", "Latitud", "Longitud", "Altitud"
 				, "Fecha"};
 
 		/*
-		 * El tamaño de la tabla es, 7 columnas (cantidad de datos a mostrar) y
+		 * El tamaño de la tabla es, 8 columnas (cantidad de datos a mostrar) y
 		 * la cantidad de filas depende de la cantida de consultas
 		 */
 			Object[][] datos = new Object[observaciones.size()][8];
@@ -262,10 +262,13 @@ public class FrameListadoporZona implements ActionListener {
 		String fieldZona = this.textZona.getText();
 		
 		if (fechaInicio != null && fechaFin != null && fieldZona != null) {
+
 			
-			filtro.setRowFilter(RowFilter.dateFilter(ComparisonType.AFTER, fechaInicio , 6));
-			filtro.setRowFilter(RowFilter.dateFilter(ComparisonType.BEFORE, fechaFin, 6));
-			filtro.setRowFilter(RowFilter.regexFilter(this.textZona.getText(), 0));
+			String inicioString = formateadorFecha.format(fechaInicio);
+						
+			filtro.setRowFilter(RowFilter.dateFilter(ComparisonType.AFTER, fechaInicio , 7));
+			filtro.setRowFilter(RowFilter.dateFilter(ComparisonType.BEFORE, fechaFin, 7));
+			filtro.setRowFilter(RowFilter.regexFilter(this.textZona.getText(), 1));
 			this.tablaObservaciones.setRowSorter(filtro);
 		}
 		
