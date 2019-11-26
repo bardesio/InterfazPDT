@@ -51,7 +51,6 @@ public class FrameModificarFenomeno implements ActionListener{
 	private JTextField textNombre;
 	private JTextField textDescripcion;
 	private JTextField textCodigo;
-	private JTextField textCodigofen;
 	private JTextField textEstado;
 
 	/** Atributos de Botones */
@@ -130,6 +129,7 @@ public class FrameModificarFenomeno implements ActionListener{
 		
 		constraints.gridx = 1;
 		ModificarFenomenoPanel.add(this.textNombre, constraints);
+		this.textNombre.setEnabled(false);
 		
 		constraints.gridx = 0;
 		constraints.gridy = 3;
@@ -137,6 +137,8 @@ public class FrameModificarFenomeno implements ActionListener{
 
 		constraints.gridx = 1;
 		ModificarFenomenoPanel.add(this.textDescripcion, constraints);
+		this.textDescripcion.setEnabled(false);
+		
 		
 		constraints.gridx = 0;
 		constraints.gridy = 4;
@@ -148,7 +150,8 @@ public class FrameModificarFenomeno implements ActionListener{
 		
 		constraints.gridx = 1;
 		 this.comboTel = this.completarComboTelefono(frame);
-
+		 this.comboTel.setEnabled(false);
+		 
 
 		if (this.comboTel!=null) {
 			ModificarFenomenoPanel.add(this.comboTel,constraints);
@@ -272,10 +275,17 @@ public class FrameModificarFenomeno implements ActionListener{
 							this.comboTel.setEnabled(true);							
 							this.fieldID = CFen.getId();
 							
+							
+							
+							//Habilito los campos
+							this.textDescripcion.setEnabled(true);
+							this.textNombre.setEnabled(true);
 							buttonModificar.setEnabled(true);
+							this.textCodigo.setEnabled(true);
 							
-							
-							
+							//Deshabilito los campos 
+							this.textCodigo.setEnabled(false);
+							this.buttonBuscar.setEnabled(false);
 							
 							
 						}

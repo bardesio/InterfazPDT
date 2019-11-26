@@ -1,8 +1,5 @@
 package interfaz.frames;
 
-
-
-
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.GridBagConstraints;
@@ -64,7 +61,6 @@ public class FrameEliminarFenomeno implements ActionListener {
 		private JTextField textNombre;
 		private JTextField textDescripcion;
 		private JTextField textCodigo;
-		private JTextField textCodigofen;
 		private JTextField textEstado;
 
 		/** Atributos de Botones */
@@ -141,6 +137,7 @@ public class FrameEliminarFenomeno implements ActionListener {
 		
 		constraints.gridx = 1;
 		eliminarFenomenoPanel.add(this.textNombre, constraints);
+		this.textNombre.setEditable(false);
 		
 		constraints.gridx = 0;
 		constraints.gridy = 3;
@@ -148,6 +145,7 @@ public class FrameEliminarFenomeno implements ActionListener {
 
 		constraints.gridx = 1;
 		eliminarFenomenoPanel.add(this.textDescripcion, constraints);
+		this.textDescripcion.setEditable(false);
 		
 		constraints.gridx = 0;
 		constraints.gridy = 4;
@@ -159,7 +157,8 @@ public class FrameEliminarFenomeno implements ActionListener {
 		
 		constraints.gridx = 1;
 		 this.comboTel = this.completarComboTelefono(frame);
-
+		 this.comboTel.setEditable(false);
+		 
 		
 			if (this.comboTel!=null) {
 				eliminarFenomenoPanel.add(this.comboTel,constraints);
@@ -251,10 +250,8 @@ public class FrameEliminarFenomeno implements ActionListener {
 				
 				try{
 					
-					//FenomenoBeanRemote fenomenobeanremote = EJBLocator.getInstance().lookup(FenomenoBeanRemote.class);
 					String codigo = this.textCodigo.getText();
 					List <Fenomeno> fenomenos= ClientePDT.existecodigo(codigo);
-					//List <Fenomeno> fenomenos = fenomenobeanremote.existecodigo(codigo);
 					if (fenomenos.isEmpty())
 					{
 						JOptionPane.showMessageDialog(null, "Fenomeno no encontrado");
@@ -277,9 +274,6 @@ public class FrameEliminarFenomeno implements ActionListener {
 							this.comboTel.setEnabled(true);							
 							this.fieldID = CFen.getId();
 							buttonEliminar.setEnabled(true);
-							
-							
-							
 							
 							
 						}

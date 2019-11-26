@@ -178,7 +178,7 @@ public class FrameListadoporZona implements ActionListener {
 		/* Cargamos la matriz con todos los datos */
 		int fila = 0;
 
-		SimpleDateFormat formateadorFecha = new SimpleDateFormat("dd/MM/yyyy");
+		//SimpleDateFormat formateadorFecha = new SimpleDateFormat("yyyy/MM/dd");
 
 		for (Observacion o : observaciones) {
 
@@ -189,7 +189,7 @@ public class FrameListadoporZona implements ActionListener {
 			datos[fila][4] = o.getLatitud();
 			datos[fila][5] = o.getLongitud();
 			datos[fila][6] = o.getAltitud();
-			datos[fila][7] = formateadorFecha.format(o.getFecha());
+			datos[fila][7] = o.getFecha();//formateadorFecha.format(o.getFecha());
 			
 			fila++;
 
@@ -258,17 +258,17 @@ public class FrameListadoporZona implements ActionListener {
 		Date fechaInicio = (Date) this.datePickerInicio.getModel().getValue();
 		Date fechaFin = (Date) this.datePickerFin.getModel().getValue();
 		
-		SimpleDateFormat formateadorFecha = new SimpleDateFormat("dd/MM/yyyy");
+		SimpleDateFormat formateadorFecha = new SimpleDateFormat("yyyy/MM/dd");
 		String fieldZona = this.textZona.getText();
 		
 		if (fechaInicio != null && fechaFin != null && fieldZona != null) {
-
 			
-			String inicioString = formateadorFecha.format(fechaInicio);
+			
+		//	String inicioString = formateadorFecha.format(fechaInicio);
 						
-			filtro.setRowFilter(RowFilter.dateFilter(ComparisonType.AFTER, fechaInicio , 7));
+			filtro.setRowFilter(RowFilter.dateFilter(ComparisonType.AFTER, fechaInicio, 7));
 			filtro.setRowFilter(RowFilter.dateFilter(ComparisonType.BEFORE, fechaFin, 7));
-			filtro.setRowFilter(RowFilter.regexFilter(this.textZona.getText(), 1));
+			//filtro.setRowFilter(RowFilter.regexFilter(this.textZona.getText(), 1));
 			this.tablaObservaciones.setRowSorter(filtro);
 		}
 		
