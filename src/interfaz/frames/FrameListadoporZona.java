@@ -49,6 +49,8 @@ public class FrameListadoporZona implements ActionListener {
 	private JLabel labelFechaInicio;
 	private JLabel labelFechaFin;
 	private JLabel labelZona;
+	
+	SimpleDateFormat formateadorFecha = new SimpleDateFormat("yyyy/MM/dd");
 
 
 	/** Atributos de TexField */
@@ -178,8 +180,6 @@ public class FrameListadoporZona implements ActionListener {
 		/* Cargamos la matriz con todos los datos */
 		int fila = 0;
 
-		//SimpleDateFormat formateadorFecha = new SimpleDateFormat("yyyy/MM/dd");
-
 		for (Observacion o : observaciones) {
 
 			datos[fila][0] = o.getCodigo_OBS();
@@ -189,7 +189,7 @@ public class FrameListadoporZona implements ActionListener {
 			datos[fila][4] = o.getLatitud();
 			datos[fila][5] = o.getLongitud();
 			datos[fila][6] = o.getAltitud();
-			datos[fila][7] = o.getFecha();//formateadorFecha.format(o.getFecha());
+			datos[fila][7] = o.getFecha();
 			
 			fila++;
 
@@ -252,24 +252,28 @@ public class FrameListadoporZona implements ActionListener {
 	}
 
 	private void accionFiltrar() {
-
-		TableRowSorter<TableModel> filtro = new TableRowSorter<>(this.tablaObservaciones.getModel());
-
+		
+	    List<RowFilter<Object,Object>> filtro = new ArrayList<RowFilter<Object,Object>>(2);
+		
+		
 		Date fechaInicio = (Date) this.datePickerInicio.getModel().getValue();
 		Date fechaFin = (Date) this.datePickerFin.getModel().getValue();
+		String fieldZona = this.textZona.getText().toUpperCase();
 		
-		SimpleDateFormat formateadorFecha = new SimpleDateFormat("yyyy/MM/dd");
-		String fieldZona = this.textZona.getText();
-		
-		if (fechaInicio != null && fechaFin != null && fieldZona != null) {
+		if (fechaInicio != null && fechaFin != null && !(fieldZona.equals(""))) {
 			
+	
+			filtro.add(RowFilter.dateFilter(ComparisonType.AFTER, fechaInicio, 7));
+			filtro.add(RowFilter.dateFilter(ComparisonType.BEFORE, fechaFin, 7));
+			filtro.add(RowFilter.regexFilter(fieldZona, 1));
+
 			
-		//	String inicioString = formateadorFecha.format(fechaInicio);
-						
-			filtro.setRowFilter(RowFilter.dateFilter(ComparisonType.AFTER, fechaInicio, 7));
-			filtro.setRowFilter(RowFilter.dateFilter(ComparisonType.BEFORE, fechaFin, 7));
-			//filtro.setRowFilter(RowFilter.regexFilter(this.textZona.getText(), 1));
-			this.tablaObservaciones.setRowSorter(filtro);
+			  DefaultTableModel dtm = (DefaultTableModel) tablaObservaciones.getModel();
+			    TableRowSorter<DefaultTableModel> tr = new TableRowSorter<>(dtm);
+			    tablaObservaciones.setRowSorter(tr);
+			    RowFilter<Object, Object> rf = RowFilter.andFilter(filtro);
+			    tr.setRowFilter(rf);
+				
 		}
 		
 		else {
