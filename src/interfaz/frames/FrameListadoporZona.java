@@ -89,11 +89,11 @@ public class FrameListadoporZona implements ActionListener {
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
 		JPanel listarObservacionesPanel = new JPanel(new GridBagLayout());
-		listarObservacionesPanel.setSize(600, 600);
+		listarObservacionesPanel.setSize(1000, 1000);
 
 		GridBagConstraints constraints = new GridBagConstraints();
 		constraints.anchor = GridBagConstraints.WEST;
-		constraints.insets = new Insets(10, 2, 2, 10);
+		constraints.insets = new Insets(30, 2, 2, 30);
 
 		constraints.gridx = 0;
 		constraints.gridy = 0;
@@ -260,7 +260,13 @@ public class FrameListadoporZona implements ActionListener {
 		Date fechaFin = (Date) this.datePickerFin.getModel().getValue();
 		String fieldZona = this.textZona.getText().toUpperCase();
 		
-		if (fechaInicio != null && fechaFin != null && !(fieldZona.equals(""))) {
+		
+		if (fechaInicio.after(fechaFin)) {
+			JOptionPane.showMessageDialog(frame, "La fecha de inicio no puede ser mayor a la fecha de fin", "Fechas invalidas!", JOptionPane.WARNING_MESSAGE);
+		}
+		
+		
+		else if (fechaInicio != null && fechaFin != null && !(fieldZona.equals(""))) {
 			
 	
 			filtro.add(RowFilter.dateFilter(ComparisonType.AFTER, fechaInicio, 7));

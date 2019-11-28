@@ -228,12 +228,22 @@ public class FrameNuevoFenomeno implements ActionListener {
 		String tels =(String) this.comboTel.getSelectedItem();
 				
 		// Si alguno es vacío, mostramos una ventana de mensaje
-		if (fieldNombre.equals("") || fieldDescripcion.equals("")|| fieldCodigo.equals("")|| fieldEstado.equals("")){
+		if (fieldNombre.equals("") || fieldDescripcion.equals("")|| fieldCodigo.equals("")){
 			JOptionPane.showMessageDialog(frame, "Debe completar todos los datos solicitados.", "Datos incompletos!",
 					JOptionPane.WARNING_MESSAGE);
 
 			return;
 		}
+		
+		//Valido maximo en los campos
+		if (fieldCodigo.length() > 50 || fieldNombre.length() > 50 || fieldDescripcion.length() > 50)
+		{
+			JOptionPane.showMessageDialog(frame, "No puede ingresar mas de 50 caracteres en los campos", "Maximo superado!",
+					JOptionPane.WARNING_MESSAGE);
+			
+			return;
+		}
+		
 		
 			
 		boolean almacenado;

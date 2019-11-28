@@ -1,5 +1,6 @@
 package interfaz.frames;
 
+
 import java.awt.EventQueue;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -37,7 +38,6 @@ import com.entidades.Usuario;
 import com.exception.ServiciosException;
 
 import interfaz.locator.ClientePDT;
-import interfaz.validaciones.ValidacionUsuario;
 import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
 import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
 import net.sourceforge.jdatepicker.impl.UtilDateModel;
@@ -216,8 +216,8 @@ public class FrameNuevaObservacion implements ActionListener {
 
 		constraints.gridx = 0;
 		constraints.gridy = 7;
-		nuevaObservacionPanel.add(this.labelLongitud, constraints);
-
+		nuevaObservacionPanel.add(this.labelLongitud, constraints);		
+		
 		constraints.gridx = 1;
 		nuevaObservacionPanel.add(this.textLongitud, constraints);
 
@@ -371,9 +371,9 @@ public class FrameNuevaObservacion implements ActionListener {
 		String fieldEstado = (String) this.comboEstado.getSelectedItem();
 		String fieldLocalidad = (String) this.comboLocalidad.getSelectedItem();
 		String fieldDescripcion = this.textDescripcion.getText();
-		float fieldLatitud = Float.parseFloat(this.textLatitud.getText());
-		float fieldLongitud = Float.parseFloat(this.textLongitud.getText());
-		float fieldAltitud = Float.parseFloat(this.textAltitud.getText());
+		float fieldLatitud = 0;
+		float fieldLongitud = 0;
+		float fieldAltitud = 0;
 		Date fieldFecha = (Date) this.datePickerFecha.getModel().getValue();
 		byte[] imagen = null;
 		
@@ -387,6 +387,45 @@ public class FrameNuevaObservacion implements ActionListener {
 
 			return;
 		}
+		
+		
+		try {	
+			 fieldLatitud = Float.parseFloat(this.textLatitud.getText());
+			 fieldLongitud = Float.parseFloat(this.textLongitud.getText());
+			 fieldAltitud = Float.parseFloat(this.textAltitud.getText());		
+		
+		}catch(Exception e){
+			JOptionPane.showMessageDialog(frame, "Las coordenadas ingresadas no tienen el formato correcto", "Error", JOptionPane.WARNING_MESSAGE);
+			return;
+		}
+		
+		
+		if (fieldLatitud > 35.024444) {
+
+			JOptionPane.showMessageDialog(frame, "La latitud ingresada no es valida, como maximo se puede ingresar 35.024444", "Latitud invalida!",
+					JOptionPane.WARNING_MESSAGE);
+			return;
+		}
+
+				
+		if (fieldLongitud > 58.433611) {
+
+			JOptionPane.showMessageDialog(frame, "La longitud ingresada no es valida, como maximo se puede ingresar 58.433611", "Longitud invalida!",
+					JOptionPane.WARNING_MESSAGE);
+			return;
+		}
+
+		
+		
+		if (fieldAltitud > 514) {
+
+			JOptionPane.showMessageDialog(frame, "La altitud ingresada no es valida, el punto mas alto de Uruguay es el es el cerro Catedral con 514msnm", "Altitud invalida!",
+					JOptionPane.WARNING_MESSAGE);
+			return;
+		}
+		
+
+		
 		
 		
 		

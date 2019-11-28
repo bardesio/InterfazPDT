@@ -118,7 +118,7 @@ public class FrameEliminarUsuario implements ActionListener{
 	private void initalizeFrame(JFrame framePadre) {
 
 		JFrame frame = new JFrame("Eliminar Usuario");
-		frame.setSize(600, 400);
+		frame.setSize(500, 500);
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(framePadre);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -303,6 +303,14 @@ public class FrameEliminarUsuario implements ActionListener{
 
 		String fieldUsuario = this.textUsuario.getText();
 		
+		if (fieldUsuario.length() > 50)
+		{
+			JOptionPane.showMessageDialog(frame, "No puede ingresar mas de 50 caracteres en el campo usuario", "Maximo superado!",
+					JOptionPane.WARNING_MESSAGE);
+			
+			return;
+		}
+		
 		
 		// Validamos ahora, que exista un Usuario con dicha CI
 				List<Usuario> usuarios;
@@ -352,8 +360,7 @@ public class FrameEliminarUsuario implements ActionListener{
 					this.comboTipo.setSelectedItem(usuarios.get(0).getTipodoc());
 					this.comboTipoUsu.setSelectedItem(usuarios.get(0).getTipousuario());
 					this.fieldID = usuarios.get(0).getId();
-				}
-		
+				}	
 	}
 	
 	private void accionEliminar() {

@@ -8,20 +8,19 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-
 import com.entidades.Usuario;
-import interfaz.locator.ClientePDT;
 
 public class FramePrincipal {
 
 	
 	static List<Usuario> listUsuarios = null;
+
 	
 	public FramePrincipal(List<Usuario> usuarios) {
 	listUsuarios = usuarios;
 	}
 	
-	public static void main(String[] args) {
+	public void main(String[] args) {
 	javax.swing.SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				createAndShowGUI();
@@ -29,6 +28,7 @@ public class FramePrincipal {
 		});
 	}
 
+	
 	
 /** Método que inicializa toda la ventana principal */
 	
@@ -39,7 +39,7 @@ public class FramePrincipal {
 		frame.setSize(600, 400);
         frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+		
 		initializeMenuBar(frame);
 		frame.setVisible(true);
 	}
@@ -50,6 +50,7 @@ public class FramePrincipal {
 		
 	
 		try {
+			
 			JMenuBar menuBar = new JMenuBar();
 			
 			if (listUsuarios.get(0).getTipousuario().getNombre().equals("ADMINISTRADOR"))
@@ -188,7 +189,7 @@ private static void initializeMenuUsuarios(JMenuBar menuBar, final JFrame frame)
 
 /** Inicialicación de botones del menu de observacion */
 
-	private static void initializeMenuObservaciones(JMenuBar menuBar, final JFrame frame) {
+private static void initializeMenuObservaciones(JMenuBar menuBar, final JFrame frame) {
 		
 		JMenu observacion = new JMenu("Observaciones");
 		
@@ -235,14 +236,11 @@ private static void initializeMenuUsuarios(JMenuBar menuBar, final JFrame frame)
 			observacion.add(nuevaObservacion);
 			observacion.add(modificarObservacion);		
 		}		
-		observacion.add(nuevaObservacion);
-		observacion.add(modificarObservacion);		
-		observacion.add(eliminarObservacion);
 		menuBar.add(observacion);		
 	}
 
 
-	public void setVisible(boolean b) {
+public void setVisible(boolean b) {
 		createAndShowGUI();
 	}
 

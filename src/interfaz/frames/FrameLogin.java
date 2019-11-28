@@ -3,18 +3,9 @@ package interfaz.frames;
 
 import java.awt.EventQueue;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemListener;
-import java.awt.HeadlessException;
-import java.awt.Window;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import java.util.List;
-
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -22,18 +13,14 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
-import javax.swing.event.DocumentListener;
-
-
 import com.entidades.*;
-import com.servicios.*;
-
 import interfaz.locator.ClientePDT;
-import interfaz.locator.EJBLocator;
 
-import com.Remote.*;
+
 
 public class FrameLogin extends JFrame {
+
+	private static final long serialVersionUID = 1L;
 
 	/** Frame de la ventana */
 	private JFrame jframe;
@@ -65,7 +52,7 @@ public class FrameLogin extends JFrame {
 
 	{		
 		initialize();
-		jframe.setTitle("Bienvenido 404 Not Found");
+		jframe.setTitle("Bienvenido a Green Place");
 		jframe.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		jframe.setBounds(100, 100, 323, 181);
 		jframe.setLocationRelativeTo(null);

@@ -1,6 +1,5 @@
 package interfaz.frames;
 
-import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -21,7 +20,6 @@ import com.entidades.TipoUsuario;
 import com.entidades.Usuario;
 import com.exception.ServiciosException;
 import interfaz.locator.ClientePDT;
-import interfaz.validaciones.*;
 
 public class FrameNuevoUsuario implements ActionListener{
 
@@ -104,7 +102,7 @@ public class FrameNuevoUsuario implements ActionListener{
 	private void initalizeFrame(JFrame framePadre) {
 
 		JFrame frame = new JFrame("Nuevo Usuario");
-		frame.setSize(136, 133);
+		frame.setSize(500, 500);
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(framePadre);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -285,16 +283,29 @@ public class FrameNuevoUsuario implements ActionListener{
 
 		
 		//Validacion para datos vacios
-		boolean vacio = ValidacionUsuario.verificarVacio(fieldNombre, fieldApellido, fieldUsuario, fieldDireccion, fieldEstado, fieldMail, fieldNumeroDoc, fieldPass);
-		if (vacio == true)
+		
+		if (fieldNombre.equals("") || fieldApellido.equals("") || fieldUsuario.equals("")|| 
+				fieldDireccion.equals("")|| fieldMail.equals("")|| 
+				fieldNumeroDoc.equals("")|| fieldPass.equals(""))
 		{
 			JOptionPane.showMessageDialog(frame, "Debe completar todos los datos solicitados.", "Datos incompletos!",
 					JOptionPane.WARNING_MESSAGE);
 			
 			return;
 		}
-	
 		
+		if (fieldNombre.length() > 50 || fieldApellido.length() > 50 || fieldUsuario.length() > 50|| 
+				fieldDireccion.length() > 50|| fieldMail.length() > 50|| 
+				fieldNumeroDoc.length() > 50|| fieldPass.length() > 50)
+		{
+			JOptionPane.showMessageDialog(frame, "No puede ingresar mas de 50 caracteres en los campos", "Maximo superado!",
+					JOptionPane.WARNING_MESSAGE);
+			
+			return;
+		}
+			
+			
+			
 		// Si estamos aquí,..quiere decir que no hay errores. Almacenamos el
 		// Usuario y volvemos al menu
 		boolean almacenado;

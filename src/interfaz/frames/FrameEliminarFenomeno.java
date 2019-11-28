@@ -250,6 +250,15 @@ public class FrameEliminarFenomeno implements ActionListener {
 				
 				try{
 					
+					//Valido maximo en el campo codigo
+					if (this.textCodigo.getText().length() > 50)
+					{
+						JOptionPane.showMessageDialog(frame, "No puede ingresar mas de 50 caracteres en el campo codigo", "Maximo superado!",
+								JOptionPane.WARNING_MESSAGE);
+						
+						return;
+					}
+					
 					String codigo = this.textCodigo.getText();
 					List <Fenomeno> fenomenos= ClientePDT.existecodigo(codigo);
 					if (fenomenos.isEmpty())

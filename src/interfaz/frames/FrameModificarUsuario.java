@@ -1,6 +1,5 @@
 package interfaz.frames;
 
-import java.awt.EventQueue;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -21,9 +20,7 @@ import com.entidades.TipoUsuario;
 import com.entidades.Usuario;
 import com.exception.ServiciosException;
 
-import interfaz.constantes.Constantes;
 import interfaz.locator.ClientePDT;
-import interfaz.validaciones.ValidacionUsuario;
 
 public class FrameModificarUsuario implements ActionListener{
 
@@ -56,7 +53,6 @@ public class FrameModificarUsuario implements ActionListener{
 	private JTextField textNombre;
 	private JTextField textApellido;
 	private JTextField textEstado;
-	//private JTextField textTipoDoc;
 	private JTextField textNumeroDoc;
 	private JTextField textDireccion;
 	private JTextField textMail;
@@ -113,7 +109,7 @@ public class FrameModificarUsuario implements ActionListener{
 	private void initalizeFrame(JFrame framePadre) {
 
 		JFrame frame = new JFrame("Modificar Usuario");
-		frame.setSize(136, 133);
+		frame.setSize(500, 500);
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(framePadre);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -296,10 +292,20 @@ public class FrameModificarUsuario implements ActionListener{
 		String fieldUsuario = this.textUsuario.getText().toUpperCase();
 		
 		
-		// Validamos ahora, que exista un Usuario con dicha CI
+		// Validamos ahora, que exista un Usuario con lo ingresado
 				List<Usuario> usuarios;
 				
 				try{
+					
+					//Valido maximo en el campo usuario
+					if (fieldUsuario.length() > 50)
+					{
+						JOptionPane.showMessageDialog(frame, "No puede ingresar mas de 50 caracteres en el campo usuario", "Maximo superado!",
+								JOptionPane.WARNING_MESSAGE);
+						
+						return;
+					}
+					
 					usuarios = ClientePDT.existeUsuario(fieldUsuario);
 				} catch (Exception e){
 					JOptionPane.showMessageDialog(frame, "Error de conexión con el servidor. Intente más tarde.",
@@ -330,7 +336,6 @@ public class FrameModificarUsuario implements ActionListener{
 					this.textNumeroDoc.setEnabled(true);
 					this.textPass.setEnabled(true);
 					this.comboTipo.setEnabled(true);
-					this.comboTipoUsu.setEnabled(true);
 					
 					//Deshabilito campos
 					this.buttonBuscar.setEnabled(false);
@@ -370,14 +375,25 @@ public class FrameModificarUsuario implements ActionListener{
 				
 
 		//Validacion para datos vacios
-				boolean vacio = ValidacionUsuario.verificarVacio(fieldNombre, fieldApellido, fieldUsuario, fieldDireccion, fieldEstado, fieldMail, fieldNumeroDoc, fieldPass);
-				if (vacio == true)
-				{
+		if (fieldNombre.equals("") || fieldApellido.equals("") || fieldUsuario.equals("")|| 
+				fieldDireccion.equals("")|| fieldMail.equals("")|| 
+				fieldNumeroDoc.equals("")|| fieldPass.equals(""))	
+		{
 					JOptionPane.showMessageDialog(frame, "Debe completar todos los datos solicitados.", "Datos incompletos!",
 							JOptionPane.WARNING_MESSAGE);
 					
 					return;
-				}
+		}
+		
+		if (fieldNombre.length() > 50 || fieldApellido.length() > 50 || fieldUsuario.length() > 50|| 
+				fieldDireccion.length() > 50|| fieldMail.length() > 50|| 
+				fieldNumeroDoc.length() > 50|| fieldPass.length() > 50)
+		{
+			JOptionPane.showMessageDialog(frame, "No puede ingresar mas de 50 caracteres en los campos", "Maximo superado!",
+					JOptionPane.WARNING_MESSAGE);
+			
+			return;
+		}
 
 
 		boolean almacenado;

@@ -244,10 +244,16 @@ public class FrameModificarFenomeno implements ActionListener{
 	private void accionBuscar() {
 
 		
-		
-		
 				try{
 					
+					//Valido maximo en el campo codigo
+					if (this.textCodigo.getText().length() > 50)
+					{
+						JOptionPane.showMessageDialog(frame, "No puede ingresar mas de 50 caracteres en el campo codigo", "Maximo superado!",
+								JOptionPane.WARNING_MESSAGE);
+						
+						return;
+					}
 					
 					//FenomenoBeanRemote fenomenobeanremote = EJBLocator.getInstance().lookup(FenomenoBeanRemote.class);
 					String codigo = this.textCodigo.getText();
@@ -311,13 +317,22 @@ public class FrameModificarFenomeno implements ActionListener{
 		
 		
 		// Si alguno es vacío, mostramos una ventana de mensaje
-		if (fieldNombre.equals("") || fieldDescripcion.equals("")) {
+		if (fieldcodigo.equals("") || fieldNombre.equals("") || fieldDescripcion.equals("")) {
 			JOptionPane.showMessageDialog(frame, "Debe completar todos los datos solicitados.", "Datos incompletos!",
 					JOptionPane.WARNING_MESSAGE);
 
 			return;
 		}
 
+		
+		//Valido maximo en los campos
+		if (fieldcodigo.length() > 50 || fieldNombre.length() > 50 || fieldDescripcion.length() > 50)
+		{
+			JOptionPane.showMessageDialog(frame, "No puede ingresar mas de 50 caracteres en los campos", "Maximo superado!",
+					JOptionPane.WARNING_MESSAGE);
+			
+			return;
+		}
 
 		boolean almacenado;
 						
@@ -343,7 +358,7 @@ public class FrameModificarFenomeno implements ActionListener{
 
 			
 		}
-		else{
+		else{ 
 			JOptionPane.showMessageDialog(frame, "Hubo un error al almacenar. Intente nuevamente más tarde",
 					"Error al registrar!", JOptionPane.ERROR_MESSAGE);
 		}
