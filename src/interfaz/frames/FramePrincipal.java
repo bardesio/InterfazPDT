@@ -101,9 +101,9 @@ public class FramePrincipal {
 /** Inicialicación de botones del menu de Fenomeno */
 
 private static void initializeMenuFenomenos(JMenuBar menuBar, final JFrame frame) {
-JMenu fenomeno = new JMenu("Fenomeno");
+JMenu fenomeno = new JMenu("Fenómenos");
 
-	JMenuItem nuevoFenomeno = new JMenuItem("Nuevo Fenomeno");
+	JMenuItem nuevoFenomeno = new JMenuItem("Nuevo Fenómeno");
 	
 	nuevoFenomeno.addActionListener(new ActionListener() {
         @Override
@@ -113,7 +113,7 @@ JMenu fenomeno = new JMenu("Fenomeno");
         	
         }
     });
-	JMenuItem modificarFenomeno = new JMenuItem("Modificar Fenomeno");
+	JMenuItem modificarFenomeno = new JMenuItem("Modificar Fenómeno");
 
 	modificarFenomeno.addActionListener(new ActionListener() {
 	    @Override
@@ -122,7 +122,7 @@ JMenu fenomeno = new JMenu("Fenomeno");
 	    	new FrameModificarFenomeno(frame);
 	    }
 	});
-	JMenuItem eliminarFenomeno = new JMenuItem("Eliminar Fenomeno");
+	JMenuItem eliminarFenomeno = new JMenuItem("Eliminar Fenómeno");
 
 	eliminarFenomeno.addActionListener(new ActionListener() {
 	    @Override

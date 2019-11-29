@@ -101,7 +101,7 @@ public class FrameEliminarObservacion implements ActionListener{
 			
 			this.labelIdentificacion = new JLabel("Identificación:");
 			this.labelUsuario = new JLabel("Nombre de usuario:");
-			this.labelFenomeno = new JLabel("Fenomeno:");
+			this.labelFenomeno = new JLabel("Fenómeno:");
 			this.labelEstado = new JLabel("Estado:");
 			this.labelLocalidad = new JLabel("Localidad:");
 			this.labelDescripcion = new JLabel("Descripción:");
@@ -129,9 +129,11 @@ public class FrameEliminarObservacion implements ActionListener{
 			buttonCancelar.addActionListener(this);
 			
 			JButton buttonBuscar = new JButton("Buscar");
+			buttonBuscar.setIcon(new ImageIcon(FramePrincipal.class.getResource("/resources/buscar.png")));
 			buttonBuscar.addActionListener(this);
 			
 			JButton buttonSeleccionar = new JButton("Seleccionar Imagen");
+			buttonSeleccionar.setIcon(new ImageIcon(FramePrincipal.class.getResource("/resources/attach.png")));
 			buttonSeleccionar.addActionListener(this);
 			
 			this.buttonEliminar = buttonEliminar;
@@ -144,7 +146,7 @@ public class FrameEliminarObservacion implements ActionListener{
 
 		private void initalizeFrame(JFrame framePadre) {
 
-			JFrame frame = new JFrame("Eliminar Observacion");
+			JFrame frame = new JFrame("Eliminar Observación");
 			frame.setSize(500, 500);
 			frame.setResizable(false);
 			frame.setLocationRelativeTo(framePadre);
@@ -273,15 +275,13 @@ public class FrameEliminarObservacion implements ActionListener{
 				constraints.anchor = GridBagConstraints.SOUTH;
 				eliminarObservacionPanel.add(buttonCancelar, constraints);
 				
-				constraints.gridx = -1;
-				constraints.gridy = 12;
-				constraints.gridwidth = 3;
-				constraints.anchor = GridBagConstraints.SOUTH;
-				eliminarObservacionPanel.add(buttonBuscar, constraints);
+				
+				this.buttonBuscar.setBounds(60,60,89,23);
+				eliminarObservacionPanel.add(buttonBuscar);
 
 				
 				eliminarObservacionPanel.setBorder(
-						BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Datos de la Observacion"));
+						BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Datos de la Observación"));
 
 				frame.getContentPane().add(eliminarObservacionPanel);
 
@@ -377,8 +377,8 @@ public class FrameEliminarObservacion implements ActionListener{
 			}
 			
 			if (observaciones==null || observaciones.size() == 0 || observaciones.get(0).getEstado().getNombre().equals("INACTIVO")) {
-				JOptionPane.showMessageDialog(frame, "La identificacion ingresada no existe.",
-						"Usuario No Existente!", JOptionPane.WARNING_MESSAGE);
+				JOptionPane.showMessageDialog(frame, "La identificación ingresada no existe.",
+						"Observación no Existente!", JOptionPane.WARNING_MESSAGE);
 
 				return;
 			}

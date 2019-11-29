@@ -102,7 +102,7 @@ public class FrameNuevaObservacion implements ActionListener {
 		
 		this.labelIdentificacion = new JLabel("Identificación:");
 		this.labelUsuario = new JLabel("Nombre de usuario:");
-		this.labelFenomeno = new JLabel("Fenomeno:");
+		this.labelFenomeno = new JLabel("Fenómeno:");
 		this.labelEstado = new JLabel("Estado:");
 		this.labelLocalidad = new JLabel("Localidad:");
 		this.labelDescripcion = new JLabel("Descripción:");
@@ -130,6 +130,7 @@ public class FrameNuevaObservacion implements ActionListener {
 		buttonCancelar.addActionListener(this);
 		
 		JButton buttonSeleccionar = new JButton("Selecionar Imagen");
+		buttonSeleccionar.setIcon(new ImageIcon(FramePrincipal.class.getResource("/resources/attach.png")));
 		buttonSeleccionar.addActionListener(this);
 		
 		
@@ -263,7 +264,7 @@ public class FrameNuevaObservacion implements ActionListener {
 			nuevaObservacionPanel.add(buttonCancelar, constraints);
 
 			nuevaObservacionPanel.setBorder(
-					BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Datos de la Observacion"));
+					BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Datos de la Observación"));
 
 			frame.getContentPane().add(nuevaObservacionPanel);
 
@@ -409,7 +410,7 @@ public class FrameNuevaObservacion implements ActionListener {
 			{
 				if (fieldLatitud > 30.085556) {
 
-					JOptionPane.showMessageDialog(frame, "Para una localidad de zona norte como maximo se puede ingresar: -30.085556 de latitud°", "Latitud invalida!",
+					JOptionPane.showMessageDialog(frame, "Para una localidad de zona norte como máximo se puede ingresar: -30.085556 de latitud°", "Latitud invalida!",
 							JOptionPane.WARNING_MESSAGE);
 					return;
 				}
@@ -417,7 +418,7 @@ public class FrameNuevaObservacion implements ActionListener {
 						
 				if (fieldLongitud > 56.951667) {
 
-					JOptionPane.showMessageDialog(frame, "Para una localidad de zona norte como maximo se puede ingresar: -56.951667° de longitud", "Longitud invalida!",
+					JOptionPane.showMessageDialog(frame, "Para una localidad de zona norte como máximo se puede ingresar: -56.951667° de longitud", "Longitud invalida!",
 							JOptionPane.WARNING_MESSAGE);
 					return;
 				}
@@ -428,7 +429,7 @@ public class FrameNuevaObservacion implements ActionListener {
 			{
 				if (fieldLatitud > 35.024444) {
 
-					JOptionPane.showMessageDialog(frame, "Para una localidad de zona sur como maximo se puede ingresar: -35.024444° de latitud", "Latitud invalida!",
+					JOptionPane.showMessageDialog(frame, "Para una localidad de zona sur como máximo se puede ingresar: -35.024444° de latitud", "Latitud invalida!",
 							JOptionPane.WARNING_MESSAGE);
 					return;
 				}
@@ -436,7 +437,7 @@ public class FrameNuevaObservacion implements ActionListener {
 						
 				if (fieldLongitud > 54.883056) {
 
-					JOptionPane.showMessageDialog(frame, "Para una localidad de zona sur como maximo se puede ingresar: -54.883056° de longitud", "Longitud invalida!",
+					JOptionPane.showMessageDialog(frame, "Para una localidad de zona sur como máximo se puede ingresar: -54.883056° de longitud", "Longitud invalida!",
 							JOptionPane.WARNING_MESSAGE);
 					return;
 				}
@@ -446,7 +447,7 @@ public class FrameNuevaObservacion implements ActionListener {
 			{
 				if (fieldLatitud > 32.653889) {
 
-					JOptionPane.showMessageDialog(frame, "Para una localidad de zona este como maximo se puede ingresar: -32.653889° de latitud", "Latitud invalida!",
+					JOptionPane.showMessageDialog(frame, "Para una localidad de zona este como máximo se puede ingresar: -32.653889° de latitud", "Latitud invalida!",
 							JOptionPane.WARNING_MESSAGE);
 					return;
 				}
@@ -454,7 +455,7 @@ public class FrameNuevaObservacion implements ActionListener {
 						
 				if (fieldLongitud > 53.182778) {
 
-					JOptionPane.showMessageDialog(frame, "Para una localidad de zona este como maximo se puede ingresar: -53.182778 de longitud°", "Longitud invalida!",
+					JOptionPane.showMessageDialog(frame, "Para una localidad de zona este como máximo se puede ingresar: -53.182778 de longitud°", "Longitud invalida!",
 							JOptionPane.WARNING_MESSAGE);
 					return;
 				}
@@ -464,7 +465,7 @@ public class FrameNuevaObservacion implements ActionListener {
 			{
 				if (fieldLatitud > 33.525) {
 
-					JOptionPane.showMessageDialog(frame, "Para una localidad de zona este como maximo se puede ingresar: -33.525 de latitud°", "Latitud invalida!",
+					JOptionPane.showMessageDialog(frame, "Para una localidad de zona este como máximo se puede ingresar: -33.525 de latitud°", "Latitud invalida!",
 							JOptionPane.WARNING_MESSAGE);
 					return;
 				}
@@ -472,7 +473,7 @@ public class FrameNuevaObservacion implements ActionListener {
 						
 				if (fieldLongitud > 58.433611) {
 
-					JOptionPane.showMessageDialog(frame, "Para una localidad de zona este como maximo se puede ingresar: -58.433611° de longitud", "Longitud invalida!",
+					JOptionPane.showMessageDialog(frame, "Para una localidad de zona este como máximo se puede ingresar: -58.433611° de longitud", "Longitud invalida!",
 							JOptionPane.WARNING_MESSAGE);
 					return;
 				}
@@ -492,7 +493,7 @@ public class FrameNuevaObservacion implements ActionListener {
 		
 		if (fieldAltitud > 514) {
 
-			JOptionPane.showMessageDialog(frame, "La altitud ingresada no es valida, el punto mas alto de Uruguay es el es el cerro Catedral con 514msnm", "Altitud invalida!",
+			JOptionPane.showMessageDialog(frame, "La altitud ingresada no es valida, el punto más alto de Uruguay es el es el cerro Catedral con 514msnm", "Altitud invalida!",
 					JOptionPane.WARNING_MESSAGE);
 			return;
 		}

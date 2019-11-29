@@ -85,7 +85,7 @@ public class FrameNuevoFenomeno implements ActionListener {
 
 	private void initalizeFrame(JFrame framePadre) {
 		
-		JFrame frame = new JFrame("Nuevo Fenomeno");
+		JFrame frame = new JFrame("Nuevo Fenómeno");
 		frame.setSize(600, 400);
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(framePadre);
@@ -158,7 +158,7 @@ public class FrameNuevoFenomeno implements ActionListener {
 							
 	
 			nuevaFenomenoPanel
-					.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Datos del Fenomeno"));
+					.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Datos del Fenómeno"));
 	
 			frame.getContentPane().add(nuevaFenomenoPanel);
 																																																																												
@@ -241,7 +241,7 @@ public class FrameNuevoFenomeno implements ActionListener {
 		//Valido maximo en los campos
 		if (fieldCodigo.length() > 50 || fieldNombre.length() > 50 || fieldDescripcion.length() > 50)
 		{
-			JOptionPane.showMessageDialog(frame, "No puede ingresar mas de 50 caracteres en los campos", "Maximo superado!",
+			JOptionPane.showMessageDialog(frame, "No puede ingresar mas de 50 caracteres en los campos", "Máximo superado!",
 					JOptionPane.WARNING_MESSAGE);
 			
 			return;
@@ -265,8 +265,8 @@ public class FrameNuevoFenomeno implements ActionListener {
 					
 					//Quiere decir que Almacenado devolvio true
 					if(almacenado) {
-						JOptionPane.showMessageDialog(frame, "El fenomeno ha sido registrado con éxito.",
-								"Fenomeno Registrado!", JOptionPane.INFORMATION_MESSAGE);
+						JOptionPane.showMessageDialog(frame, "El fenómeno ha sido registrado con éxito.",
+								"Fenómeno Registrado!", JOptionPane.INFORMATION_MESSAGE);
 						// cerramos la ventanta
 						this.frame.dispose();
 		
@@ -287,8 +287,8 @@ public class FrameNuevoFenomeno implements ActionListener {
 					
 					if(almacenado) {
 						
-						JOptionPane.showMessageDialog(frame, "El Fenomeno ha sido registrado con éxito.",
-								"Usuario Registrado!", JOptionPane.INFORMATION_MESSAGE);
+						JOptionPane.showMessageDialog(frame, "El Fenómeno ha sido registrado con éxito.",
+								"Fenómeno Registrado!", JOptionPane.INFORMATION_MESSAGE);
 						
 						// cerramos la ventanta
 						this.frame.dispose();
@@ -304,7 +304,7 @@ public class FrameNuevoFenomeno implements ActionListener {
 				}
 			//El usuario ya existe en el sistema
 			else {
-				JOptionPane.showMessageDialog(null, "El fenomeno ya existe en el sistema");
+				JOptionPane.showMessageDialog(null, "El fenómeno ya existe en el sistema");
 				return;
 				}
 			

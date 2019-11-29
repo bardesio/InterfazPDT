@@ -12,7 +12,9 @@ import java.util.Date;
 import java.util.List;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -53,8 +55,8 @@ public class FrameListadoporZona implements ActionListener {
 	SimpleDateFormat formateadorFecha = new SimpleDateFormat("yyyy/MM/dd");
 
 
-	/** Atributos de TexField */
-	private JTextField textZona;
+	/** Atributos del ComboBox */
+	private JComboBox<String> comboZonas;
 	
 	/** Buttons */
 	private JButton botonFiltrar;
@@ -66,12 +68,13 @@ public class FrameListadoporZona implements ActionListener {
 		this.labelFechaFin = new JLabel("Fecha Fin: ");
 
 		this.labelZona = new JLabel("Zona: ");
-		this.textZona = new JTextField(15);
 		
 		JButton botonFiltrar = new JButton("Filtrar");
+		botonFiltrar.setIcon(new ImageIcon(FramePrincipal.class.getResource("/resources/filter.png")));
 		botonFiltrar.addActionListener(this);
 
 		JButton botonLimpiar = new JButton("Limpiar Filtro");
+		botonLimpiar.setIcon(new ImageIcon(FramePrincipal.class.getResource("/resources/clean.png")));
 		botonLimpiar.addActionListener(this);
 
 		this.botonFiltrar = botonFiltrar;
@@ -116,7 +119,8 @@ public class FrameListadoporZona implements ActionListener {
 		listarObservacionesPanel.add(this.labelZona, constraints);
 		
 		constraints.gridx = 1;
-		listarObservacionesPanel.add(this.textZona, constraints);
+		this.comboZonas = this.completarComboZonas();
+		listarObservacionesPanel.add(this.comboZonas, constraints);
 		
 		constraints.gridx = 2;
 		constraints.gridy = 0;
@@ -246,7 +250,6 @@ public class FrameListadoporZona implements ActionListener {
 
 		this.tablaObservaciones.setRowSorter(null);
 		this.datePickerFin.getModel().setValue(null);
-		this.textZona.setText("");
 		this.datePickerInicio.getModel().setValue(null);
 
 	}
@@ -258,7 +261,8 @@ public class FrameListadoporZona implements ActionListener {
 		
 		Date fechaInicio = (Date) this.datePickerInicio.getModel().getValue();
 		Date fechaFin = (Date) this.datePickerFin.getModel().getValue();
-		String fieldZona = this.textZona.getText().toUpperCase();
+		String fieldZona = (String) this.comboZonas.getSelectedItem();
+
 		
 		
 		if (fechaInicio.after(fechaFin)) {
@@ -289,5 +293,10 @@ public class FrameListadoporZona implements ActionListener {
 		}
 	}
 
+	private JComboBox<String> completarComboZonas() {
+		String[] valores = {"NORTE", "SUR", "ESTE", "OESTE"};
+		return new JComboBox<>(valores);
+	}
+	
 }
 

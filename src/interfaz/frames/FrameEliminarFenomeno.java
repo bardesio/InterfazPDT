@@ -94,6 +94,7 @@ public class FrameEliminarFenomeno implements ActionListener {
 			buttonCancelar.addActionListener(this);
 
 			JButton buttonBuscar = new JButton ("Buscar");
+			buttonBuscar.setIcon(new ImageIcon(FramePrincipal.class.getResource("/resources/buscar.png")));
 			buttonBuscar.addActionListener(this);
 			
 			this.buttonEliminar =buttonEliminar ;
@@ -104,7 +105,7 @@ public class FrameEliminarFenomeno implements ActionListener {
 		}
 	private void initalizeFrame(JFrame framePadre) {
 
-		JFrame frame = new JFrame("Eliminar Fenomeno");
+		JFrame frame = new JFrame("Eliminar Fenómeno");
 		frame.setSize(600, 400);
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(framePadre);
@@ -178,19 +179,16 @@ public class FrameEliminarFenomeno implements ActionListener {
 				constraints.gridx = 1;
 				constraints.gridy = 10;
 				constraints.gridwidth = 4;
-				constraints.anchor = GridBagConstraints.SOUTH;
+				constraints.anchor = GridBagConstraints.WEST;
 				eliminarFenomenoPanel.add(buttonCancelar, constraints);
 				
 
-				constraints.gridx = 0;
-				constraints.gridy = 10;
-				constraints.gridwidth = 3;
-				constraints.anchor = GridBagConstraints.SOUTH;
-				eliminarFenomenoPanel.add(buttonBuscar, constraints);
+				this.buttonBuscar.setBounds(60,60,89,23);
+				eliminarFenomenoPanel.add(buttonBuscar);
 				
 
 				eliminarFenomenoPanel
-					.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Datos del Fenomeno"));
+					.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Datos del Fenómeno"));
 
 			frame.getContentPane().add(eliminarFenomenoPanel);
 
@@ -256,7 +254,7 @@ public class FrameEliminarFenomeno implements ActionListener {
 					//Valido maximo en el campo codigo
 					if (this.textCodigo.getText().length() > 50)
 					{
-						JOptionPane.showMessageDialog(frame, "No puede ingresar mas de 50 caracteres en el campo codigo", "Maximo superado!",
+						JOptionPane.showMessageDialog(frame, "No puede ingresar mas de 50 caracteres en el campo código", "Máximo superado!",
 								JOptionPane.WARNING_MESSAGE);
 						
 						return;
@@ -266,7 +264,8 @@ public class FrameEliminarFenomeno implements ActionListener {
 					List <Fenomeno> fenomenos= ClientePDT.existecodigo(codigo);
 					if (fenomenos.isEmpty())
 					{
-						JOptionPane.showMessageDialog(null, "Fenomeno no encontrado");
+						JOptionPane.showMessageDialog(frame, "El código del fenómeno ingresado no existe.",
+								"Fenómeno Inexistente!", JOptionPane.WARNING_MESSAGE);
 						return;
 					}else {
 						for(Fenomeno CFen : fenomenos)
@@ -323,7 +322,7 @@ public class FrameEliminarFenomeno implements ActionListener {
 			
 			if(us==null || us.size()==0)
 			{
-				JOptionPane.showMessageDialog(null, "Fenomeno no encontrado");
+				JOptionPane.showMessageDialog(null, "Fenómeno no encontrado");
 				return;
 			}
 			else {
@@ -339,8 +338,8 @@ public class FrameEliminarFenomeno implements ActionListener {
 		
 	}
 		if (almaceno) {
-			JOptionPane.showMessageDialog(frame, "El fenomeno ha sido eliminado con éxito.",
-					"Fenomeno Eliminado!", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(frame, "El fenómeno ha sido eliminado con éxito.",
+					"Fenómeno Eliminado!", JOptionPane.INFORMATION_MESSAGE);
 			
 			// cerramos la ventanta
 			this.frame.dispose();

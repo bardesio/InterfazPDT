@@ -109,6 +109,7 @@ public class FrameEliminarUsuario implements ActionListener{
 		buttonCancelar.addActionListener(this);
 
 		JButton buttonBuscar = new JButton ("Buscar");
+		buttonBuscar.setIcon(new ImageIcon(FramePrincipal.class.getResource("/resources/buscar.png")));
 		buttonBuscar.addActionListener(this);
 		
 		this.buttonEliminar = buttonEliminar;
@@ -220,24 +221,21 @@ public class FrameEliminarUsuario implements ActionListener{
 		eliminarUsuarioPanel.add(this.comboTipoUsu, constraints);
 		this.comboTipoUsu.setEnabled(false);
 
+			constraints.gridx = 1;
+			constraints.gridy = 10;
+			constraints.gridwidth = 4;
+			constraints.anchor = GridBagConstraints.WEST;
+			eliminarUsuarioPanel.add(buttonEliminar, constraints);
+			this.buttonEliminar.setEnabled(false);
+
 			constraints.gridx = 2;
 			constraints.gridy = 10;
 			constraints.gridwidth = 3;
 			constraints.anchor = GridBagConstraints.SOUTH;
-			eliminarUsuarioPanel.add(buttonEliminar, constraints);
-			this.buttonEliminar.setEnabled(false);
-
-			constraints.gridx = 1;
-			constraints.gridy = 10;
-			constraints.gridwidth = 4;
-			constraints.anchor = GridBagConstraints.SOUTH;
 			eliminarUsuarioPanel.add(buttonCancelar, constraints);
 			
-			constraints.gridx = 0;
-			constraints.gridy = 10;
-			constraints.gridwidth = 3;
-			constraints.anchor = GridBagConstraints.SOUTH;
-			eliminarUsuarioPanel.add(buttonBuscar, constraints);
+			this.buttonBuscar.setBounds(60,60,89,23);
+			eliminarUsuarioPanel.add(buttonBuscar);
 
 			eliminarUsuarioPanel
 				.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Datos del Usuario"));
@@ -308,7 +306,7 @@ public class FrameEliminarUsuario implements ActionListener{
 		
 		if (fieldUsuario.length() > 50)
 		{
-			JOptionPane.showMessageDialog(frame, "No puede ingresar mas de 50 caracteres en el campo usuario", "Maximo superado!",
+			JOptionPane.showMessageDialog(frame, "No puede ingresar mas de 50 caracteres en el campo usuario", "Máximo superado!",
 					JOptionPane.WARNING_MESSAGE);
 			
 			return;
@@ -330,7 +328,7 @@ public class FrameEliminarUsuario implements ActionListener{
 				
 				if (usuarios==null || usuarios.size() == 0 || usuarios.get(0).getEstado().equals("INACTIVO")) {
 					JOptionPane.showMessageDialog(frame, "El nombre de usuario ingresado no existe.",
-							"Usuario Existente!", JOptionPane.WARNING_MESSAGE);
+							"Usuario Inexistente!", JOptionPane.WARNING_MESSAGE);
 
 					return;
 				}
@@ -350,6 +348,7 @@ public class FrameEliminarUsuario implements ActionListener{
 					
 					this.buttonEliminar.setEnabled(true);
 					this.textUsuario.setEnabled(false);
+					this.buttonBuscar.setEnabled(false);
 				
 					//Cargo los campos
 					

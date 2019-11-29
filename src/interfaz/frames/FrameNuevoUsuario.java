@@ -303,7 +303,7 @@ public class FrameNuevoUsuario implements ActionListener{
 				fieldDireccion.length() > 50|| fieldMail.length() > 50|| 
 				fieldNumeroDoc.length() > 50|| fieldPass.length() > 50)
 		{
-			JOptionPane.showMessageDialog(frame, "No puede ingresar mas de 50 caracteres en los campos", "Maximo superado!",
+			JOptionPane.showMessageDialog(frame, "No puede ingresar mas de 50 caracteres en los campos", "Máximo superado!",
 					JOptionPane.WARNING_MESSAGE);
 			
 			return;

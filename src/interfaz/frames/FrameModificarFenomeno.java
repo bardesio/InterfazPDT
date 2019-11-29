@@ -97,7 +97,7 @@ public class FrameModificarFenomeno implements ActionListener{
 	
 	private void initalizeFrame(JFrame framePadre) {
 
-		JFrame frame = new JFrame("Modificar Fenomeno");
+		JFrame frame = new JFrame("Modificar Fenómeno");
 		frame.setSize(136, 133);
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(framePadre);
@@ -172,20 +172,16 @@ public class FrameModificarFenomeno implements ActionListener{
 			constraints.gridx = 1;
 			constraints.gridy = 10;
 			constraints.gridwidth = 4;
-			constraints.anchor = GridBagConstraints.SOUTH;
+			constraints.anchor = GridBagConstraints.WEST;
 			ModificarFenomenoPanel.add(buttonCancelar, constraints);
 			
 
-			/*constraints.gridx = 0;
-			constraints.gridy = 10;
-			constraints.gridwidth = 3;
-			constraints.anchor = GridBagConstraints.SOUTH;
-			ModificarFenomenoPanel.add(buttonBuscar, constraints);*/
+			
 			this.buttonBuscar.setBounds(60,60,89,23);
 			ModificarFenomenoPanel.add(buttonBuscar);			
 
 			ModificarFenomenoPanel
-				.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Datos del Fenomeno"));
+				.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Datos del Fenómeno"));
 
 		frame.getContentPane().add(ModificarFenomenoPanel);
 
@@ -254,7 +250,7 @@ public class FrameModificarFenomeno implements ActionListener{
 					//Valido maximo en el campo codigo
 					if (this.textCodigo.getText().length() > 50)
 					{
-						JOptionPane.showMessageDialog(frame, "No puede ingresar mas de 50 caracteres en el campo codigo", "Maximo superado!",
+						JOptionPane.showMessageDialog(frame, "No puede ingresar mas de 50 caracteres en el campo código", "Máximo superado!",
 								JOptionPane.WARNING_MESSAGE);
 						
 						return;
@@ -266,7 +262,8 @@ public class FrameModificarFenomeno implements ActionListener{
 					//List <Fenomeno> fenomenos = fenomenobeanremote.existecodigo(codigo);
 					if (fenomenos.isEmpty())
 					{
-						JOptionPane.showMessageDialog(null, "Fenomeno no encontrado");
+						JOptionPane.showMessageDialog(frame, "El código del fenómeno ingresado no existe.",
+								"Fenómeno Inexistente!", JOptionPane.WARNING_MESSAGE);
 						return;
 					}else {
 						for(Fenomeno CFen : fenomenos)
@@ -332,7 +329,7 @@ public class FrameModificarFenomeno implements ActionListener{
 		//Valido maximo en los campos
 		if (fieldcodigo.length() > 50 || fieldNombre.length() > 50 || fieldDescripcion.length() > 50)
 		{
-			JOptionPane.showMessageDialog(frame, "No puede ingresar mas de 50 caracteres en los campos", "Maximo superado!",
+			JOptionPane.showMessageDialog(frame, "No puede ingresar mas de 50 caracteres en los campos", "Máximo superado!",
 					JOptionPane.WARNING_MESSAGE);
 			
 			return;
@@ -354,7 +351,7 @@ public class FrameModificarFenomeno implements ActionListener{
 		}
 
 		if (almacenado) {
-			JOptionPane.showMessageDialog(frame, "El Fenomeno ha sido modificado con éxito.",
+			JOptionPane.showMessageDialog(frame, "El Fenómeno ha sido modificado con éxito.",
 					"Fenomeno Modificado!", JOptionPane.INFORMATION_MESSAGE);
 			
 			// cerramos la ventanta

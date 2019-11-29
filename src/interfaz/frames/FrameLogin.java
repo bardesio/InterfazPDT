@@ -90,6 +90,7 @@ public class FrameLogin extends JFrame {
                     
 		//Defino el botón Aceptar
 				JButton btnAceptar = new JButton("Aceptar");
+				btnAceptar.setIcon(new ImageIcon(FramePrincipal.class.getResource("/resources/confirm.png")));
 				btnAceptar.addActionListener(new  ActionListener() { 
 					@Override//Establezco que debe hacer cuando hago clic
 					public void actionPerformed(ActionEvent e) {
@@ -100,7 +101,7 @@ public class FrameLogin extends JFrame {
 						//Usuario u1= new Usuario();
 						try {
 							List<Usuario> usuarios = ClientePDT.Login(usuario, password);
-							//llamarlo desde el clietnte
+							//llamarlo desde el cliente
 							if(usuarios.isEmpty())
 							{
 								JOptionPane.showMessageDialog(null, "Usuario y/o Contraseña invalida");
@@ -138,7 +139,7 @@ public class FrameLogin extends JFrame {
 					
 					
 				});
-				btnAceptar.setBounds(80, 109, 89, 23);
+				btnAceptar.setBounds(60, 109, 100, 23);
 				jpanel.add(btnAceptar);
 				
 				//Defino el botón Cancelar

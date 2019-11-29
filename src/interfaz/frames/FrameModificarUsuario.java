@@ -222,24 +222,19 @@ public class FrameModificarUsuario implements ActionListener{
 		modificarUsuarioPanel.add(this.comboTipoUsu, constraints);
 		this.comboTipoUsu.setEnabled(false);
 
-			constraints.gridx = 2;
-			constraints.gridy = 10;
-			constraints.gridwidth = 3;
-			constraints.anchor = GridBagConstraints.SOUTH;
-			modificarUsuarioPanel.add(buttonModificar, constraints);
-			this.buttonModificar.setEnabled(false);
+		constraints.gridx = 1;
+		constraints.gridy = 10;
+		constraints.gridwidth = 4;
+		constraints.anchor = GridBagConstraints.WEST;
+		modificarUsuarioPanel.add(buttonModificar, constraints);
+		this.buttonModificar.setEnabled(false);
 
-			constraints.gridx = 1;
-			constraints.gridy = 10;
-			constraints.gridwidth = 4;
-			constraints.anchor = GridBagConstraints.SOUTH;
-			modificarUsuarioPanel.add(buttonCancelar, constraints);
+		constraints.gridx = 2;
+		constraints.gridy = 10;
+		constraints.gridwidth = 3;
+		constraints.anchor = GridBagConstraints.SOUTH;
+		modificarUsuarioPanel.add(buttonCancelar, constraints);
 			
-			/*constraints.gridx = 0;
-			constraints.gridy = 10;
-			constraints.gridwidth = 3;
-			constraints.anchor = GridBagConstraints.SOUTH;
-			modificarUsuarioPanel.add(buttonBuscar, constraints);*/
 			this.buttonBuscar.setBounds(60,60,89,23);
 			modificarUsuarioPanel.add(buttonBuscar);
 
@@ -316,7 +311,7 @@ public class FrameModificarUsuario implements ActionListener{
 					//Valido maximo en el campo usuario
 					if (fieldUsuario.length() > 50)
 					{
-						JOptionPane.showMessageDialog(frame, "No puede ingresar mas de 50 caracteres en el campo usuario", "Maximo superado!",
+						JOptionPane.showMessageDialog(frame, "No puede ingresar mas de 50 caracteres en el campo usuario", "Máximo superado!",
 								JOptionPane.WARNING_MESSAGE);
 						
 						return;
@@ -333,7 +328,7 @@ public class FrameModificarUsuario implements ActionListener{
 				
 				if (usuarios==null || usuarios.size() == 0 || usuarios.get(0).getEstado().equals("INACTIVO")) {
 					JOptionPane.showMessageDialog(frame, "El nombre de usuario ingresado no existe.",
-							"Usuario Existente!", JOptionPane.WARNING_MESSAGE);
+							"Usuario Inexistente!", JOptionPane.WARNING_MESSAGE);
 
 					return;
 				}
@@ -405,7 +400,7 @@ public class FrameModificarUsuario implements ActionListener{
 				fieldDireccion.length() > 50|| fieldMail.length() > 50|| 
 				fieldNumeroDoc.length() > 50|| fieldPass.length() > 50)
 		{
-			JOptionPane.showMessageDialog(frame, "No puede ingresar mas de 50 caracteres en los campos", "Maximo superado!",
+			JOptionPane.showMessageDialog(frame, "No puede ingresar mas de 50 caracteres en los campos", "Máximo superado!",
 					JOptionPane.WARNING_MESSAGE);
 			
 			return;
