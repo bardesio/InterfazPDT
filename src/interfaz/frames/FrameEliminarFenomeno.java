@@ -30,6 +30,7 @@ import javax.swing.JTextField;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 
@@ -85,9 +86,11 @@ public class FrameEliminarFenomeno implements ActionListener {
 			 this.textEstado = new JTextField(15);
 			
 			JButton buttonEliminar = new JButton("Eliminar");
+			buttonEliminar.setIcon(new ImageIcon(temporal.class.getResource("/resources/delete.gif")));
 			buttonEliminar.addActionListener(this);
 			
 			JButton buttonCancelar = new JButton("Cancelar");
+			buttonCancelar.setIcon(new ImageIcon(temporal.class.getResource("/resources/cancel.png")));
 			buttonCancelar.addActionListener(this);
 
 			JButton buttonBuscar = new JButton ("Buscar");

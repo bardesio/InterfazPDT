@@ -5,6 +5,8 @@ import java.awt.EventQueue;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.List;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -136,17 +138,18 @@ public class FrameLogin extends JFrame {
 					
 					
 				});
-				btnAceptar.setBounds(100, 109, 89, 23);
+				btnAceptar.setBounds(80, 109, 89, 23);
 				jpanel.add(btnAceptar);
 				
 				//Defino el botón Cancelar
 				JButton btnCancelar = new JButton("Cancelar");
+				btnCancelar.setIcon(new ImageIcon(temporal.class.getResource("/resources/cancel.png")));
 				btnCancelar.addActionListener(new ActionListener() { //Establezco que debe hacer cuando hago clic en Cancelar
 					public void actionPerformed(ActionEvent e) {
 						System.exit(0); // Salgo del sistema
 					}
 				});
-				btnCancelar.setBounds(200, 109, 89, 23);
+				btnCancelar.setBounds(180, 109, 105, 23);
 				jpanel.add(btnCancelar);
 			
 				}

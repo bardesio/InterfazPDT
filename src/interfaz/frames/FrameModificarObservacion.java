@@ -125,9 +125,11 @@ public class FrameModificarObservacion implements ActionListener {
 		this.textUsuario = new JTextField(15);
 		
 		JButton buttonModificar = new JButton("Modificar");
+		buttonModificar.setIcon(new ImageIcon(temporal.class.getResource("/resources/Update.png")));
 		buttonModificar.addActionListener(this);
 
 		JButton buttonCancelar = new JButton("Cancelar");
+		buttonCancelar.setIcon(new ImageIcon(temporal.class.getResource("/resources/cancel.png")));
 		buttonCancelar.addActionListener(this);
 		
 		JButton buttonBuscar = new JButton("Buscar");

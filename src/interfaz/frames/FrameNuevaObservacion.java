@@ -122,9 +122,11 @@ public class FrameNuevaObservacion implements ActionListener {
 		this.textUsuario = new JTextField(15);
 		
 		JButton buttonIngresar = new JButton("Ingresar");
+		buttonIngresar.setIcon(new ImageIcon(temporal.class.getResource("/resources/add.png")));
 		buttonIngresar.addActionListener(this);
 
 		JButton buttonCancelar = new JButton("Cancelar");
+		buttonCancelar.setIcon(new ImageIcon(temporal.class.getResource("/resources/cancel.png")));
 		buttonCancelar.addActionListener(this);
 		
 		JButton buttonSeleccionar = new JButton("Selecionar Imagen");

@@ -121,9 +121,11 @@ public class FrameEliminarObservacion implements ActionListener{
 			this.textUsuario = new JTextField(15);
 			
 			JButton buttonEliminar = new JButton("Eliminar");
+			buttonEliminar.setIcon(new ImageIcon(temporal.class.getResource("/resources/delete.gif")));
 			buttonEliminar.addActionListener(this);
 
 			JButton buttonCancelar = new JButton("Cancelar");
+			buttonCancelar.setIcon(new ImageIcon(temporal.class.getResource("/resources/cancel.png")));
 			buttonCancelar.addActionListener(this);
 			
 			JButton buttonBuscar = new JButton("Buscar");

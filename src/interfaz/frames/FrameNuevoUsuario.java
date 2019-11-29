@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.util.List;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -88,9 +89,11 @@ public class FrameNuevoUsuario implements ActionListener{
 		this.textUsuario = new JTextField(15);
 		
 		JButton buttonIngresar = new JButton("Ingresar");
+		buttonIngresar.setIcon(new ImageIcon(temporal.class.getResource("/resources/add.png")));
 		buttonIngresar.addActionListener(this);
 
 		JButton buttonCancelar = new JButton("Cancelar");
+		buttonCancelar.setIcon(new ImageIcon(temporal.class.getResource("/resources/cancel.png")));
 		buttonCancelar.addActionListener(this);
 
 		this.buttonIngresar = buttonIngresar;
