@@ -25,13 +25,13 @@ import interfaz.locator.ClientePDT;
 
 public class FrameModificarUsuario implements ActionListener{
 
-	/** Frame de la ventana */
+	/** Creo el Frame de la ventana */
 	private JFrame frame;
 	
-	//declaro un ID que me servira en caso de que este inactivo
+	/**Creo un ID global*/
 	Long fieldID = null;
 	
-	/** Atributos de labels */
+	/** Creo los atributos de labels */
 	private JLabel labelPass;
 	private JLabel labelUsuario;
 	private JLabel labelNombre;
@@ -44,11 +44,12 @@ public class FrameModificarUsuario implements ActionListener{
 	private JLabel labelTipoUsu;
 
 	
+	/** Creo los atributos de los combobox*/
 	private JComboBox<String> comboTipoUsu;
 	private JComboBox<String> comboTipo;
 
 
-	/** Atributos de TexField */
+	/** Creo los atributos de los TexField */
 	private JTextField textPass;
 	private JTextField textUsuario;
 	private JTextField textNombre;
@@ -58,17 +59,19 @@ public class FrameModificarUsuario implements ActionListener{
 	private JTextField textDireccion;
 	private JTextField textMail;
 	
-	/** Atributos de Botones */
+	/** Creo los atributos de Botones */
 	private JButton buttonModificar;
 	private JButton buttonCancelar;
 	private JButton buttonBuscar;
 	
 	
-	/** Lista de Tipos del sistema */
+	/** Creo una lista de Tipos del sistema */
 	private List<TipoUsuario> tipoUsuarios;
 	
 	public FrameModificarUsuario(JFrame framePadre) {
 
+		/** Nombro las labels */
+		
 		this.labelApellido = new JLabel("Apellido:");
 		this.labelNombre = new JLabel("Nombre:");
 		this.labelDireccion = new JLabel("Direccion:");
@@ -81,6 +84,7 @@ public class FrameModificarUsuario implements ActionListener{
 		this.labelTipoUsu = new JLabel("Tipo de Usuario:");
 
 		
+		/** Tamaño de los textboxs */
 
 		this.textApellido = new JTextField(15);
 		this.textNombre = new JTextField(15);
@@ -91,14 +95,20 @@ public class FrameModificarUsuario implements ActionListener{
 		this.textPass = new JTextField(15);
 		this.textUsuario = new JTextField(15);
 		
+		/** Defino el boton modificar */
+
 		JButton buttonModificar = new JButton("Modificar");
 		buttonModificar.setIcon(new ImageIcon(FramePrincipal.class.getResource("/resources/Update.png")));
 		buttonModificar.addActionListener(this);
+
+		/** Defino el boton cancelar */
 		
 		JButton buttonCancelar = new JButton("Cancelar");
 		buttonCancelar.setIcon(new ImageIcon(FramePrincipal.class.getResource("/resources/cancel.png")));
 		buttonCancelar.addActionListener(this);
 
+		/** Defino el boton buscar */
+		
 		JButton buttonBuscar = new JButton ("Buscar");
 		buttonBuscar.setIcon(new ImageIcon(FramePrincipal.class.getResource("/resources/buscar.png")));
 		buttonBuscar.addActionListener(this);
@@ -357,7 +367,7 @@ public class FrameModificarUsuario implements ActionListener{
 					this.textNumeroDoc.setText(usuarios.get(0).getNumerodoc());
 					this.textPass.setText(usuarios.get(0).getPass());
 					this.comboTipo.setSelectedItem(usuarios.get(0).getTipodoc());
-					this.comboTipoUsu.setSelectedItem(usuarios.get(0).getTipousuario());
+					this.comboTipoUsu.setSelectedItem(usuarios.get(0).getTipousuario().getNombre());
 					this.fieldID = usuarios.get(0).getId();
 				}
 		
@@ -418,7 +428,7 @@ public class FrameModificarUsuario implements ActionListener{
 
 		if (almacenado) {
 			JOptionPane.showMessageDialog(frame, "El Usuario ha sido modificado con éxito.",
-					"Usuario Registrado!", JOptionPane.INFORMATION_MESSAGE);
+					"Usuario Modificado!", JOptionPane.INFORMATION_MESSAGE);
 			
 			// cerramos la ventanta
 			this.frame.dispose();

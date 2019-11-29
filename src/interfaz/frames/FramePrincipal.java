@@ -208,7 +208,7 @@ private static void initializeMenuObservaciones(JMenuBar menuBar, final JFrame f
 		
 		JMenu observacion = new JMenu("Observaciones");
 		
-		JMenuItem nuevaObservacion = new JMenuItem("Nueva Observacion");
+		JMenuItem nuevaObservacion = new JMenuItem("Nueva Observación");
 		
 		nuevaObservacion.addActionListener(new ActionListener() {
             @Override
@@ -219,7 +219,7 @@ private static void initializeMenuObservaciones(JMenuBar menuBar, final JFrame f
         });
 			
 		
-		JMenuItem modificarObservacion = new JMenuItem("Modificar Observacion");
+		JMenuItem modificarObservacion = new JMenuItem("Modificar Observación");
 		
 		
 		modificarObservacion.addActionListener(new ActionListener() {
@@ -231,7 +231,7 @@ private static void initializeMenuObservaciones(JMenuBar menuBar, final JFrame f
             
         });
 
-		JMenuItem eliminarObservacion = new JMenuItem("Eliminar Observacion");
+		JMenuItem eliminarObservacion = new JMenuItem("Eliminar Observación");
 		
 		eliminarObservacion.addActionListener(new ActionListener() {
             @Override

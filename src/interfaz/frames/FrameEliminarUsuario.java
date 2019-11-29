@@ -361,7 +361,7 @@ public class FrameEliminarUsuario implements ActionListener{
 					this.textNumeroDoc.setText(usuarios.get(0).getNumerodoc());
 					this.textPass.setText(usuarios.get(0).getPass());
 					this.comboTipo.setSelectedItem(usuarios.get(0).getTipodoc());
-					this.comboTipoUsu.setSelectedItem(usuarios.get(0).getTipousuario());
+					this.comboTipoUsu.setSelectedItem(usuarios.get(0).getTipousuario().getNombre());
 					this.fieldID = usuarios.get(0).getId();
 				}	
 	}
@@ -406,7 +406,7 @@ public class FrameEliminarUsuario implements ActionListener{
 
 		if (almacenado) {
 			JOptionPane.showMessageDialog(frame, "El Usuario ha sido eliminado con éxito.",
-					"Usuario Registrado!", JOptionPane.INFORMATION_MESSAGE);
+					"Usuario Eliminado!", JOptionPane.INFORMATION_MESSAGE);
 			
 			// cerramos la ventanta
 			this.frame.dispose();

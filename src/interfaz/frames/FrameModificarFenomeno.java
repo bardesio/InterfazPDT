@@ -64,11 +64,11 @@ public class FrameModificarFenomeno implements ActionListener{
 	public FrameModificarFenomeno(JFrame framePadre) {
 
 	
-		this.labelCodigo = new JLabel("Codigo:"); 
+		this.labelCodigo = new JLabel("Código:"); 
 		this.labelNombre = new JLabel("Nombre:");
 		this.labelestado = new JLabel("Estado:");
-		this.labelDescripcion = new JLabel("Descripcion:");
-		this.labeltelefono = new JLabel ("Telefonos de Emergencia:");
+		this.labelDescripcion = new JLabel("Descripción:");
+		this.labeltelefono = new JLabel ("Teléfonos de Emergencia:");
 		
 		 this.textCodigo=new JTextField(15);
 		 this.textNombre= new JTextField(15);
@@ -261,7 +261,7 @@ public class FrameModificarFenomeno implements ActionListener{
 					}
 					
 					//FenomenoBeanRemote fenomenobeanremote = EJBLocator.getInstance().lookup(FenomenoBeanRemote.class);
-					String codigo = this.textCodigo.getText();
+					String codigo = this.textCodigo.getText().toUpperCase();
 					List <Fenomeno> fenomenos= ClientePDT.existecodigo(codigo);
 					//List <Fenomeno> fenomenos = fenomenobeanremote.existecodigo(codigo);
 					if (fenomenos.isEmpty())
@@ -281,8 +281,7 @@ public class FrameModificarFenomeno implements ActionListener{
 							String nom=CFen.getNombreFen();
 							textNombre.setText(nom);
 							comboTel.setEnabled(false);
-							String nombretel = CFen.getTelefonos().getNombre();
-							this.comboTel.setToolTipText(nombretel);
+							this.comboTel.setSelectedItem(CFen.getTelefonos().getNombre());
 							this.comboTel.setEnabled(true);							
 							this.fieldID = CFen.getId();
 							
@@ -356,7 +355,7 @@ public class FrameModificarFenomeno implements ActionListener{
 
 		if (almacenado) {
 			JOptionPane.showMessageDialog(frame, "El Fenomeno ha sido modificado con éxito.",
-					"Usuario Registrado!", JOptionPane.INFORMATION_MESSAGE);
+					"Fenomeno Modificado!", JOptionPane.INFORMATION_MESSAGE);
 			
 			// cerramos la ventanta
 			this.frame.dispose();

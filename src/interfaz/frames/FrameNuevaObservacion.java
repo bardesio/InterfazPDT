@@ -100,12 +100,12 @@ public class FrameNuevaObservacion implements ActionListener {
 
 		listaUsuarios = listUsuarios;
 		
-		this.labelIdentificacion = new JLabel("Identificacion:");
+		this.labelIdentificacion = new JLabel("Identificación:");
 		this.labelUsuario = new JLabel("Nombre de usuario:");
 		this.labelFenomeno = new JLabel("Fenomeno:");
 		this.labelEstado = new JLabel("Estado:");
 		this.labelLocalidad = new JLabel("Localidad:");
-		this.labelDescripcion = new JLabel("Descripcion:");
+		this.labelDescripcion = new JLabel("Descripción:");
 		this.labelImagen = new JLabel("Imagen:");
 		this.labelLatitud = new JLabel("Latitud:");
 		this.labelAltitud = new JLabel("Altitud:");
@@ -142,7 +142,7 @@ public class FrameNuevaObservacion implements ActionListener {
 
 	private void initalizeFrame(JFrame framePadre) {
 
-		JFrame frame = new JFrame("Nueva Observacion");
+		JFrame frame = new JFrame("Nueva Observación");
 		frame.setSize(500, 500);
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(framePadre);
@@ -285,8 +285,7 @@ public class FrameNuevaObservacion implements ActionListener {
 		JComboBox<String> combo = new JComboBox<>();
 
 		for (Fenomeno fen : this.fenomenos) {
-			combo.addItem(fen.getCodigo());
-
+			combo.addItem(fen.getNombreFen());
 		}
 
 		return combo;
@@ -531,8 +530,8 @@ public class FrameNuevaObservacion implements ActionListener {
 
 					// Si se devolvio verdadero el almacenado
 					if (almacenado) {
-						JOptionPane.showMessageDialog(frame, "La observacion ha sido registrado con éxito.",
-								"Usuario Registrado!", JOptionPane.INFORMATION_MESSAGE);
+						JOptionPane.showMessageDialog(frame, "La observación ha sido registrado con éxito.",
+								"Observación Registrada!", JOptionPane.INFORMATION_MESSAGE);
 
 						this.frame.dispose();
 

@@ -58,11 +58,11 @@ public class FrameNuevoFenomeno implements ActionListener {
 
 	
 		
-		this.labelCodigo = new JLabel("Codigo:"); 
+		this.labelCodigo = new JLabel("Código:"); 
 		this.labelestado = new JLabel("Estado:");
 		this.labelNombre = new JLabel("Nombre:");
-		this.labelDescripcion = new JLabel("Descripcion:");
-		this.labeltelefono = new JLabel ("Telefonos de Emergencia:");
+		this.labelDescripcion = new JLabel("Descripción:");
+		this.labeltelefono = new JLabel ("Teléfonos de Emergencia:");
 		
 		 this.textCodigo=new JTextField(15);
 		 this.textNombre= new JTextField(15);
@@ -265,8 +265,8 @@ public class FrameNuevoFenomeno implements ActionListener {
 					
 					//Quiere decir que Almacenado devolvio true
 					if(almacenado) {
-						JOptionPane.showMessageDialog(frame, "El Fenomeno ha sido registrado con éxito.",
-								"Usuario Registrado!", JOptionPane.INFORMATION_MESSAGE);
+						JOptionPane.showMessageDialog(frame, "El fenomeno ha sido registrado con éxito.",
+								"Fenomeno Registrado!", JOptionPane.INFORMATION_MESSAGE);
 						// cerramos la ventanta
 						this.frame.dispose();
 		

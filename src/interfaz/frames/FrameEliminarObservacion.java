@@ -99,12 +99,12 @@ public class FrameEliminarObservacion implements ActionListener{
 
 			listaUsuarios = listUsuarios;
 			
-			this.labelIdentificacion = new JLabel("Identificacion:");
+			this.labelIdentificacion = new JLabel("Identificación:");
 			this.labelUsuario = new JLabel("Nombre de usuario:");
 			this.labelFenomeno = new JLabel("Fenomeno:");
 			this.labelEstado = new JLabel("Estado:");
 			this.labelLocalidad = new JLabel("Localidad:");
-			this.labelDescripcion = new JLabel("Descripcion:");
+			this.labelDescripcion = new JLabel("Descripción:");
 			this.labelImagen = new JLabel("Imagen:");
 			this.labelLatitud = new JLabel("Latitud:");
 			this.labelAltitud = new JLabel("Altitud:");
@@ -303,8 +303,7 @@ public class FrameEliminarObservacion implements ActionListener{
 			JComboBox<String> combo = new JComboBox<>();
 
 			for (Fenomeno fen : this.fenomenos) {
-				combo.addItem(fen.getCodigo());
-
+				combo.addItem(fen.getNombreFen());
 			}
 
 			return combo;
@@ -403,8 +402,8 @@ public class FrameEliminarObservacion implements ActionListener{
 				this.textLongitud.setText(Float.toString(observaciones.get(0).getLongitud()));
 				this.textUsuario.setText(observaciones.get(0).getUsuario().getUsuario());
 				this.comboEstado.setSelectedItem(observaciones.get(0).getEstado());
-				this.comboFenomenos.setSelectedItem(observaciones.get(0).getFenomeno());
-				this.comboLocalidad.setSelectedItem(observaciones.get(0).getLocalidad());
+				this.comboFenomenos.setSelectedItem(observaciones.get(0).getFenomeno().getNombreFen());
+				this.comboLocalidad.setSelectedItem(observaciones.get(0).getLocalidad().getNombreLoc());
 				this.fieldID = observaciones.get(0).getId();
 				
 				//Cargo la fecha actual
@@ -493,15 +492,15 @@ public class FrameEliminarObservacion implements ActionListener{
 
 						// Si se devolvio verdadero el almacenado
 						if (almacenado) {
-							JOptionPane.showMessageDialog(frame, "La observacion ha sido eliminada con éxito.",
-									"Observacion Eliminada!", JOptionPane.INFORMATION_MESSAGE);
+							JOptionPane.showMessageDialog(frame, "La observación ha sido eliminada con éxito.",
+									"Observación Eliminada!", JOptionPane.INFORMATION_MESSAGE);
 
 							this.frame.dispose();
 
 						}
 						
 						else {
-							JOptionPane.showMessageDialog(frame, "No se pudo Eliminar la observacion",
+							JOptionPane.showMessageDialog(frame, "No se pudo eliminar la observación",
 									"Error de conexión!", JOptionPane.WARNING_MESSAGE);
 
 							return;

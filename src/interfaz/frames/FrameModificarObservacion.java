@@ -103,12 +103,12 @@ public class FrameModificarObservacion implements ActionListener {
 
 		listaUsuarios = listUsuarios;
 		
-		this.labelIdentificacion = new JLabel("Identificacion:");
+		this.labelIdentificacion = new JLabel("Identificación:");
 		this.labelUsuario = new JLabel("Nombre de usuario:");
 		this.labelFenomeno = new JLabel("Fenomeno:");
 		this.labelEstado = new JLabel("Estado:");
 		this.labelLocalidad = new JLabel("Localidad:");
-		this.labelDescripcion = new JLabel("Descripcion:");
+		this.labelDescripcion = new JLabel("Descripción:");
 		this.labelImagen = new JLabel("Imagen:");
 		this.labelLatitud = new JLabel("Latitud:");
 		this.labelAltitud = new JLabel("Altitud:");
@@ -307,8 +307,7 @@ public class FrameModificarObservacion implements ActionListener {
 		JComboBox<String> combo = new JComboBox<>();
 
 		for (Fenomeno fen : this.fenomenos) {
-			combo.addItem(fen.getCodigo());
-
+			combo.addItem(fen.getNombreFen());
 		}
 
 		return combo;
@@ -415,8 +414,8 @@ public class FrameModificarObservacion implements ActionListener {
 			this.textLongitud.setText(Float.toString(observaciones.get(0).getLongitud()));
 			this.textUsuario.setText(observaciones.get(0).getUsuario().getUsuario());
 			this.comboEstado.setSelectedItem(observaciones.get(0).getEstado());
-			this.comboFenomenos.setSelectedItem(observaciones.get(0).getFenomeno());
-			this.comboLocalidad.setSelectedItem(observaciones.get(0).getLocalidad());
+			this.comboFenomenos.setSelectedItem(observaciones.get(0).getFenomeno().getNombreFen());
+			this.comboLocalidad.setSelectedItem(observaciones.get(0).getLocalidad().getNombreLoc());
 			this.fieldID = observaciones.get(0).getId();
 			
 			//Cargo la fecha actual
@@ -465,9 +464,9 @@ public class FrameModificarObservacion implements ActionListener {
 		String fieldEstado = (String) this.comboEstado.getSelectedItem();
 		String fieldLocalidad = (String) this.comboLocalidad.getSelectedItem();
 		String fieldDescripcion = this.textDescripcion.getText();
-		float fieldLatitud = Float.parseFloat(this.textLatitud.getText());
-		float fieldLongitud = Float.parseFloat(this.textLongitud.getText());
-		float fieldAltitud = Float.parseFloat(this.textAltitud.getText());
+		float fieldLatitud = 0;
+		float fieldLongitud = 0;
+		float fieldAltitud = 0;
 		Date fieldFecha = (Date) this.datePickerFecha.getModel().getValue();
 		byte[] imagen = null;
 		
@@ -481,6 +480,113 @@ public class FrameModificarObservacion implements ActionListener {
 
 			return;
 		}
+		
+		
+		try {	
+			 fieldLatitud = Float.parseFloat(this.textLatitud.getText());
+			 fieldLongitud = Float.parseFloat(this.textLongitud.getText());
+			 fieldAltitud = Float.parseFloat(this.textAltitud.getText());		
+		
+		}catch(Exception e){
+			JOptionPane.showMessageDialog(frame, "Las coordenadas ingresadas no tienen el formato correcto", "Error", JOptionPane.WARNING_MESSAGE);
+			return;
+		}
+		
+		
+		try {	
+			Localidad localidad = ClientePDT.obtenerLocalidad(fieldLocalidad);
+			
+			if(localidad.getDepartamento().getZona().getNombre_zona().equals("NORTE"))
+			{
+				if (fieldLatitud > 30.085556) {
+
+					JOptionPane.showMessageDialog(frame, "Para una localidad de zona norte como maximo se puede ingresar: -30.085556 de latitud°", "Latitud invalida!",
+							JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+
+						
+				if (fieldLongitud > 56.951667) {
+
+					JOptionPane.showMessageDialog(frame, "Para una localidad de zona norte como maximo se puede ingresar: -56.951667° de longitud", "Longitud invalida!",
+							JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+
+			}
+			
+			else if(localidad.getDepartamento().getZona().getNombre_zona().equals("SUR"))
+			{
+				if (fieldLatitud > 35.024444) {
+
+					JOptionPane.showMessageDialog(frame, "Para una localidad de zona sur como maximo se puede ingresar: -35.024444° de latitud", "Latitud invalida!",
+							JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+
+						
+				if (fieldLongitud > 54.883056) {
+
+					JOptionPane.showMessageDialog(frame, "Para una localidad de zona sur como maximo se puede ingresar: -54.883056° de longitud", "Longitud invalida!",
+							JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+			}
+			
+			else if(localidad.getDepartamento().getZona().getNombre_zona().equals("ESTE"))
+			{
+				if (fieldLatitud > 32.653889) {
+
+					JOptionPane.showMessageDialog(frame, "Para una localidad de zona este como maximo se puede ingresar: -32.653889° de latitud", "Latitud invalida!",
+							JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+
+						
+				if (fieldLongitud > 53.182778) {
+
+					JOptionPane.showMessageDialog(frame, "Para una localidad de zona este como maximo se puede ingresar: -53.182778 de longitud°", "Longitud invalida!",
+							JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+			}
+			
+			else if(localidad.getDepartamento().getZona().getNombre_zona().equals("OESTE"))
+			{
+				if (fieldLatitud > 33.525) {
+
+					JOptionPane.showMessageDialog(frame, "Para una localidad de zona este como maximo se puede ingresar: -33.525 de latitud°", "Latitud invalida!",
+							JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+
+						
+				if (fieldLongitud > 58.433611) {
+
+					JOptionPane.showMessageDialog(frame, "Para una localidad de zona este como maximo se puede ingresar: -58.433611° de longitud", "Longitud invalida!",
+							JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+			}
+			
+			
+			
+		}catch(Exception e){
+			JOptionPane.showMessageDialog(frame, "Error al traer la localidad", "Error", JOptionPane.WARNING_MESSAGE);
+			return;
+		}
+		
+
+		
+		if (fieldAltitud > 514) {
+
+			JOptionPane.showMessageDialog(frame, "La altitud ingresada no es valida, el punto mas alto de Uruguay es el es el cerro Catedral con 514msnm", "Altitud invalida!",
+					JOptionPane.WARNING_MESSAGE);
+			return;
+		}
+		
+
+		
 		
 		if (!camino.toString().equals("")) {
 			try {	
@@ -508,15 +614,15 @@ public class FrameModificarObservacion implements ActionListener {
 
 					// Si se devolvio verdadero el almacenado
 					if (almacenado) {
-						JOptionPane.showMessageDialog(frame, "La observacion ha sido modificada con éxito.",
-								"Observacion Modificada!", JOptionPane.INFORMATION_MESSAGE);
+						JOptionPane.showMessageDialog(frame, "La observación ha sido modificada con éxito.",
+								"Observación Modificada!", JOptionPane.INFORMATION_MESSAGE);
 
 						this.frame.dispose();
 
 					}
 					
 					else {
-						JOptionPane.showMessageDialog(frame, "No se pudo modificar la observacion",
+						JOptionPane.showMessageDialog(frame, "No se pudo modificar la observación",
 								"Error de conexión!", JOptionPane.WARNING_MESSAGE);
 
 						return;
