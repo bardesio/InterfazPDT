@@ -334,7 +334,19 @@ public class FrameNuevoUsuario implements ActionListener{
         } 
 
 			
+        if (Tipodoc.equals("CI"))
+        {
+      //Valido que en CI solo se ingresen numeros
+	        try {	
+				//Trato de parsear la ci
+				int valor = Integer.parseInt(this.textNumeroDoc.getText());
 			
+			}catch(Exception e){
+				//Si entra aca es porque tiene formato invalido
+				JOptionPane.showMessageDialog(frame, "Solo puede ingresar numero en la CI", "Error de documento", JOptionPane.WARNING_MESSAGE);
+				return;
+			}
+        }
 			
 		// Si estamos aquí,..quiere decir que no hay errores. 
 		boolean almacenado;
