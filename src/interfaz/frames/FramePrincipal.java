@@ -1,13 +1,19 @@
 package interfaz.frames;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+
 import com.entidades.Usuario;
 
 public class FramePrincipal {
@@ -41,6 +47,14 @@ public class FramePrincipal {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		initializeMenuBar(frame);
+		
+		JPanel panel = new JPanel();
+		frame.getContentPane().add(panel, BorderLayout.CENTER);
+		
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setSize(600,400);
+		lblNewLabel.setIcon(new ImageIcon(temporal.class.getResource("/resources/naturaleza.jpeg")));
+		panel.add(lblNewLabel);
 		frame.setVisible(true);
 	}
 	
@@ -52,6 +66,7 @@ public class FramePrincipal {
 		try {
 			
 			JMenuBar menuBar = new JMenuBar();
+			menuBar.setBackground(new Color(224, 255, 255));
 			
 			if (listUsuarios.get(0).getTipousuario().getNombre().equals("ADMINISTRADOR"))
 			{
@@ -87,7 +102,7 @@ public class FramePrincipal {
 
 private static void initializeMenuFenomenos(JMenuBar menuBar, final JFrame frame) {
 JMenu fenomeno = new JMenu("Fenomeno");
-	
+
 	JMenuItem nuevoFenomeno = new JMenuItem("Nuevo Fenomeno");
 	
 	nuevoFenomeno.addActionListener(new ActionListener() {

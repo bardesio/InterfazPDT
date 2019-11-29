@@ -192,4 +192,11 @@ public class ClientePDT {
 			return observacionBeanRemote.existeObservacion(identificacion);
 		}
 		
+		public static Localidad obtenerLocalidad(String loc) throws Exception {
+
+			LocalidadBeanRemote localidadBeanRemote = EJBLocator.getInstance().lookup(LocalidadBeanRemote.class);
+			return localidadBeanRemote.obtenerLocalidad(loc);
+		}
+		
+		
 }

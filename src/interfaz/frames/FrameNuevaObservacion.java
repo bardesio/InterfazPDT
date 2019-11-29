@@ -400,21 +400,93 @@ public class FrameNuevaObservacion implements ActionListener {
 		}
 		
 		
-		if (fieldLatitud > 35.024444) {
+		//Borrar si no funciona
+		try {	
+			Localidad localidad = ClientePDT.obtenerLocalidad(fieldLocalidad);
+			
+			if(localidad.getDepartamento().getZona().getNombre_zona().equals("NORTE"))
+			{
+				if (fieldLatitud > 30.085556) {
 
-			JOptionPane.showMessageDialog(frame, "La latitud ingresada no es valida, como maximo se puede ingresar 35.024444", "Latitud invalida!",
-					JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog(frame, "Para una localidad de zona norte como maximo se puede ingresar: -30.085556 de latitud°", "Latitud invalida!",
+							JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+
+						
+				if (fieldLongitud > 56.951667) {
+
+					JOptionPane.showMessageDialog(frame, "Para una localidad de zona norte como maximo se puede ingresar: -56.951667° de longitud", "Longitud invalida!",
+							JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+
+			}
+			
+			else if(localidad.getDepartamento().getZona().getNombre_zona().equals("SUR"))
+			{
+				if (fieldLatitud > 35.024444) {
+
+					JOptionPane.showMessageDialog(frame, "Para una localidad de zona sur como maximo se puede ingresar: -35.024444° de latitud", "Latitud invalida!",
+							JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+
+						
+				if (fieldLongitud > 54.883056) {
+
+					JOptionPane.showMessageDialog(frame, "Para una localidad de zona sur como maximo se puede ingresar: -54.883056° de longitud", "Longitud invalida!",
+							JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+			}
+			
+			else if(localidad.getDepartamento().getZona().getNombre_zona().equals("ESTE"))
+			{
+				if (fieldLatitud > 32.653889) {
+
+					JOptionPane.showMessageDialog(frame, "Para una localidad de zona este como maximo se puede ingresar: -32.653889° de latitud", "Latitud invalida!",
+							JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+
+						
+				if (fieldLongitud > 53.182778) {
+
+					JOptionPane.showMessageDialog(frame, "Para una localidad de zona este como maximo se puede ingresar: -53.182778 de longitud°", "Longitud invalida!",
+							JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+			}
+			
+			else if(localidad.getDepartamento().getZona().getNombre_zona().equals("OESTE"))
+			{
+				if (fieldLatitud > 33.525) {
+
+					JOptionPane.showMessageDialog(frame, "Para una localidad de zona este como maximo se puede ingresar: -33.525 de latitud°", "Latitud invalida!",
+							JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+
+						
+				if (fieldLongitud > 58.433611) {
+
+					JOptionPane.showMessageDialog(frame, "Para una localidad de zona este como maximo se puede ingresar: -58.433611° de longitud", "Longitud invalida!",
+							JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+			}
+			
+			
+			
+		}catch(Exception e){
+			JOptionPane.showMessageDialog(frame, "Error al traer la localidad", "Error", JOptionPane.WARNING_MESSAGE);
 			return;
 		}
+		
+		
 
-				
-		if (fieldLongitud > 58.433611) {
-
-			JOptionPane.showMessageDialog(frame, "La longitud ingresada no es valida, como maximo se puede ingresar 58.433611", "Longitud invalida!",
-					JOptionPane.WARNING_MESSAGE);
-			return;
-		}
-
+		
 		
 		
 		if (fieldAltitud > 514) {
