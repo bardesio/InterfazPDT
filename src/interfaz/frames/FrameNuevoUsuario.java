@@ -210,8 +210,6 @@ public class FrameNuevoUsuario implements ActionListener{
 			constraints.gridwidth = 3;
 			constraints.anchor = GridBagConstraints.SOUTH;
 			nuevoUsuarioPanel.add(buttonIngresar, constraints);
-			//buttonIngresar.setBounds(1,10,3,23);
-			//nuevoUsuarioPanel.add(buttonIngresar);
 
 			constraints.gridx = 2;
 			constraints.gridy = 10;

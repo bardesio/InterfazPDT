@@ -492,6 +492,18 @@ public class FrameModificarObservacion implements ActionListener {
 		byte[] imagen = null;
 		
 		
+		//Valido que la fecha no sea superior al día de hoy
+		Date fechaActual = new Date();
+
+		if (fieldFecha.after(fechaActual)) 
+		{
+
+			JOptionPane.showMessageDialog(frame, "La fecha de la observación no puede ser superior al día de hoy", "Fecha Invalida!",
+					JOptionPane.WARNING_MESSAGE);
+
+			return;
+		}
+		
 		
 		// Validacion para datos vacios
 		if (fieldIdentificacion.equals("") || fieldDescripcion.equals("")) {
