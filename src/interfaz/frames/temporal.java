@@ -1,29 +1,29 @@
 package interfaz.frames;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-
 import com.entidades.Usuario;
+import javax.swing.JPanel;
+import java.awt.BorderLayout;
+import javax.swing.JLabel;
+import javax.swing.ImageIcon;
+import java.awt.Color;
+import javax.swing.JButton;
+import javax.swing.UIManager;
 
-public class FramePrincipal {
+public class temporal {
 
 	
 	static List<Usuario> listUsuarios = null;
 
-	//recibo en el constructor del frame el usuario
-	public FramePrincipal(List<Usuario> usuarios) {
-	//Lo guardo en una variable	
+	
+	public temporal(List<Usuario> usuarios) {
 	listUsuarios = usuarios;
 	}
 	
@@ -51,11 +51,6 @@ public class FramePrincipal {
 		
 		JPanel panel = new JPanel();
 		frame.getContentPane().add(panel, BorderLayout.CENTER);
-		
-		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setSize(600,400);
-		lblNewLabel.setIcon(new ImageIcon(FramePrincipal.class.getResource("/resources/green.jpg")));
-		panel.add(lblNewLabel);
 		frame.setVisible(true);
 	}
 	
@@ -67,9 +62,8 @@ public class FramePrincipal {
 		try {
 			
 			JMenuBar menuBar = new JMenuBar();
-			menuBar.setBackground(new Color(224, 255, 255));
+			menuBar.setBackground(new Color(95, 158, 160));
 			
-			//Determino el tipo de usuario y le habilito o no las ventanas
 			if (listUsuarios.get(0).getTipousuario().getNombre().equals("ADMINISTRADOR"))
 			{
 				initializeMenuUsuarios(menuBar, frame);
@@ -93,6 +87,7 @@ public class FramePrincipal {
 			frame.setJMenuBar(menuBar);
 			
 		} catch (Exception e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -102,9 +97,9 @@ public class FramePrincipal {
 /** Inicialicación de botones del menu de Fenomeno */
 
 private static void initializeMenuFenomenos(JMenuBar menuBar, final JFrame frame) {
-JMenu fenomeno = new JMenu("Fenómenos");
-
-	JMenuItem nuevoFenomeno = new JMenuItem("Nuevo Fenómeno");
+JMenu fenomeno = new JMenu("Fenomeno");
+	
+	JMenuItem nuevoFenomeno = new JMenuItem("Nuevo Fenomeno");
 	
 	nuevoFenomeno.addActionListener(new ActionListener() {
         @Override
@@ -114,7 +109,7 @@ JMenu fenomeno = new JMenu("Fenómenos");
         	
         }
     });
-	JMenuItem modificarFenomeno = new JMenuItem("Modificar Fenómeno");
+	JMenuItem modificarFenomeno = new JMenuItem("Modificar Fenomeno");
 
 	modificarFenomeno.addActionListener(new ActionListener() {
 	    @Override
@@ -123,7 +118,7 @@ JMenu fenomeno = new JMenu("Fenómenos");
 	    	new FrameModificarFenomeno(frame);
 	    }
 	});
-	JMenuItem eliminarFenomeno = new JMenuItem("Eliminar Fenómeno");
+	JMenuItem eliminarFenomeno = new JMenuItem("Eliminar Fenomeno");
 
 	eliminarFenomeno.addActionListener(new ActionListener() {
 	    @Override
@@ -209,7 +204,7 @@ private static void initializeMenuObservaciones(JMenuBar menuBar, final JFrame f
 		
 		JMenu observacion = new JMenu("Observaciones");
 		
-		JMenuItem nuevaObservacion = new JMenuItem("Nueva Observación");
+		JMenuItem nuevaObservacion = new JMenuItem("Nueva Observacion");
 		
 		nuevaObservacion.addActionListener(new ActionListener() {
             @Override
@@ -220,7 +215,7 @@ private static void initializeMenuObservaciones(JMenuBar menuBar, final JFrame f
         });
 			
 		
-		JMenuItem modificarObservacion = new JMenuItem("Modificar Observación");
+		JMenuItem modificarObservacion = new JMenuItem("Modificar Observacion");
 		
 		
 		modificarObservacion.addActionListener(new ActionListener() {
@@ -232,7 +227,7 @@ private static void initializeMenuObservaciones(JMenuBar menuBar, final JFrame f
             
         });
 
-		JMenuItem eliminarObservacion = new JMenuItem("Eliminar Observación");
+		JMenuItem eliminarObservacion = new JMenuItem("Eliminar Observacion");
 		
 		eliminarObservacion.addActionListener(new ActionListener() {
             @Override
