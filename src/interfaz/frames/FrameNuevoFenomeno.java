@@ -239,7 +239,7 @@ public class FrameNuevoFenomeno implements ActionListener {
 		}
 		
 		//Valido maximo en los campos
-		if (fieldCodigo.length() > 50 || fieldNombre.length() > 50 || fieldDescripcion.length() > 50)
+		if (fieldCodigo.length() > 50 || fieldNombre.length() > 50 || fieldDescripcion.length() > 100)
 		{
 			JOptionPane.showMessageDialog(frame, "No puede ingresar mas de 50 caracteres en los campos", "Máximo superado!",
 					JOptionPane.WARNING_MESSAGE);

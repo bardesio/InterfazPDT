@@ -305,9 +305,9 @@ public class FrameModificarFenomeno implements ActionListener{
 	private void accionModificar() {
 
 		// Guardo lo ingresado en variables
-		String fieldDescripcion = this.textDescripcion.getText();
-		String fieldNombre= this.textNombre.getText();
-		String fieldcodigo = this.textCodigo.getText();
+		String fieldDescripcion = this.textDescripcion.getText().toUpperCase();
+		String fieldNombre= this.textNombre.getText().toUpperCase();
+		String fieldcodigo = this.textCodigo.getText().toUpperCase();
 		String tel = (String) this.comboTel.getSelectedItem();
 		String fieldEstado = this.textEstado.getText().toUpperCase();
 		
@@ -322,7 +322,7 @@ public class FrameModificarFenomeno implements ActionListener{
 
 		
 		//Valido maximo en los campos
-		if (fieldcodigo.length() > 50 || fieldNombre.length() > 50 || fieldDescripcion.length() > 50)
+		if (fieldcodigo.length() > 50 || fieldNombre.length() > 50 || fieldDescripcion.length() > 100)
 		{
 			JOptionPane.showMessageDialog(frame, "No puede ingresar mas de 50 caracteres en los campos", "Máximo superado!",
 					JOptionPane.WARNING_MESSAGE);
