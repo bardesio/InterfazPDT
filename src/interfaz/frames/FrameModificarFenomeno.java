@@ -95,7 +95,7 @@ public class FrameModificarFenomeno implements ActionListener{
 	private void initalizeFrame(JFrame framePadre) {
 
 		JFrame frame = new JFrame("Modificar Fenómeno");
-		frame.setSize(136, 133);
+		frame.setSize(500, 500);
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(framePadre);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

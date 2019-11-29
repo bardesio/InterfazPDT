@@ -94,7 +94,7 @@ public class FrameEliminarFenomeno implements ActionListener {
 	private void initalizeFrame(JFrame framePadre) {
 
 		JFrame frame = new JFrame("Eliminar Fenómeno");
-		frame.setSize(600, 400);
+		frame.setSize(500, 500);
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(framePadre);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

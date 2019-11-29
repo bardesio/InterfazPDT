@@ -85,7 +85,7 @@ public class FrameNuevoFenomeno implements ActionListener {
 	private void initalizeFrame(JFrame framePadre) {
 		
 		JFrame frame = new JFrame("Nuevo Fenómeno");
-		frame.setSize(600, 400);
+		frame.setSize(500, 500);
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(framePadre);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -142,17 +142,16 @@ public class FrameNuevoFenomeno implements ActionListener {
 		if (this.comboTel!=null) {
 			nuevaFenomenoPanel.add(this.comboTel,constraints);
 			
-	
-			constraints.gridx = 0;
+			constraints.gridx = 2;
 			constraints.gridy = 10;
-			constraints.gridwidth = 4;
-			constraints.anchor = GridBagConstraints.CENTER;
+			constraints.gridwidth = 3;
+			constraints.anchor = GridBagConstraints.SOUTH;
 			nuevaFenomenoPanel.add(buttonIngresar, constraints);
 	
 			constraints.gridx = 1;
 			constraints.gridy = 10;
-			constraints.gridwidth = 5;
-			constraints.anchor = GridBagConstraints.CENTER;
+			constraints.gridwidth = 4;
+			constraints.anchor = GridBagConstraints.WEST;
 			nuevaFenomenoPanel.add(buttonCancelar, constraints);																																																																															
 							
 	
