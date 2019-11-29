@@ -20,7 +20,7 @@ public class FramePrincipal {
 
 	
 	static List<Usuario> listUsuarios = null;
-
+	
 	//recibo en el constructor del frame el usuario
 	public FramePrincipal(List<Usuario> usuarios) {
 	//Lo guardo en una variable	
@@ -48,9 +48,10 @@ public class FramePrincipal {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		initializeMenuBar(frame);
-		
+				
 		JPanel panel = new JPanel();
 		frame.getContentPane().add(panel, BorderLayout.CENTER);
+		panel.setBackground(Color.WHITE);
 		
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setSize(600,400);
@@ -67,7 +68,6 @@ public class FramePrincipal {
 		try {
 			
 			JMenuBar menuBar = new JMenuBar();
-			menuBar.setBackground(new Color(224, 255, 255));
 			
 			//Determino el tipo de usuario y le habilito o no las ventanas
 			if (listUsuarios.get(0).getTipousuario().getNombre().equals("ADMINISTRADOR"))
