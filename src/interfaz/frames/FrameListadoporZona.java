@@ -172,7 +172,7 @@ public class FrameListadoporZona implements ActionListener {
 			return null;
 		}
 
-		String[] nombreColumnas = { "Identificación", "Nombre de Zona", "Nombre del Fenomeno", "Descripcion", "Latitud", "Longitud", "Altitud"
+		String[] nombreColumnas = { "Id", "Zona", "Fenomeno", "Descripcion", "Latitud", "Longitud", "Altitud"
 				, "Fecha"};
 
 		/*

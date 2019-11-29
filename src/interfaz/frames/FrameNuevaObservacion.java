@@ -619,7 +619,7 @@ public class FrameNuevaObservacion implements ActionListener {
 			//Cargar imagen en JLabel
 			try {
 				BufferedImage img = ImageIO.read(archivoImagen);
-				ImageIcon imagen = new ImageIcon(img.getScaledInstance(15, 15, Image.SCALE_SMOOTH));
+				ImageIcon imagen = new ImageIcon(img.getScaledInstance(30, 30, Image.SCALE_DEFAULT));
 						labelfoto.setIcon(imagen);
 			}catch(Exception e){
 				JOptionPane.showMessageDialog(frame, "Error al cargar el archivo","Error", JOptionPane.WARNING_MESSAGE);

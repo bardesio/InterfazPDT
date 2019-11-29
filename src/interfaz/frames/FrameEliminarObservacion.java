@@ -426,7 +426,7 @@ public class FrameEliminarObservacion implements ActionListener{
 					} catch (IOException e) {
 						e.printStackTrace();
 					} 
-					ImageIcon imagen = new ImageIcon(img.getScaledInstance(15,15 , Image.SCALE_SMOOTH));
+					ImageIcon imagen = new ImageIcon(img.getScaledInstance(30,30 , Image.SCALE_SMOOTH));
 					this.labelfoto.setIcon(imagen);
 				}
 				
