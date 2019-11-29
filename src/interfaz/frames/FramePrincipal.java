@@ -53,7 +53,7 @@ public class FramePrincipal {
 		
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setSize(600,400);
-		lblNewLabel.setIcon(new ImageIcon(temporal.class.getResource("/resources/naturaleza.jpeg")));
+		lblNewLabel.setIcon(new ImageIcon(FramePrincipal.class.getResource("/resources/naturaleza.jpeg")));
 		panel.add(lblNewLabel);
 		frame.setVisible(true);
 	}

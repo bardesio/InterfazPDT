@@ -143,7 +143,7 @@ public class FrameLogin extends JFrame {
 				
 				//Defino el botón Cancelar
 				JButton btnCancelar = new JButton("Cancelar");
-				btnCancelar.setIcon(new ImageIcon(temporal.class.getResource("/resources/cancel.png")));
+				btnCancelar.setIcon(new ImageIcon(FramePrincipal.class.getResource("/resources/cancel.png")));
 				btnCancelar.addActionListener(new ActionListener() { //Establezco que debe hacer cuando hago clic en Cancelar
 					public void actionPerformed(ActionEvent e) {
 						System.exit(0); // Salgo del sistema

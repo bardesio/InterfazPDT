@@ -70,11 +70,11 @@ public class FrameNuevoFenomeno implements ActionListener {
 		 this.textEstado = new JTextField(15);
 		
 		JButton buttonIngresar = new JButton("Ingresar");
-		buttonIngresar.setIcon(new ImageIcon(temporal.class.getResource("/resources/add.png")));
+		buttonIngresar.setIcon(new ImageIcon(FramePrincipal.class.getResource("/resources/add.png")));
 		buttonIngresar.addActionListener((ActionListener) this);
 
 		JButton buttonCancelar = new JButton("Cancelar");
-		buttonCancelar.setIcon(new ImageIcon(temporal.class.getResource("/resources/cancel.png")));
+		buttonCancelar.setIcon(new ImageIcon(FramePrincipal.class.getResource("/resources/cancel.png")));
 		buttonCancelar.addActionListener((ActionListener) this);
 
 		this.buttonIngresar = buttonIngresar;

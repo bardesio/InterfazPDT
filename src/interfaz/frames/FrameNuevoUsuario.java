@@ -89,11 +89,11 @@ public class FrameNuevoUsuario implements ActionListener{
 		this.textUsuario = new JTextField(15);
 		
 		JButton buttonIngresar = new JButton("Ingresar");
-		buttonIngresar.setIcon(new ImageIcon(temporal.class.getResource("/resources/add.png")));
+		buttonIngresar.setIcon(new ImageIcon(FramePrincipal.class.getResource("/resources/add.png")));
 		buttonIngresar.addActionListener(this);
 
 		JButton buttonCancelar = new JButton("Cancelar");
-		buttonCancelar.setIcon(new ImageIcon(temporal.class.getResource("/resources/cancel.png")));
+		buttonCancelar.setIcon(new ImageIcon(FramePrincipal.class.getResource("/resources/cancel.png")));
 		buttonCancelar.addActionListener(this);
 
 		this.buttonIngresar = buttonIngresar;
@@ -199,15 +199,17 @@ public class FrameNuevoUsuario implements ActionListener{
 		if (this.comboTipoUsu!=null){
 			nuevoUsuarioPanel.add(this.comboTipoUsu, constraints);
 		
-			constraints.gridx = 0;
+			constraints.gridx = 1;
 			constraints.gridy = 10;
 			constraints.gridwidth = 3;
 			constraints.anchor = GridBagConstraints.SOUTH;
 			nuevoUsuarioPanel.add(buttonIngresar, constraints);
+			//buttonIngresar.setBounds(1,10,3,23);
+			//nuevoUsuarioPanel.add(buttonIngresar);
 
-			constraints.gridx = 1;
+			constraints.gridx = 2;
 			constraints.gridy = 10;
-			constraints.gridwidth = 4;
+			constraints.gridwidth = 5;
 			constraints.anchor = GridBagConstraints.SOUTH;
 			nuevoUsuarioPanel.add(buttonCancelar, constraints);
 

@@ -92,14 +92,15 @@ public class FrameModificarUsuario implements ActionListener{
 		this.textUsuario = new JTextField(15);
 		
 		JButton buttonModificar = new JButton("Modificar");
-		buttonModificar.setIcon(new ImageIcon(temporal.class.getResource("/resources/Update.png")));
+		buttonModificar.setIcon(new ImageIcon(FramePrincipal.class.getResource("/resources/Update.png")));
 		buttonModificar.addActionListener(this);
 		
 		JButton buttonCancelar = new JButton("Cancelar");
-		buttonCancelar.setIcon(new ImageIcon(temporal.class.getResource("/resources/cancel.png")));
+		buttonCancelar.setIcon(new ImageIcon(FramePrincipal.class.getResource("/resources/cancel.png")));
 		buttonCancelar.addActionListener(this);
 
 		JButton buttonBuscar = new JButton ("Buscar");
+		buttonBuscar.setIcon(new ImageIcon(FramePrincipal.class.getResource("/resources/buscar.png")));
 		buttonBuscar.addActionListener(this);
 		
 		this.buttonModificar = buttonModificar;
@@ -224,11 +225,13 @@ public class FrameModificarUsuario implements ActionListener{
 			constraints.anchor = GridBagConstraints.SOUTH;
 			modificarUsuarioPanel.add(buttonCancelar, constraints);
 			
-			constraints.gridx = 0;
+			/*constraints.gridx = 0;
 			constraints.gridy = 10;
 			constraints.gridwidth = 3;
 			constraints.anchor = GridBagConstraints.SOUTH;
-			modificarUsuarioPanel.add(buttonBuscar, constraints);
+			modificarUsuarioPanel.add(buttonBuscar, constraints);*/
+			this.buttonBuscar.setBounds(60,60,89,23);
+			modificarUsuarioPanel.add(buttonBuscar);
 
 		modificarUsuarioPanel
 				.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Datos del Usuario"));
