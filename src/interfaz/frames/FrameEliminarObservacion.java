@@ -38,20 +38,23 @@ import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
 import net.sourceforge.jdatepicker.impl.UtilDateModel;
 
 public class FrameEliminarObservacion implements ActionListener{
-
-	// Validamos ahora, que exista una Observacion son dicha ID
+		
+		//Lista de observaciones global
 		List<Observacion> observaciones;
 		
+		//ID global
 		Long fieldID = null;
 		
+		//Camino global para la imagen
 		String camino = "";
 		
+		//File global para la imagen
 		File archivoImagen = null;
 
-		/** Frame de la ventana */
+		//Frame de la ventana 
 		private JFrame frame;
 
-		/** Atributos de labels */
+		// Atributos de labels 
 		private JLabel labelIdentificacion;
 		private JLabel labelUsuario;
 		private JLabel labelFenomeno;
@@ -65,14 +68,15 @@ public class FrameEliminarObservacion implements ActionListener{
 		private JLabel labelFecha;
 		private JLabel labelfoto;
 
+		//Creo los comboboxs
 		private JComboBox<String> comboFenomenos;
 		private JComboBox<String> comboLocalidad;
 		private JComboBox<String> comboEstado;
 
-		/** Date Picker */
+		//Date Picker
 		private JDatePickerImpl datePickerFecha;
 
-		/** Atributos de TexField */
+		// Atributos de TexField 
 		private JTextField textIdentificacion;
 		private JTextField textDescripcion;
 		private JTextField textLatitud;
@@ -80,25 +84,27 @@ public class FrameEliminarObservacion implements ActionListener{
 		private JTextField textAltitud;
 		private JTextField textUsuario;
 
-		/** Atributos de Botones */
+		// Atributos de Botones 
 		private JButton buttonEliminar;
 		private JButton buttonCancelar;
 		private JButton buttonBuscar;
 		private JButton buttonSeleccionar;
 
 		
-		/** Lista de Tipos del sistema */
+		// Lista de Tipos del sistema 
 		private List<Fenomeno> fenomenos;
 		private List<Localidad> localidades;
 		private List<Estado> estados;
-
+		
+		//Lista de usuarios gobal
 		List<Usuario> listaUsuarios = null;
 		
 		public FrameEliminarObservacion(JFrame framePadre, List<Usuario> listUsuarios) {
 		
-
+			//Le paso el usuario actual
 			listaUsuarios = listUsuarios;
 			
+			//Asigno el nombre de las label
 			this.labelIdentificacion = new JLabel("Identificación:");
 			this.labelUsuario = new JLabel("Nombre de usuario:");
 			this.labelFenomeno = new JLabel("Fenómeno:");
@@ -113,6 +119,7 @@ public class FrameEliminarObservacion implements ActionListener{
 			this.labelFecha = new JLabel("Fecha:");
 			this.labelfoto = new JLabel("");
 
+			//Asigno el tamaño de los textboxes
 			this.textAltitud = new JTextField(15);
 			this.textDescripcion = new JTextField(15);
 			this.textIdentificacion = new JTextField(15);
@@ -120,22 +127,27 @@ public class FrameEliminarObservacion implements ActionListener{
 			this.textLongitud = new JTextField(15);
 			this.textUsuario = new JTextField(15);
 			
+			//Nombre e icono del boton eliminar
 			JButton buttonEliminar = new JButton("Eliminar");
 			buttonEliminar.setIcon(new ImageIcon(FramePrincipal.class.getResource("/resources/delete.gif")));
 			buttonEliminar.addActionListener(this);
 
+			//Nombre e icono del boton cancelar
 			JButton buttonCancelar = new JButton("Cancelar");
 			buttonCancelar.setIcon(new ImageIcon(FramePrincipal.class.getResource("/resources/cancel.png")));
 			buttonCancelar.addActionListener(this);
 			
+			//Nombre e icono del boton buscar
 			JButton buttonBuscar = new JButton("Buscar");
 			buttonBuscar.setIcon(new ImageIcon(FramePrincipal.class.getResource("/resources/buscar.png")));
 			buttonBuscar.addActionListener(this);
 			
+			//Nombre e icono del boton seleccionar imagen
 			JButton buttonSeleccionar = new JButton("Seleccionar Imagen");
 			buttonSeleccionar.setIcon(new ImageIcon(FramePrincipal.class.getResource("/resources/attach.png")));
 			buttonSeleccionar.addActionListener(this);
 			
+			//le asigno a los botones sus propiedades
 			this.buttonEliminar = buttonEliminar;
 			this.buttonCancelar = buttonCancelar;
 			this.buttonBuscar = buttonBuscar;
@@ -292,6 +304,7 @@ public class FrameEliminarObservacion implements ActionListener{
 
 		}
 		
+		//Llenamos el combo Fenomenos
 		private JComboBox<String> completarComboFenomeno(JFrame frame) {
 
 			try {
@@ -309,6 +322,7 @@ public class FrameEliminarObservacion implements ActionListener{
 			return combo;
 		}
 
+		//Llenamos el combo localidades
 		private JComboBox<String> completarComboLocalidad(JFrame frame) {
 
 			try {
@@ -326,6 +340,7 @@ public class FrameEliminarObservacion implements ActionListener{
 			return combo;
 		}
 
+		//Llenamos el combo estados
 		private JComboBox<String> completarComboEstado(JFrame frame) {
 
 			try {
@@ -343,6 +358,7 @@ public class FrameEliminarObservacion implements ActionListener{
 			return combo;
 		}
 
+		//Determino que boton se pulso y ejecuto una acción
 		@Override
 		public void actionPerformed(ActionEvent e) {
 
@@ -364,10 +380,12 @@ public class FrameEliminarObservacion implements ActionListener{
 		}
 
 		private void accionBuscar() {
-		
+			
+			//Me guardo el identificador y lo paso a mayuscula
 			String fieldIdentificacion = this.textIdentificacion.getText().toUpperCase();
 					
 			try{
+				//Valido que exista la observacion y me la traigo
 				observaciones = ClientePDT.existeObservacion(fieldIdentificacion);
 			} catch (Exception e){
 				JOptionPane.showMessageDialog(frame, "Error de conexión con el servidor. Intente más tarde.",
@@ -376,6 +394,7 @@ public class FrameEliminarObservacion implements ActionListener{
 				return;
 			}
 			
+			//Valido que no haya vacios
 			if (observaciones==null || observaciones.size() == 0 || observaciones.get(0).getEstado().getNombre().equals("INACTIVO")) {
 				JOptionPane.showMessageDialog(frame, "La identificación ingresada no existe.",
 						"Observación no Existente!", JOptionPane.WARNING_MESSAGE);
@@ -386,7 +405,6 @@ public class FrameEliminarObservacion implements ActionListener{
 			else {
 				
 				//Habilito el boton de eliminar
-				
 				this.buttonEliminar.setEnabled(true);
 			
 				
@@ -394,7 +412,7 @@ public class FrameEliminarObservacion implements ActionListener{
 				this.buttonBuscar.setEnabled(false);
 				this.textIdentificacion.setEnabled(false);
 				
-				
+				//Cargo los campos para que se vean
 				this.textAltitud.setText(Float.toString(observaciones.get(0).getAltitud()));
 				this.textDescripcion.setText(observaciones.get(0).getDescripcion());
 				this.textIdentificacion.setText(observaciones.get(0).getCodigo_OBS());
@@ -416,6 +434,7 @@ public class FrameEliminarObservacion implements ActionListener{
 				this.datePickerFecha.getModel().setYear(Integer.parseInt(yyyymmdd[0]));
 				
 				 
+				//Cargo la imagen
 				BufferedImage img = null;
 				
 				if(!(observaciones.get(0).getImagen()==null)) {
@@ -433,6 +452,7 @@ public class FrameEliminarObservacion implements ActionListener{
 			}
 		}
 
+		//Creo el datapicker para la fecha
 		private JDatePickerImpl crearDatePicker() {
 
 			UtilDateModel model = new UtilDateModel();
@@ -445,7 +465,6 @@ public class FrameEliminarObservacion implements ActionListener{
 		private void accionEliminar() throws ServiciosException {
 
 			// Si es Eliminar se validan datos!
-
 			String fieldIdentificacion = this.textIdentificacion.getText().toUpperCase();
 			String fieldUsuario = listaUsuarios.get(0).getUsuario().toString();
 			String fieldFenomeno = (String) this.comboFenomenos.getSelectedItem();
@@ -468,6 +487,7 @@ public class FrameEliminarObservacion implements ActionListener{
 				return;
 			}
 			
+			//Verifico que la ruta de la imagen no sea invalida
 			if (!camino.toString().equals("")) {
 				try {	
 					imagen = Files.readAllBytes(archivoImagen.toPath());
@@ -478,8 +498,7 @@ public class FrameEliminarObservacion implements ActionListener{
 				
 			
 			
-			// Si estamos aquí,..quiere decir que no hay errores. Almacenamos el
-			// Usuario y volvemos al menu
+			// Si estamos aquí,..quiere decir que no hay errores. 
 			boolean almacenado;
 
 			try {
@@ -490,7 +509,7 @@ public class FrameEliminarObservacion implements ActionListener{
 								fieldLocalidad, fieldDescripcion, imagen, fieldLatitud, fieldLongitud, fieldAltitud,
 								estado, fieldFecha);
 
-						// Si se devolvio verdadero el almacenado
+						// No hubo errores al almacenar
 						if (almacenado) {
 							JOptionPane.showMessageDialog(frame, "La observación ha sido eliminada con éxito.",
 									"Observación Eliminada!", JOptionPane.INFORMATION_MESSAGE);
@@ -516,7 +535,6 @@ public class FrameEliminarObservacion implements ActionListener{
 		}
 
 		private void accionCancelar() {
-			// si se cancela, se eliminar la ventana
 			this.frame.dispose();
 
 		}

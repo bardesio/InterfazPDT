@@ -1,7 +1,5 @@
 package interfaz.frames;
 
-
-import java.awt.EventQueue;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
@@ -11,10 +9,8 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.nio.file.Files;
-import java.sql.Blob;
 import java.util.Date;
 import java.util.List;
-
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -25,18 +21,14 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
-
 import com.entidades.Estado;
 import com.entidades.Fenomeno;
 import com.entidades.Localidad;
 import com.entidades.Observacion;
-import com.entidades.TipoUsuario;
 import com.entidades.Usuario;
 import com.exception.ServiciosException;
-
 import interfaz.locator.ClientePDT;
 import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
 import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
@@ -44,15 +36,19 @@ import net.sourceforge.jdatepicker.impl.UtilDateModel;
 
 public class FrameNuevaObservacion implements ActionListener {
 
+	//Campo global id
 	Long fieldID = null;
+	
+	//Campo global para la ruta de la imagen
 	String camino = "";
-		
+	
+	//campo global para el archivo de la imagen
 	File archivoImagen = null;
 
-	/** Frame de la ventana */
+	// Frame de la ventana 
 	private JFrame frame;
 
-	/** Atributos de labels */
+	// Atributos de labels 
 	private JLabel labelIdentificacion;
 	private JLabel labelUsuario;
 	private JLabel labelFenomeno;
@@ -66,14 +62,15 @@ public class FrameNuevaObservacion implements ActionListener {
 	private JLabel labelFecha;
 	private JLabel labelfoto;
 
+	//Atributos para los combos
 	private JComboBox<String> comboFenomenos;
 	private JComboBox<String> comboLocalidad;
 	private JComboBox<String> comboEstado;
 
-	/** Date Picker */
+	//Creo el Date Picker 
 	private JDatePickerImpl datePickerFecha;
 
-	/** Atributos de TexField */
+	// Atributos de TexField 
 	private JTextField textIdentificacion;
 	private JTextField textDescripcion;
 	private JTextField textLatitud;
@@ -81,25 +78,27 @@ public class FrameNuevaObservacion implements ActionListener {
 	private JTextField textAltitud;
 	private JTextField textUsuario;
 
-	/** Atributos de Botones */
+	// Atributos de Botones 
 	private JButton buttonIngresar;
 	private JButton buttonCancelar;
 	private JButton buttonSeleccionar;
 	
 	
 	
-	/** Lista de Tipos del sistema */
+	// Lista de Tipos del sistema 
 	private List<Fenomeno> fenomenos;
 	private List<Localidad> localidades;
 	private List<Estado> estados;
 
+	//Lista global de usuarios
 	List<Usuario> listaUsuarios = null;
 	
 	public FrameNuevaObservacion(JFrame framePadre, List<Usuario> listUsuarios) {
 	
-
+		//Me guardo el usuario actual
 		listaUsuarios = listUsuarios;
 		
+		//Asigno los nombres de las labels
 		this.labelIdentificacion = new JLabel("Identificación:");
 		this.labelUsuario = new JLabel("Nombre de usuario:");
 		this.labelFenomeno = new JLabel("Fenómeno:");
@@ -114,6 +113,7 @@ public class FrameNuevaObservacion implements ActionListener {
 		this.labelFecha = new JLabel("Fecha:");
 		this.labelfoto = new JLabel("");
 
+		//Asigno el tamaño de los textboxs
 		this.textAltitud = new JTextField(15);
 		this.textDescripcion = new JTextField(15);
 		this.textIdentificacion = new JTextField(15);
@@ -121,19 +121,22 @@ public class FrameNuevaObservacion implements ActionListener {
 		this.textLongitud = new JTextField(15);
 		this.textUsuario = new JTextField(15);
 		
+		//Defino el nombre y la ruta del boton ingresar
 		JButton buttonIngresar = new JButton("Ingresar");
 		buttonIngresar.setIcon(new ImageIcon(FramePrincipal.class.getResource("/resources/add.png")));
 		buttonIngresar.addActionListener(this);
 
+		//Defino el nombre y la ruta del boton cancelar
 		JButton buttonCancelar = new JButton("Cancelar");
 		buttonCancelar.setIcon(new ImageIcon(FramePrincipal.class.getResource("/resources/cancel.png")));
 		buttonCancelar.addActionListener(this);
 		
+		//Defino el nombre y la ruta del boton seleccionar imagen
 		JButton buttonSeleccionar = new JButton("Selecionar Imagen");
 		buttonSeleccionar.setIcon(new ImageIcon(FramePrincipal.class.getResource("/resources/attach.png")));
 		buttonSeleccionar.addActionListener(this);
 		
-		
+		//Guardo las propiedades de los botones
 		this.buttonIngresar = buttonIngresar;
 		this.buttonCancelar = buttonCancelar;
 		this.buttonSeleccionar = buttonSeleccionar;
@@ -275,6 +278,7 @@ public class FrameNuevaObservacion implements ActionListener {
 			
 	}
 
+	//Completo el combo fenomenos
 	private JComboBox<String> completarComboFenomeno(JFrame frame) {
 
 		try {
@@ -292,6 +296,7 @@ public class FrameNuevaObservacion implements ActionListener {
 		return combo;
 	}
 
+	//Completo el combo localidad
 	private JComboBox<String> completarComboLocalidad(JFrame frame) {
 
 		try {
@@ -309,6 +314,7 @@ public class FrameNuevaObservacion implements ActionListener {
 		return combo;
 	}
 
+	//Completar combo estado
 	private JComboBox<String> completarComboEstado(JFrame frame) {
 
 		try {
@@ -326,10 +332,9 @@ public class FrameNuevaObservacion implements ActionListener {
 		return combo;
 	}
 
+	//Defino la accion del boton pulsado
 	@Override
 	public void actionPerformed(ActionEvent e) {
-
-		/* Debo primero conocer que botón fue clickeado */
 
 		if (e.getSource() == this.buttonCancelar) {
 			this.accionCancelar();
@@ -348,12 +353,14 @@ public class FrameNuevaObservacion implements ActionListener {
 
 	}
 	
+	//llamo al jfile chooser
 	private void accionSeleccionar() {
 		
 		this.seleccionarImagen();
 		
 	}
 
+	//Creo y date picker
 	private JDatePickerImpl crearDatePicker() {
 		
 		UtilDateModel model = new UtilDateModel();
@@ -363,10 +370,10 @@ public class FrameNuevaObservacion implements ActionListener {
 		return datePicker;
 	}
 
+	//Defino la accion del boton ingresar
 	private void accionIngesar() throws ServiciosException {
 
-		// Si es ingresar se validan datos!
-
+		//Guardo los campos en variables
 		String fieldIdentificacion = this.textIdentificacion.getText().toUpperCase();
 		String fieldUsuario = listaUsuarios.get(0).getUsuario().toString();
 		String fieldFenomeno = (String) this.comboFenomenos.getSelectedItem();
@@ -392,18 +399,20 @@ public class FrameNuevaObservacion implements ActionListener {
 		
 		
 		try {	
+			//Trato de parsear las coordenadas
 			 fieldLatitud = Float.parseFloat(this.textLatitud.getText());
 			 fieldLongitud = Float.parseFloat(this.textLongitud.getText());
 			 fieldAltitud = Float.parseFloat(this.textAltitud.getText());		
 		
 		}catch(Exception e){
+			//Si entra aca es porque tiene formato invalido
 			JOptionPane.showMessageDialog(frame, "Las coordenadas ingresadas no tienen el formato correcto", "Error", JOptionPane.WARNING_MESSAGE);
 			return;
 		}
 		
 		
-		//Borrar si no funciona
-		try {	
+		try {
+			//Obtengo la localidad, y en base a eso determino la zona
 			Localidad localidad = ClientePDT.obtenerLocalidad(fieldLocalidad);
 			
 			if(localidad.getDepartamento().getZona().getNombre_zona().equals("NORTE"))
@@ -486,11 +495,7 @@ public class FrameNuevaObservacion implements ActionListener {
 			return;
 		}
 		
-		
-
-		
-		
-		
+		//Defino la altitud maxima permitida		
 		if (fieldAltitud > 514) {
 
 			JOptionPane.showMessageDialog(frame, "La altitud ingresada no es valida, el punto más alto de Uruguay es el es el cerro Catedral con 514msnm", "Altitud invalida!",
@@ -498,11 +503,8 @@ public class FrameNuevaObservacion implements ActionListener {
 			return;
 		}
 		
-
 		
-		
-		
-		
+		//Verifico que la ruta a la imagen no sea vacia
 		if (!(camino.toString().equals(""))) {
 		try {	
 			imagen = Files.readAllBytes(archivoImagen.toPath());
@@ -512,19 +514,17 @@ public class FrameNuevaObservacion implements ActionListener {
 		}
 		
 		
-		// Si estamos aquí,..quiere decir que no hay errores. Almacenamos el
-		// Usuario y volvemos al menu
+		// Si estamos aquí,..quiere decir que no hay errores.
 		boolean almacenado;
 
 		try {
-			
-						List<Observacion> observaciones = ClientePDT.existeObservacion(fieldIdentificacion);
+			//Verifico que exista la observacion
+			List<Observacion> observaciones = ClientePDT.existeObservacion(fieldIdentificacion);
 
 			// Si la lista es de tamaño 0
 			if (observaciones == null || observaciones.size() == 0) {
-				// Intento crear la observacion
 				try {
-
+					// Intento crear la observacion
 					almacenado = ClientePDT.CrearObservacion(fieldIdentificacion, fieldUsuario, fieldFenomeno,
 							fieldLocalidad, fieldDescripcion, imagen, fieldLatitud, fieldLongitud, fieldAltitud,
 							fieldEstado, fieldFecha);
@@ -545,7 +545,7 @@ public class FrameNuevaObservacion implements ActionListener {
 					return;
 				}
 
-				// La observacion existe pero esta inactiva
+				// La observacion existe pero esta inactiva, la activo nuevamente con los campos ingresados
 			} else if (observaciones.get(0).getEstado().toString() == "ACTIVO") {
 				try {
 					fieldID = observaciones.get(0).getId();
@@ -571,7 +571,7 @@ public class FrameNuevaObservacion implements ActionListener {
 				}
 			}
 
-			// La observación ya existe en el sistema
+			// La observación ya existe en el sistema y esta activa
 			else {
 				JOptionPane.showMessageDialog(null, "La observación ya existe en el sistema");
 				return;
@@ -585,12 +585,13 @@ public class FrameNuevaObservacion implements ActionListener {
 		}
 	}
 
+	//Defino la accion del boton cancelar
 	private void accionCancelar() {
-		// si se cancela, se eliminar la ventana
 		this.frame.dispose();
 
 	}
 	
+	//Defino la accion del boton seleccionar imagen
 	private void seleccionarImagen() {
 		
 		//Creamos el objeto JFileChooser

@@ -6,6 +6,8 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -24,13 +26,13 @@ import interfaz.locator.ClientePDT;
 
 public class FrameNuevoUsuario implements ActionListener{
 
-	
+	//defino Id global
 	Long fieldID = null;
 	
-	/** Frame de la ventana */
+	// Frame de la ventana 
 	private JFrame frame;
 
-	/** Atributos de labels */
+	// Atributos de labels 
 	private JLabel labelPass;
 	private JLabel labelUsuario;
 	private JLabel labelNombre;
@@ -42,12 +44,12 @@ public class FrameNuevoUsuario implements ActionListener{
 	private JLabel labelMail;
 	private JLabel labelTipoUsu;
 
-	
+	//Defino atributo combos
 	private JComboBox<String> comboTipoUsu;
 	private JComboBox<String> comboTipo;
 
 
-	/** Atributos de TexField */
+	// Atributos de TexField */
 	private JTextField textPass;
 	private JTextField textUsuario;
 	private JTextField textNombre;
@@ -57,15 +59,16 @@ public class FrameNuevoUsuario implements ActionListener{
 	private JTextField textDireccion;
 	private JTextField textMail;
 	
-	/** Atributos de Botones */
+	// Atributos de Botones */
 	private JButton buttonIngresar;
 	private JButton buttonCancelar;
 	
-	/** Lista de Tipos del sistema */
+	// Lista de Tipos del sistema */
 	private List<TipoUsuario> tipoUsuarios;
 
 	public FrameNuevoUsuario(JFrame framePadre) {
 
+		//Defino nombre de las labels
 		this.labelApellido = new JLabel("Apellido:");
 		this.labelNombre = new JLabel("Nombre:");
 		this.labelDireccion = new JLabel("Direccion:");
@@ -78,7 +81,7 @@ public class FrameNuevoUsuario implements ActionListener{
 		this.labelTipoUsu = new JLabel("Tipo de Usuario:");
 
 		
-
+		//Defino tamaño de los textboxs
 		this.textApellido = new JTextField(15);
 		this.textNombre = new JTextField(15);
 		this.textDireccion = new JTextField(15);
@@ -88,14 +91,17 @@ public class FrameNuevoUsuario implements ActionListener{
 		this.textPass = new JPasswordField (15);
 		this.textUsuario = new JTextField(15);
 		
+		//Defino boton ingresar y el icono
 		JButton buttonIngresar = new JButton("Ingresar");
 		buttonIngresar.setIcon(new ImageIcon(FramePrincipal.class.getResource("/resources/add.png")));
 		buttonIngresar.addActionListener(this);
 
+		//Defino el boton cancelar y el icono
 		JButton buttonCancelar = new JButton("Cancelar");
 		buttonCancelar.setIcon(new ImageIcon(FramePrincipal.class.getResource("/resources/cancel.png")));
 		buttonCancelar.addActionListener(this);
 
+		//Asigno las propiedades a los botones
 		this.buttonIngresar = buttonIngresar;
 		this.buttonCancelar = buttonCancelar;
 
@@ -230,11 +236,13 @@ public class FrameNuevoUsuario implements ActionListener{
 		}
 	}
 
+	//Completo combo tipos de documento
 	private JComboBox<String> completarComboTipo() {
 		String[] valores = {"CI", "PASAPORTE", "CARTA DE CIUDADANIA", "OTROS"};
 		return new JComboBox<>(valores);
 	}
 
+	//Completo combo tipos de usuario
 	private JComboBox<String> completarComboUsuario(JFrame frame) {
 		
 		try{
@@ -253,6 +261,7 @@ public class FrameNuevoUsuario implements ActionListener{
 		return combo;
 	}
 
+	//Defino y ejecuto el boton que se pulso
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
@@ -270,11 +279,11 @@ public class FrameNuevoUsuario implements ActionListener{
 		}
 
 	}
-	
+
+	//Defino el boton de ingresar
 	private void accionIngesar() throws ServiciosException {
 
-		// Si es ingresar se validan datos!
-
+		//Guardo los campos en variables
 		String fieldNombre = this.textNombre.getText().toUpperCase();
 		String fieldApellido = this.textApellido.getText().toUpperCase();
 		String fieldUsuario = this.textUsuario.getText().toUpperCase();
@@ -299,6 +308,7 @@ public class FrameNuevoUsuario implements ActionListener{
 			return;
 		}
 		
+		//Valido el maximo
 		if (fieldNombre.length() > 50 || fieldApellido.length() > 50 || fieldUsuario.length() > 50|| 
 				fieldDireccion.length() > 50|| fieldMail.length() > 50|| 
 				fieldNumeroDoc.length() > 50|| fieldPass.length() > 50)
@@ -308,16 +318,32 @@ public class FrameNuevoUsuario implements ActionListener{
 			
 			return;
 		}
+		
+		
+		
+		// Defino un Patrón para validar el email
+        Pattern pattern = Pattern
+                .compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                        + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+ 
+ 
+        Matcher mather = pattern.matcher(fieldMail);
+ 
+        if (mather.find() != true) {
+        	JOptionPane.showMessageDialog(frame, "El E-mail ingresado no es valido.", "E-mail invalido!",
+					JOptionPane.WARNING_MESSAGE);
+        return;
+        } 
+
 			
 			
 			
-		// Si estamos aquí,..quiere decir que no hay errores. Almacenamos el
-		// Usuario y volvemos al menu
+		// Si estamos aquí,..quiere decir que no hay errores. 
 		boolean almacenado;
 		
 				
 		try{
-			
+			//Valido que no exista el usuario
 			List<Usuario> us = ClientePDT.existeUsuario(fieldUsuario);
 			
 			//Si la lista es de tamaño 0
@@ -369,7 +395,7 @@ public class FrameNuevoUsuario implements ActionListener{
 					}
 				}
 
-				//El usuario ya existe en el sistema
+				//El usuario ya existe en el sistema y esta activo
 			else {
 				JOptionPane.showMessageDialog(null, "El usuario ya existe en el sistema");
 				return;
@@ -385,8 +411,8 @@ public class FrameNuevoUsuario implements ActionListener{
 		}
 	}
 		
+	//Defino la accion de cancelar
 	private void accionCancelar() {
-		// si se cancela, se eliminar la ventana
 		this.frame.dispose();
 
 	}

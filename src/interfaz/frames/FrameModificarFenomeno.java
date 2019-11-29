@@ -1,13 +1,11 @@
 package interfaz.frames;
 
-import java.awt.EventQueue;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
-
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -17,77 +15,76 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
-import org.omg.CORBA.LongLongSeqHelper;
-
-import com.Remote.FenomenoBeanRemote;
 import com.entidades.Fenomeno;
 import com.entidades.Telefono;
-import com.entidades.TipoUsuario;
-import com.entidades.Usuario;
-
 import interfaz.locator.ClientePDT;
-import interfaz.locator.EJBLocator;
 
 public class FrameModificarFenomeno implements ActionListener{
 
 	
 	
-	//Probando
+	//Atributo frame
 	private JFrame frame;
 
 	Long fieldID = null;
-	/** Atributos de labels */
+	
+	// Atributos de labels 
 	private JLabel labelCodigo;
 	private JLabel labelNombre;
 	private JLabel labelDescripcion;
 	private JLabel labeltelefono;
 	private JLabel labelestado;
 	
+	//Creo el combobox de telefonos
 	private JComboBox<String> comboTel;
 	
 	
 	
-	/** Atributos de TexField */
+	// Atributos de TexField 
 	private JTextField textNombre;
 	private JTextField textDescripcion;
 	private JTextField textCodigo;
 	private JTextField textEstado;
 
-	/** Atributos de Botones */
+	// Atributos de Botones 
 	private JButton buttonModificar;
 	private JButton buttonCancelar;
 	private JButton buttonBuscar;
 	
+	//Creo la lista de telefonos
 	private List<Telefono> telefonos;
 
 	public FrameModificarFenomeno(JFrame framePadre) {
 
-	
+		//Defino el nombre de las labels
 		this.labelCodigo = new JLabel("Código:"); 
 		this.labelNombre = new JLabel("Nombre:");
 		this.labelestado = new JLabel("Estado:");
 		this.labelDescripcion = new JLabel("Descripción:");
 		this.labeltelefono = new JLabel ("Teléfonos de Emergencia:");
 		
+		//Defino el tamaño de los textbox
 		 this.textCodigo=new JTextField(15);
 		 this.textNombre= new JTextField(15);
 		 this.textDescripcion = new JTextField(15);
 		 this.textEstado = new JTextField(15);
 		 
-		
+		//Defino nombre e icono del boton modificar
 		JButton buttonModificar = new JButton("Modificar");
 		buttonModificar.setIcon(new ImageIcon(FramePrincipal.class.getResource("/resources/Update.png")));
 		buttonModificar.addActionListener(this);
-		
+
+		//Defino nombre e icono del boton cancelar
 		JButton buttonCancelar = new JButton("Cancelar");
 		buttonCancelar.setIcon(new ImageIcon(FramePrincipal.class.getResource("/resources/cancel.png")));
 		buttonCancelar.addActionListener(this);
 
+		//Defino nombre e icono del boton buscar
 		JButton buttonBuscar = new JButton ("Buscar");
 		buttonBuscar.setIcon(new ImageIcon(FramePrincipal.class.getResource("/resources/buscar.png")));
 		buttonBuscar.addActionListener(this);
 		
+		//Asigno el boton buscar las propiedades
 		this.buttonModificar = buttonModificar;
 		this.buttonCancelar = buttonCancelar;
 		this.buttonBuscar = buttonBuscar;
@@ -148,10 +145,6 @@ public class FrameModificarFenomeno implements ActionListener{
 		constraints.gridy = 4;
 		ModificarFenomenoPanel.add(this.labeltelefono, constraints);
 		
-		
-		
-		
-		
 		constraints.gridx = 1;
 		 this.comboTel = this.completarComboTelefono(frame);
 		 this.comboTel.setEnabled(false);
@@ -197,6 +190,8 @@ public class FrameModificarFenomeno implements ActionListener{
 		frame.dispose();}
 		
 	}
+	
+	//Cargo combo de telefonos
 	private JComboBox<String> completarComboTelefono(JFrame frame) {
 		
 		try{
@@ -218,15 +213,9 @@ public class FrameModificarFenomeno implements ActionListener{
 		return combo;
 	}
 	
-	
-	/**
-	 * Como implementos Action Listener, quiere decir que soy escuchado de
-	 * eventos. Este método es quien se ejecutan cuando tocan un boton .
-	 */
+	//Defino y ejecuto el boton que se pulso
 	@Override
 	public void actionPerformed(ActionEvent e) {
-
-		/* Debo primero conocer que botón fue clickeado */
 
 		if (e.getSource() == this.buttonCancelar) {
 			this.accionCancelar();
@@ -256,16 +245,20 @@ public class FrameModificarFenomeno implements ActionListener{
 						return;
 					}
 					
-					//FenomenoBeanRemote fenomenobeanremote = EJBLocator.getInstance().lookup(FenomenoBeanRemote.class);
+					//Me guardo el codigo y busco los fenomenos con dicho codigo
 					String codigo = this.textCodigo.getText().toUpperCase();
 					List <Fenomeno> fenomenos= ClientePDT.existecodigo(codigo);
-					//List <Fenomeno> fenomenos = fenomenobeanremote.existecodigo(codigo);
+				
+					// Si no se encuentran resultado muestro mensaje
 					if (fenomenos.isEmpty())
 					{
 						JOptionPane.showMessageDialog(frame, "El código del fenómeno ingresado no existe.",
 								"Fenómeno Inexistente!", JOptionPane.WARNING_MESSAGE);
 						return;
-					}else {
+					}
+					
+					//Camino feliz, se encontraron resultados. Los muestro.
+					else {
 						for(Fenomeno CFen : fenomenos)
 						{
 																					
@@ -299,6 +292,8 @@ public class FrameModificarFenomeno implements ActionListener{
 					}
 					 
 				}
+				
+				//Fallo en ir al servidor.
 					catch(Exception e) {
 						JOptionPane.showMessageDialog(frame, "Error de conexión con el servidor. Intente más tarde.",
 								"Error de conexión!", JOptionPane.WARNING_MESSAGE);
@@ -309,7 +304,7 @@ public class FrameModificarFenomeno implements ActionListener{
 
 	private void accionModificar() {
 
-		// Si es ingresar se validan datos!
+		// Guardo lo ingresado en variables
 		String fieldDescripcion = this.textDescripcion.getText();
 		String fieldNombre= this.textNombre.getText();
 		String fieldcodigo = this.textCodigo.getText();
@@ -339,8 +334,7 @@ public class FrameModificarFenomeno implements ActionListener{
 						
 		try{
 			
-			//almacenado = fenomenobeanremote.modificarFenomeno(fieldcodigofen, fieldcodigo, fieldNombre, fieldDescripcion);			
-			
+			//Intento modificar
 			almacenado = ClientePDT.ModificarFenomeno(fieldID, fieldcodigo,fieldEstado, fieldNombre, fieldDescripcion,tel);
 			
 		} catch (Exception e){
@@ -350,6 +344,7 @@ public class FrameModificarFenomeno implements ActionListener{
 			return;
 		}
 
+		//Camino feliz, lo guardo bien
 		if (almacenado) {
 			JOptionPane.showMessageDialog(frame, "El Fenómeno ha sido modificado con éxito.",
 					"Fenomeno Modificado!", JOptionPane.INFORMATION_MESSAGE);
@@ -359,6 +354,8 @@ public class FrameModificarFenomeno implements ActionListener{
 
 			
 		}
+		
+		//Error al guardarlo
 		else{ 
 			JOptionPane.showMessageDialog(frame, "Hubo un error al almacenar. Intente nuevamente más tarde",
 					"Error al registrar!", JOptionPane.ERROR_MESSAGE);
@@ -366,9 +363,8 @@ public class FrameModificarFenomeno implements ActionListener{
 
 	}
 	
-	
+	//Defino la accion del boton cancelar
 	private void accionCancelar() {
-		// si se cancela, se eliminar la ventana
 		this.frame.dispose();
 
 	}

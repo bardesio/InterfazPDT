@@ -10,7 +10,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -21,15 +20,11 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.RowFilter;
 import javax.swing.RowFilter.ComparisonType;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
-
 import com.entidades.Observacion;
-
 import interfaz.locator.ClientePDT;
 import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
 import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
@@ -37,46 +32,51 @@ import net.sourceforge.jdatepicker.impl.UtilDateModel;
 
 public class FrameListadoporZona implements ActionListener {
 	
-	/** Frame */
+	// Atributo Frame 
 	private Frame frame;
 
-	/** Tabla */
+	// Creo la tabla 
 	private JTable tablaObservaciones;
 
-	/** Date Picker */
+	// Creo los Date Picker
 	private JDatePickerImpl datePickerFin;
 	private JDatePickerImpl datePickerInicio;
 
-	/** Labels */
+	//Creo las Labels 
 	private JLabel labelFechaInicio;
 	private JLabel labelFechaFin;
 	private JLabel labelZona;
 	
+	//Creo el formateador
 	SimpleDateFormat formateadorFecha = new SimpleDateFormat("yyyy/MM/dd");
 
 
-	/** Atributos del ComboBox */
+	// Atributos del ComboBox 
 	private JComboBox<String> comboZonas;
 	
-	/** Buttons */
+	// Creo los botones
 	private JButton botonFiltrar;
 	private JButton botonLimpiar;
 
 	public FrameListadoporZona(JFrame framePadre) {
-
+		
+		//Le pongo nombre de las labels
 		this.labelFechaInicio = new JLabel("Fecha Inicio: ");
 		this.labelFechaFin = new JLabel("Fecha Fin: ");
-
 		this.labelZona = new JLabel("Zona: ");
 		
+		
+		//Le pongo nombre e icono al boton filtrar
 		JButton botonFiltrar = new JButton("Filtrar");
 		botonFiltrar.setIcon(new ImageIcon(FramePrincipal.class.getResource("/resources/filter.png")));
 		botonFiltrar.addActionListener(this);
 
+		//Le pongo nombre e icono al boton limpiar
 		JButton botonLimpiar = new JButton("Limpiar Filtro");
 		botonLimpiar.setIcon(new ImageIcon(FramePrincipal.class.getResource("/resources/clean.png")));
 		botonLimpiar.addActionListener(this);
 
+		//Asigno propiedades a los botones
 		this.botonFiltrar = botonFiltrar;
 		this.botonLimpiar = botonLimpiar;
 		
@@ -159,7 +159,8 @@ public class FrameListadoporZona implements ActionListener {
 		}
 
 	}
-
+	
+	//Cargo la tabla observaciones
 	private JTable cargartablaObservaciones() {
 
 		List<Observacion> observaciones;
@@ -170,20 +171,20 @@ public class FrameListadoporZona implements ActionListener {
 		}
 		catch (Exception e){
 			return null;
-		}
+		}		
 
+		
+		//Indico las columnas
 		String[] nombreColumnas = { "Id", "Zona", "Fenomeno", "Descripcion", "Latitud", "Longitud", "Altitud"
 				, "Fecha"};
 
-		/*
-		 * El tamaño de la tabla es, 8 columnas (cantidad de datos a mostrar) y
-		 * la cantidad de filas depende de la cantida de consultas
-		 */
+			//Ingreso el tamaño
 			Object[][] datos = new Object[observaciones.size()][8];
 
 		/* Cargamos la matriz con todos los datos */
 		int fila = 0;
 
+		//Foreach para recorrer la observacion y obtener los campos
 		for (Observacion o : observaciones) {
 
 			datos[fila][0] = o.getCodigo_OBS();
@@ -198,7 +199,9 @@ public class FrameListadoporZona implements ActionListener {
 			fila++;
 
 		}
-
+		
+		
+		
 		/*
 		 * Este codigo indica que las celdas no son editables y que son todas
 		 * del tipos String
@@ -223,10 +226,13 @@ public class FrameListadoporZona implements ActionListener {
 
 		this.tablaObservaciones = table;
 
+		
 		return table;
-
+		
+		
 	}
 
+	//Creo el datapicker
 	private JDatePickerImpl crearDatePicker() {
 
 		UtilDateModel model = new UtilDateModel();
@@ -235,6 +241,7 @@ public class FrameListadoporZona implements ActionListener {
 		return datePicker;
 	}
 
+	//Verifico que boton fue pulsado y que accion ejecutar
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
@@ -246,6 +253,7 @@ public class FrameListadoporZona implements ActionListener {
 
 	}
 
+	//Defino el boton limpiar
 	private void accionLimpiarFiltro() {
 
 		this.tablaObservaciones.setRowSorter(null);
@@ -254,22 +262,24 @@ public class FrameListadoporZona implements ActionListener {
 
 	}
 
+	//Defino el boton filtrar
 	private void accionFiltrar() {
 		
+		//Creo una lista con el filtro
 	    List<RowFilter<Object,Object>> filtro = new ArrayList<RowFilter<Object,Object>>(2);
 		
-		
+		//Asigno los campos en variables
 		Date fechaInicio = (Date) this.datePickerInicio.getModel().getValue();
 		Date fechaFin = (Date) this.datePickerFin.getModel().getValue();
 		String fieldZona = (String) this.comboZonas.getSelectedItem();
 
 		
-		
+		//Verifico que la fecha de inicio no supere a la fecha fin
 		if (fechaInicio.after(fechaFin)) {
 			JOptionPane.showMessageDialog(frame, "La fecha de inicio no puede ser mayor a la fecha de fin", "Fechas invalidas!", JOptionPane.WARNING_MESSAGE);
 		}
 		
-		
+		//Verifico que no sea nulo
 		else if (fechaInicio != null && fechaFin != null && !(fieldZona.equals(""))) {
 			
 	
@@ -293,6 +303,7 @@ public class FrameListadoporZona implements ActionListener {
 		}
 	}
 
+	//Completo el combo zonas
 	private JComboBox<String> completarComboZonas() {
 		String[] valores = {"NORTE", "SUR", "ESTE", "OESTE"};
 		return new JComboBox<>(valores);

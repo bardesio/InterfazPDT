@@ -6,7 +6,6 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
-
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -16,26 +15,23 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
-import com.entidades.Fenomeno;
 import com.entidades.TipoUsuario;
 import com.entidades.Usuario;
-
-import interfaz.constantes.Constantes;
 import interfaz.locator.ClientePDT;
 
 
 public class FrameEliminarUsuario implements ActionListener{
 
-	
+	//Listado global de usuarios
 	List<Usuario> usuarioActual = null;
 	
-	/** Frame de la ventana */
+	//Frame de la ventana 
 	private JFrame frame;
 
+	//ID Global
 	Long fieldID = null;
 	
-	/** Atributos de labels */
+	//Atributos de labels 
 	private JLabel labelPass;
 	private JLabel labelUsuario;
 	private JLabel labelNombre;
@@ -48,13 +44,13 @@ public class FrameEliminarUsuario implements ActionListener{
 	private JLabel labelTipoUsu;
 	
 	
-	
+	//Atributos de comboboxs
 	private JComboBox<String> comboTipoUsu;
 	private JComboBox<String> comboTipo;
 	
 	
 	
-	/** Atributos de TexField */
+	//Atributos de TexField 
 	private JTextField textPass;
 	private JTextField textUsuario;
 	private JTextField textNombre;
@@ -64,12 +60,12 @@ public class FrameEliminarUsuario implements ActionListener{
 	private JTextField textDireccion;
 	private JTextField textMail;
 	
-	/** Atributos de Botones */
+	//Atributos de Botones 
 	private JButton buttonEliminar;
 	private JButton buttonCancelar;
 	private JButton buttonBuscar;
 
-	/** Lista de Tipos del sistema */
+	// Lista de Tipos del sistema
 	private List<TipoUsuario> tipoUsuarios;
 	
 	public FrameEliminarUsuario(JFrame framePadre, List<Usuario> listUsuarios) {
@@ -78,6 +74,7 @@ public class FrameEliminarUsuario implements ActionListener{
 		usuarioActual = listUsuarios;
 		
 		
+		//Le pongo nombre a las labels
 		this.labelApellido = new JLabel("Apellido:");
 		this.labelNombre = new JLabel("Nombre:");
 		this.labelDireccion = new JLabel("Direccion:");
@@ -89,7 +86,7 @@ public class FrameEliminarUsuario implements ActionListener{
 		this.labelUsuario = new JLabel("Usuario:");
 		this.labelTipoUsu = new JLabel("Tipo de Usuario:");
 		
-		
+		//Le ingreso el tamaño a los textboxs
 		this.textApellido = new JTextField(15);
 		this.textNombre = new JTextField(15);
 		this.textDireccion = new JTextField(15);
@@ -99,19 +96,22 @@ public class FrameEliminarUsuario implements ActionListener{
 		this.textPass = new JTextField(15);
 		this.textUsuario = new JTextField(15);
 		
-		
+		//Le pongo nombre e icono al boton eliminar
 		JButton buttonEliminar = new JButton("Eliminar");
 		buttonEliminar.setIcon(new ImageIcon(FramePrincipal.class.getResource("/resources/delete.gif")));
 		buttonEliminar.addActionListener(this);
-		
+
+		//Le pongo nombre e icono al boton cancelar
 		JButton buttonCancelar = new JButton("Cancelar");
 		buttonCancelar.setIcon(new ImageIcon(FramePrincipal.class.getResource("/resources/cancel.png")));
 		buttonCancelar.addActionListener(this);
 
+		//Le pongo nombre e icono al boton buscar
 		JButton buttonBuscar = new JButton ("Buscar");
 		buttonBuscar.setIcon(new ImageIcon(FramePrincipal.class.getResource("/resources/buscar.png")));
 		buttonBuscar.addActionListener(this);
 		
+		//asigno a los botones las propiedades
 		this.buttonEliminar = buttonEliminar;
 		this.buttonCancelar = buttonCancelar;
 		this.buttonBuscar = buttonBuscar;
@@ -250,12 +250,13 @@ public class FrameEliminarUsuario implements ActionListener{
 
 	}
 	
-	
+	//Cargo los tipos de documentos
 	private JComboBox<String> completarComboTipo() {
 		String[] valores = {"CI", "PASAPORTE", "CARTA DE CIUDADANIA", "OTROS"};
 		return new JComboBox<>(valores);
 	}
 	
+	//Cargo los tipos de usuarios
 	private JComboBox<String> completarComboUsuario(JFrame frame) {
 		
 		try{
@@ -276,15 +277,9 @@ public class FrameEliminarUsuario implements ActionListener{
 		
 }
 	
-	
-	/**
-	 * Como implementos Action Listener, quiere decir que soy escuchado de
-	 * eventos. Este método es quien se ejecutan cuando tocan un boton .
-	 */
+	//Ejecuto una accion en base al boton pulsado
 	@Override
 	public void actionPerformed(ActionEvent e) {
-
-		/* Debo primero conocer que botón fue clickeado */
 
 		if (e.getSource() == this.buttonCancelar) {
 			this.accionCancelar();
@@ -304,6 +299,7 @@ public class FrameEliminarUsuario implements ActionListener{
 
 		String fieldUsuario = this.textUsuario.getText();
 		
+		//Valido que el maximo sea valido
 		if (fieldUsuario.length() > 50)
 		{
 			JOptionPane.showMessageDialog(frame, "No puede ingresar mas de 50 caracteres en el campo usuario", "Máximo superado!",
@@ -325,7 +321,7 @@ public class FrameEliminarUsuario implements ActionListener{
 					return;
 				}
 				
-				
+				//Valido que exista y sea ACTIVO
 				if (usuarios==null || usuarios.size() == 0 || usuarios.get(0).getEstado().equals("INACTIVO")) {
 					JOptionPane.showMessageDialog(frame, "El nombre de usuario ingresado no existe.",
 							"Usuario Inexistente!", JOptionPane.WARNING_MESSAGE);
@@ -333,6 +329,7 @@ public class FrameEliminarUsuario implements ActionListener{
 					return;
 				}
 				
+				//Valido que el usuario actual no se elimine a si mismo
 				else if (usuarioActual.get(0).getUsuario().equals(usuarios.get(0).getUsuario())){
 					JOptionPane.showMessageDialog(frame, "No se puede eliminar a si mismo",
 							"Usuario Existente!", JOptionPane.WARNING_MESSAGE);
@@ -367,6 +364,7 @@ public class FrameEliminarUsuario implements ActionListener{
 	
 	private void accionEliminar() {
 
+		//Guardo los campos nuevamente
 		String fieldUsuario = this.textUsuario.getText();
 		String fieldNombre = this.textNombre.getText().toUpperCase();
 		String fieldApellido = this.textApellido.getText().toUpperCase();
@@ -421,7 +419,6 @@ public class FrameEliminarUsuario implements ActionListener{
 	
 	
 	private void accionCancelar() {
-		// si se cancela, se eliminar la ventana
 		this.frame.dispose();
 
 	}

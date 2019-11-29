@@ -21,8 +21,9 @@ public class FramePrincipal {
 	
 	static List<Usuario> listUsuarios = null;
 
-	
+	//recibo en el constructor del frame el usuario
 	public FramePrincipal(List<Usuario> usuarios) {
+	//Lo guardo en una variable	
 	listUsuarios = usuarios;
 	}
 	
@@ -68,6 +69,7 @@ public class FramePrincipal {
 			JMenuBar menuBar = new JMenuBar();
 			menuBar.setBackground(new Color(224, 255, 255));
 			
+			//Determino el tipo de usuario y le habilito o no las ventanas
 			if (listUsuarios.get(0).getTipousuario().getNombre().equals("ADMINISTRADOR"))
 			{
 				initializeMenuUsuarios(menuBar, frame);
@@ -91,7 +93,6 @@ public class FramePrincipal {
 			frame.setJMenuBar(menuBar);
 			
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

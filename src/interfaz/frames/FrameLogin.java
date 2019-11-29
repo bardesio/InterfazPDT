@@ -24,12 +24,15 @@ public class FrameLogin extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 
-	/** Frame de la ventana */
+	// Frame de la ventana
 	private JFrame jframe;
 	
+	//Atributo Jpanel
 	private JPanel jpanel;
-	public static JTextField textUsuario;
-	public static JTextField textPass;
+	
+	//Atributos textfields
+	public JTextField textUsuario;
+	public JTextField textPass;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -44,6 +47,7 @@ public class FrameLogin extends JFrame {
 		});
 	}
 	
+	//Inicializa el JFrame
 	private void initialize() {
 		jframe = new JFrame();
 		jframe.setBounds(100, 100, 450, 300);
@@ -92,16 +96,20 @@ public class FrameLogin extends JFrame {
 				JButton btnAceptar = new JButton("Aceptar");
 				btnAceptar.setIcon(new ImageIcon(FramePrincipal.class.getResource("/resources/confirm.png")));
 				btnAceptar.addActionListener(new  ActionListener() { 
-					@Override//Establezco que debe hacer cuando hago clic
+				
+					//Establezco que debe hacer cuando hago clic
+					@Override
 					public void actionPerformed(ActionEvent e) {
 						
 						String usuario = textUsuario.getText().toUpperCase();
 						String password = textPass.getText().toUpperCase();
 					
-						//Usuario u1= new Usuario();
 						try {
+							
+							//Verifico que el usuario y la password sean validos
 							List<Usuario> usuarios = ClientePDT.Login(usuario, password);
-							//llamarlo desde el cliente
+							
+							//Si lo devuelto es invalido
 							if(usuarios.isEmpty())
 							{
 								JOptionPane.showMessageDialog(null, "Usuario y/o Contraseña invalida");
@@ -145,7 +153,9 @@ public class FrameLogin extends JFrame {
 				//Defino el botón Cancelar
 				JButton btnCancelar = new JButton("Cancelar");
 				btnCancelar.setIcon(new ImageIcon(FramePrincipal.class.getResource("/resources/cancel.png")));
-				btnCancelar.addActionListener(new ActionListener() { //Establezco que debe hacer cuando hago clic en Cancelar
+				btnCancelar.addActionListener(new ActionListener() { 
+					
+					//Establezco que debe hacer cuando hago clic en Cancelar
 					public void actionPerformed(ActionEvent e) {
 						System.exit(0); // Salgo del sistema
 					}

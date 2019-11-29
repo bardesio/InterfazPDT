@@ -1,14 +1,11 @@
 package interfaz.frames;
 
-import java.awt.Component;
-import java.awt.EventQueue;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
-
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -18,65 +15,67 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
-import org.jgroups.protocols.TUNNEL;
-
 import com.entidades.Fenomeno;
 import com.entidades.Telefono;
-import com.entidades.TipoUsuario;
-
-import interfaz.constantes.Constantes;
 import interfaz.locator.ClientePDT;
 
 public class FrameNuevoFenomeno implements ActionListener {
 
+	//Defino id global
 	Long id =  null;
+	
+	//Defino frame global
 	private JFrame frame;
 
-	/** Atributos de labels */
+	// Atributos de labels 
 	private JLabel labelCodigo;
 	private JLabel labelNombre;
 	private JLabel labelDescripcion;
 	private JLabel labeltelefono;
 	private JLabel labelestado;
 	
+	//Defino combo telefonos
 	private JComboBox<String> comboTel;
 	
-	/** Atributos de TexField */
+	// Atributos de TexField 
 	private JTextField textNombre;
 	private JTextField textDescripcion;
 	private JTextField textCodigo;
 	private JTextField textEstado;
-	/** Atributos de Botones */
+	
+	//** Atributos de Botones */
 	private JButton buttonIngresar;
 	private JButton buttonCancelar;
 	
-	
+	//Defino lista de telefonos
 	private List<Telefono> telefonos;
 	
 	public FrameNuevoFenomeno(JFrame framePadre) {
-
 	
-		
+		//Asigno nombre a las labels
 		this.labelCodigo = new JLabel("Código:"); 
 		this.labelestado = new JLabel("Estado:");
 		this.labelNombre = new JLabel("Nombre:");
 		this.labelDescripcion = new JLabel("Descripción:");
 		this.labeltelefono = new JLabel ("Teléfonos de Emergencia:");
 		
+		//Asigno tamaño a los textboxs
 		 this.textCodigo=new JTextField(15);
 		 this.textNombre= new JTextField(15);
 		 this.textDescripcion = new JTextField(15);
 		 this.textEstado = new JTextField(15);
 		
+		 //Defino el nombre y el icono del boton ingresar
 		JButton buttonIngresar = new JButton("Ingresar");
 		buttonIngresar.setIcon(new ImageIcon(FramePrincipal.class.getResource("/resources/add.png")));
 		buttonIngresar.addActionListener((ActionListener) this);
 
+		 //Defino el nombre y el icono del boton cancelar
 		JButton buttonCancelar = new JButton("Cancelar");
 		buttonCancelar.setIcon(new ImageIcon(FramePrincipal.class.getResource("/resources/cancel.png")));
 		buttonCancelar.addActionListener((ActionListener) this);
 
+		//Asigno propiedades a los botones
 		this.buttonIngresar = buttonIngresar;
 		this.buttonCancelar = buttonCancelar;
 
@@ -173,7 +172,7 @@ public class FrameNuevoFenomeno implements ActionListener {
 			frame.dispose();}
 		}
 		
-	
+	//Completo combo de telefonos
 	private JComboBox<String> completarComboTelefono(JFrame frame) {
 		
 		try{
@@ -195,7 +194,7 @@ public class FrameNuevoFenomeno implements ActionListener {
 		return combo;
 	}
 	
-	
+	//Metodo para separar nombre de telefono
 	public String separarNombreDeTelefono(String telEmergencia) {
 		int i = 0;
 		while(i<= telEmergencia.length() -1) {
@@ -206,6 +205,7 @@ public class FrameNuevoFenomeno implements ActionListener {
 		return telEmergencia;
 	}
 
+	//Defino el boton pulsado
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
@@ -219,6 +219,7 @@ public class FrameNuevoFenomeno implements ActionListener {
 		
 	}
 	
+	//Defino la accion ingresar 
 	private void accionIngesar() {
 
 		// Si es ingresar se validan datos!
@@ -253,13 +254,14 @@ public class FrameNuevoFenomeno implements ActionListener {
 		
 		
 		try{
+			//Verifico que no exista el fenomeno
 			List<Fenomeno> fn = ClientePDT.existecodigo(fieldCodigo);
-			
 			
 			if(fn == null || fn.size() == 0)
 			{
 				try {
 					
+					//Intento crearlo
 					almacenado= ClientePDT.ingresarnuevoFenomeno(fieldCodigo,fieldEstado, fieldNombre, fieldDescripcion,tels);
 					
 					
@@ -279,6 +281,8 @@ public class FrameNuevoFenomeno implements ActionListener {
 
 				return;
 			}
+			
+			//Existe pero esta inactivo
 			}else if (!String.valueOf(fn.get(0).getEstado()).equals("ACTIVO"))
 				{
 				try {
@@ -302,7 +306,7 @@ public class FrameNuevoFenomeno implements ActionListener {
 					return;
 					}
 				}
-			//El usuario ya existe en el sistema
+			//El fenomeno ya existe en el sistema y esta activo
 			else {
 				JOptionPane.showMessageDialog(null, "El fenómeno ya existe en el sistema");
 				return;
@@ -318,9 +322,8 @@ public class FrameNuevoFenomeno implements ActionListener {
 	}
 		
 
-	
+	//Defino el boton cancelar
 	private void accionCancelar() {
-		// si se cancela, se eliminar la ventana
 		this.frame.dispose();
 
 	}

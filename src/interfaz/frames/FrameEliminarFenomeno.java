@@ -1,103 +1,91 @@
 package interfaz.frames;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.HeadlessException;
 import java.awt.Insets;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.util.List;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-
-import com.Remote.FenomenoBeanRemote;
 import com.entidades.Fenomeno;
 import com.entidades.Telefono;
-import com.exception.ServiciosException;
-
-
-
 import interfaz.locator.ClientePDT;
-import interfaz.locator.EJBLocator;
-
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.JPopupMenu;
-import java.awt.Component;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 public class FrameEliminarFenomeno implements ActionListener {
-
-	//Probando
+		
+		//Creo un frame global 
 		private JFrame frame;
-
+		
+		//Creo un ID global
 		Long fieldID = null;
-		/** Atributos de labels */
+		
+		//Atributos de labels
 		private JLabel labelCodigo;
 		private JLabel labelNombre;
 		private JLabel labelDescripcion;
 		private JLabel labeltelefono;
 		private JLabel labelestado;
 		
+		//Combobox de los telefonos
 		private JComboBox<String> comboTel;
 		
 		
 		
-		/** Atributos de TexField */
+		//Atributos de TexField
 		private JTextField textNombre;
 		private JTextField textDescripcion;
 		private JTextField textCodigo;
 		private JTextField textEstado;
 
-		/** Atributos de Botones */
+		//Atributos de Botones
 		private JButton buttonEliminar;
 		private JButton buttonCancelar;
 		private JButton buttonBuscar;
 		
+		//Lista de telefonos
 		private List<Telefono> telefonos;
 
 		public FrameEliminarFenomeno(JFrame framePadre) {
 
-		
+			//Le pongo nombre a las labels
 			this.labelCodigo = new JLabel("Código:"); 
 			this.labelNombre = new JLabel("Nombre:");
 			this.labelestado = new JLabel("Estado:");
 			this.labelDescripcion = new JLabel("Descripción:");
 			this.labeltelefono = new JLabel ("Teléfonos de Emergencia:");
 			
+			//Le asigno el tamaño a los textboxs
 			 this.textCodigo=new JTextField(15);
 			 this.textNombre= new JTextField(15);
 			 this.textDescripcion = new JTextField(15);
 			 this.textEstado = new JTextField(15);
 			
+			 //Nombre e icono del boton eliminar
 			JButton buttonEliminar = new JButton("Eliminar");
 			buttonEliminar.setIcon(new ImageIcon(FramePrincipal.class.getResource("/resources/delete.gif")));
 			buttonEliminar.addActionListener(this);
-			
+
+			//Nombre e icono del boton Cancelar
 			JButton buttonCancelar = new JButton("Cancelar");
 			buttonCancelar.setIcon(new ImageIcon(FramePrincipal.class.getResource("/resources/cancel.png")));
 			buttonCancelar.addActionListener(this);
 
+
+			//Nombre e icono del boton Buscar
 			JButton buttonBuscar = new JButton ("Buscar");
 			buttonBuscar.setIcon(new ImageIcon(FramePrincipal.class.getResource("/resources/buscar.png")));
 			buttonBuscar.addActionListener(this);
 			
-			this.buttonEliminar =buttonEliminar ;
+			//Asigno los botones con las propiedades
+			this.buttonEliminar = buttonEliminar ;
 			this.buttonCancelar = buttonCancelar;
 			this.buttonBuscar = buttonBuscar;
 
@@ -156,9 +144,6 @@ public class FrameEliminarFenomeno implements ActionListener {
 		eliminarFenomenoPanel.add(this.labeltelefono, constraints);
 		
 		
-		
-		
-		
 		constraints.gridx = 1;
 		 this.comboTel = this.completarComboTelefono(frame);
 		 this.comboTel.setEditable(false);
@@ -204,6 +189,8 @@ public class FrameEliminarFenomeno implements ActionListener {
 			frame.dispose();}
 			
 		}
+	
+		//Llenar el combo de telefonos
 		private JComboBox<String> completarComboTelefono(JFrame frame) {
 			
 			try{
@@ -226,11 +213,10 @@ public class FrameEliminarFenomeno implements ActionListener {
 		}
 		 
 		 
-		 
-		 @Override
+	//Realizo determinada acción a partir del boton que fue clickeado 
+	@Override
 	public void actionPerformed(ActionEvent e) {
-
-		/* Debo primero conocer que botón fue clickeado */
+			 	
 				if (e.getSource() == this.buttonCancelar) {
 					this.accionCancelar();
 				} else if (e.getSource() == this.buttonBuscar) 
@@ -244,10 +230,8 @@ public class FrameEliminarFenomeno implements ActionListener {
 				
 
 			}
-		 private void accionBuscar() {
-
-				
-				
+	
+	 private void accionBuscar() {
 				
 				try{
 					
@@ -260,14 +244,21 @@ public class FrameEliminarFenomeno implements ActionListener {
 						return;
 					}
 					
+					//Valido que exista y me traigo los datos
 					String codigo = this.textCodigo.getText().toUpperCase();
 					List <Fenomeno> fenomenos= ClientePDT.existecodigo(codigo);
+					
+					//No existe el fenomeno que me ingresaron
 					if (fenomenos.isEmpty())
 					{
 						JOptionPane.showMessageDialog(frame, "El código del fenómeno ingresado no existe.",
 								"Fenómeno Inexistente!", JOptionPane.WARNING_MESSAGE);
 						return;
-					}else {
+					}
+					
+					//Existe el fenomeno, muestro los datos como solo lectura
+					else 
+					{
 						for(Fenomeno CFen : fenomenos)
 						{
 																					
@@ -297,6 +288,7 @@ public class FrameEliminarFenomeno implements ActionListener {
 						return;
 					}
 	}			
+	 
 	public void accionEliminar(){
 		
 		String fieldDescripcion = this.textDescripcion.getText().toUpperCase();
@@ -349,7 +341,6 @@ public class FrameEliminarFenomeno implements ActionListener {
 					"Error al eliminar!", JOptionPane.ERROR_MESSAGE);
 		}
 	}private void accionCancelar() {
-		// si se cancela, se eliminar la ventana
 		this.frame.dispose();
 	}
 
